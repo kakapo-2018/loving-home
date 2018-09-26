@@ -68,14 +68,14 @@ GenyMotion: Android emulator
 | --- | --- |
 | Users | id, username, password, email, coins |
 | Animals | id, name, species, disposition |
-| AnimalsAndUsers | animal_id, user_id |
-| Charities | id, charityName |
+| AnimalsAndUsers | animalId, userId |
+| Charities | id, charityName, mission, websiteURL, logo |
 | CharitiesAndUsers | userId, charityId, donationPercent |
 | News | id, organisation, headline, content, photo |
 | Events | id, organisation, headline, content, photo, location, dateAndTime |
 | Cosmetics | id, name, image, price |
-| CosmeticsAndUsers | user_id, cosmetic_id |
-| CosmeticsAndAnimals | animal_id, cosmetic_id |
+| CosmeticsAndUsers | userId, cosmeticId |
+| CosmeticsAndAnimals | animalId, cosmeticId |
 
 ### Redux Reducers
 
@@ -100,6 +100,7 @@ GenyMotion: Android emulator
 
 | Method | Endpoint | Protected | Usage | Response |
 | --- | --- | --- | --- | --- |
+| GET | /charities/all | --- | Gets all charities available | An array of charity objects |
 | GET | /users/:id/charities | --- | Gets the current user's charity choices | An array of charity objects |
 | POST | /users/:id/charities | --- | Sets the current user's charity choices | An array of charity objects |
 | GET | /users/:id/animals | --- | Returns all animals adopted by that user | An array of animal objects |
@@ -124,3 +125,108 @@ Get	/api/meetings	Yes	Get a Users Meeting Histroy	An Array of Meetings
   ],
 
 }
+
+#### Request & Response Formats
+
+##### GET /users/:id/charities
+
+###### Response:
+
+```
+[
+  {
+    id: 1,
+    charityName: "Puppies Motel",
+    mission: "Just get it done",
+    websiteURL: "www.totes-puppies.com",
+    logo: "puppies-motel.jpg",
+    donationPercent: 40
+  }
+]
+```
+
+##### POST /users/:id/charities
+
+###### Request:
+
+```
+[
+  {
+    charityId: 1,
+    donationPercent: 40
+  }
+]
+```
+
+###### Response:
+
+```
+[
+  {
+    id: 1,
+    charityName: "Puppies Motel",
+    mission: "Just get it done",
+    websiteURL: "www.totes-puppies.com",
+    logo: "puppies-motel.jpg",
+    donationPercent: 40
+  }
+]
+```
+
+##### GET /users/:id/animals
+
+###### Response:
+
+```
+[
+  {
+    id: 1,
+    name: "Chippy",
+    species: "Dog",
+    disposition: "Sassy"
+  }
+]
+```
+
+##### POST /users/:id/animals
+
+###### Request:
+
+```
+[
+  {
+    userId: 1
+    animalId: 1,
+    name: "Chippy",
+    species: "Dog",
+    disposition: "Sassy"
+  }
+]
+```
+
+###### Response:
+
+```
+[
+  {
+    id: 1,
+    name: "Chippy",
+    species: "Dog",
+    disposition: "Sassy"
+  }
+]
+```
+
+##### GET /users/:id/inventory
+
+##### POST /users/:id/inventory
+
+##### GET /animals/:id/inventory/
+
+##### POST /animals/:id/inventory/
+
+##### GET /news
+
+##### GET /events
+
+##### GET /store/inventory
