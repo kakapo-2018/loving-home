@@ -37,8 +37,8 @@ GenyMotion: Android emulator
 ## Technical Requirements
 
 | MVP | DB Tables | APIs | Reducers |
-| --- | --- | --- | --- | --- |
-| Login, register & users db | Users table | Refer to auth exercise | Refer to exercise | Refer to exercise |
+| --- | --- | --- | --- |
+| Login, register & users db | Users table | Refer to auth exercise | Refer to exercise |
 | Selecting desired charities | Charities, CharitiesAndUsers table | GET, POST /users/:id/charities | ActiveCharities |
 | Homepage | Animals, AnimalsAndUsers tables | GET, POST /users/:id/animals. GET, POST /users/:id/cosmetics. GET, POST /animals/:id/cosmetics/ | UserPets, Amenities, Clock, ActivePet |
 | News | News table | GET /news | NewsCarousel, ActiveNews |
@@ -118,13 +118,6 @@ Post	/api/auth/login	Yes	Log In a User	The Users JWT Token
 Post	/api/auth/register	Yes	Register a User	The Users JWT Token
 Get	/api/meetings	Yes	Get a Users Meeting Histroy	An Array of Meetings
 
-
-{
-  Cosmetics: [
-    "hat", "jacket"
-  ],
-
-}
 
 #### Request & Response Formats
 
@@ -218,15 +211,122 @@ Get	/api/meetings	Yes	Get a Users Meeting Histroy	An Array of Meetings
 ```
 
 ##### GET /users/:id/inventory
+```
+[
+  {
+    id: 1,
+    name: "Raincoat",
+    image: "raincoat.jpg",
+    price: 2000
+  }
+]
+```
 
 ##### POST /users/:id/inventory
-
+###### Request
+```
+[
+  {
+    userId: 1,
+    cosmeticId: 1,
+    name: "Raincoat",
+    image: "raincoat.jpg",
+    price: 2000
+  }
+]
+```
+###### Response
+```
+[
+  {
+    id: 1,
+    name: "Raincoat",
+    image: "raincoat.jpg",
+    price: 2000
+  }
+]
+```
 ##### GET /animals/:id/inventory/
+###### Response
+(only one item for each animal)
+```
+  {
+    id: 2,
+    name: "Bowtie",
+    image: "Bow-tie.jpg",
+    price: 1750
+  }
+```
 
 ##### POST /animals/:id/inventory/
-
+###### Request
+(only one item for each animal)
+```
+{
+  animalId: 1,
+  cosmeticId: 2,
+  name: "Bow-tie",
+  image: "Bow-tie.jpg",
+  price: 1750
+}
+```
+###### Response
+(only one item for each animal)
+```
+  {
+    id: 2,
+    name: "Bow-tie",
+    image: "Bow-tie.jpg",
+    price: 1750
+  }
+```
 ##### GET /news
-
+###### Response
+```
+[
+  {
+    id: 1,
+    organisation: "Dog Motel",
+    headline: "2 cute 4 skool",
+    content: "pretty self explainitory",
+    photo: "lilwoofer.png"
+  }
+]
+```
 ##### GET /events
+###### Response
+```
+[
+  {
+    id: 1,
+    organisation: "Alpaca Petting Society",
+    headline: "National Petting Day!",
+    content: "So soft",
+    photo: "woolfriend.png",
+    location: "Wellington",
+    dateAndTime: "Thursday 4 Oct 2018, 19:00" 
+  }
+]
+```
 
 ##### GET /store/inventory
+###### Response
+```
+  {
+    cosmetics: [
+      { id: 1,
+        name: "Raincoat",
+        image: "raincoat.jpg",
+        price: 2000
+      }
+    ],
+    animals: [
+      {
+        id: 1,
+        name: "Chippy",
+        species: "Dog",
+        disposition: "Sassy"
+      }
+    ]
+  }
+```
