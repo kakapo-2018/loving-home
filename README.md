@@ -31,15 +31,14 @@
 | MVP | DB Tables | APIs | Reducers | Actions |
 | --- | --- | --- | --- | --- |
 | Homepage |   |   |   |   |
-| Login & users db |   |   |   |   |
+| Login & users db | Users table: id, username, password, email | Refer to auth exercise | Refer to exercise | Refer to exercise |
 | News |   |   |   |   |
 | Events |   |   |   |   |
 | Store & "microtransactions" |   |   |   |   |
 | Roaming pets |   |   |   |   |
 | 3 starter pets |   |   |   |   |
-| Selecting desired charities |   |   |   |   |
+| Selecting desired charities | Charities table: id, charityName. CharitiesAndUsers table: userId, charityId, donationPercent |   |   |   |
 | Rules page |   |   |   |   |
-| --- | --- | --- | --- | --- |
 | Stretch | DB Tables | APIs | Reducers | Actions |
 | --- | --- | --- | --- | --- |
 | Minigame |   |   |   |   |
