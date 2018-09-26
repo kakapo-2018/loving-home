@@ -25,3 +25,29 @@
 - Treats in News & Events pages to be collected
 - Achievements page
 - Checkin rewards (new pets, new toys, treats upgrades)
+
+## Technical Requirements
+
+| MVP | DB Tables | APIs | Reducers | Actions |
+| --- | --- | --- | --- | --- |
+| Homepage |   |   |   |   |
+| Login & users db |   |   |   |   |
+| News |   |   |   |   |
+| Events |   |   |   |   |
+| Store & "microtransactions" |   |   |   |   |
+| Roaming pets |   |   |   |   |
+| 3 starter pets |   |   |   |   |
+| Selecting desired charities |   |   |   |   |
+| Rules page |   |   |   |   |
+| --- | --- | --- | --- | --- |
+| Stretch | DB Tables | APIs | Reducers | Actions |
+| --- | --- | --- | --- | --- |
+| Minigame |   |   |   |   |
+| Donation contribution progress bar |   |   |   |   |
+| Pet needs |   |   |   |   |
+| More pets! |   |   |   |   |
+| Aesthetic food + water |   |   |   |   |
+| Naming pets |   |   |   |   |
+| Treats in News & Events pages |   |   |   |   |
+| Achievements page |   |   |   |   |
+| Checkin rewards |   |   |   |   |
