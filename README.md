@@ -1,5 +1,10 @@
 # Loving Home!
 
+## Setup
+
+Expo: On phone runtime of app
+GenyMotion: Android emulator
+
 ## MVP & Stretch Goals
 
 ### MVP
