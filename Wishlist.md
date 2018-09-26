@@ -2,7 +2,7 @@
 
 - Daily Challenges
 - Pet temperament & flavour
-- Pet zkillz (tricks)
+- Pet zkillz (sick tricks)
 - Filtering wishlist by NSFW
 - Social interactivity with friends! Visit gardens and other pets
 - Cooperative challenges
