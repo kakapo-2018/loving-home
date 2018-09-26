@@ -30,17 +30,17 @@
 
 ## Technical Requirements
 
-| MVP | DB Tables | APIs | Reducers | Actions |
+| MVP | DB Tables | APIs | Reducers |
 | --- | --- | --- | --- | --- |
-| Homepage | Animals, AnimalsAndPets tables | GET, POST /users/:id/pets. GET /animals. GET, POST /users/:id/cosmetics. GET, POST /pets/:id/cosmetics/ | UserPets, Amenities, Clock, ActivePet | FILL_WATER, FILL_FOOD, REDUCE_WATER, REDUCE_FOOD, UPDATE_ACTIVE_PETS, UPDATE_ENTER_TIME, UPDATE EXIT_TIME |
+| Homepage | Animals, AnimalsAndPets tables | GET, POST /users/:id/pets. GET /animals. GET, POST /users/:id/cosmetics. GET, POST /pets/:id/cosmetics/ | UserPets, Amenities, Clock, ActivePet |
 | Login & users db | Users table | Refer to auth exercise | Refer to exercise | Refer to exercise |
-| News | News table | GET /news | NewsCarousel, ActiveNews | UPDATE_ACTIVE_NEWS |
-| Events | Events table | GET /events | EventsCarousel, ActiveEvent | UPDATE_ACTIVE_EVENT |
-| Store & "microtransactions" | Cosmetics, CosmeticsAndUsers, CosmeticsAndAnimals | GET /cosmetics. GET, POST /users/:id/cosmetics. GET, POST /pets/:id/cosmetics/ | CosmeticCarousel, ActiveCosmetic |   |
-| Roaming pets |   |   |   |   |
-| 3 starter pets |   |   |   |   |
-| Selecting desired charities | Charities, CharitiesAndUsers table | GET, POST /:userid/charitychoice | ActiveCharities | 'UPDATE_ACTIVE_CHARITES' |
-| Rules page |   |   |   |   |
+| News | News table | GET /news | NewsCarousel, ActiveNews |
+| Events | Events table | GET /events | EventsCarousel, ActiveEvent |
+| Store & "microtransactions" | Cosmetics, CosmeticsAndUsers, CosmeticsAndAnimals | GET /cosmetics. GET, POST /users/:id/cosmetics. GET, POST /pets/:id/cosmetics/ | CosmeticCarousel, ActiveCosmetic |
+| Roaming pets |   |   |   |
+| 3 starter pets |   |   |   |
+| Selecting desired charities | Charities, CharitiesAndUsers table | GET, POST /:userid/charitychoice | ActiveCharities |
+| Rules page |   |   |   |
 
 
 | Stretch | DB Tables | APIs | Reducers | Actions |
@@ -80,11 +80,12 @@
 | Clock | Stores info about time including time since last login | Object containing current time and last login time | UPDATE_ENTER_TIME, UPDATE EXIT_TIME |
 | ActivePet | Stores info about the cur | an array of all pets the current user owns. | UPDATE_ACTIVE_PETS |
 | NewsCarousel |  |  |  |
-| ActiveNews |  |  |  |
+| ActiveNews |  |  | UPDATE_ACTIVE_NEWS |
 | EventsCarousel |  |  |  |
-| ActiveEvents |  |  |  |
-| EventsCarousel |  |  |  |
-| ActiveEvents |  |  |  |
+| ActiveEvents |  |  | UPDATE_ACTIVE_EVENT |
+| CosmeticsCarousel |  |  |  |
+| ActiveCosmetics |  |  | UPDATE_ACTIVE_COSMETIC |
+| ActiveCharities |  |  | UPDATE_ACTIVE_CHARITES |
 
 
 
