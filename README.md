@@ -228,7 +228,7 @@ Get	/api/meetings	Yes	Get a Users Meeting Histroy	An Array of Meetings
 [
   {
     userId: 1,
-    costmeticId: 1,
+    cosmeticId: 1,
     name: "Raincoat",
     image: "raincoat.jpg",
     price: 2000
@@ -264,7 +264,7 @@ Get	/api/meetings	Yes	Get a Users Meeting Histroy	An Array of Meetings
 ```
 {
   animalId: 1,
-  costmeticId: 2,
+  cosmeticId: 2,
   name: "Bow-tie",
   image: "Bow-tie.jpg",
   price: 1750
