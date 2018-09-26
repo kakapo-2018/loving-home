@@ -39,11 +39,11 @@ GenyMotion: Android emulator
 | MVP | DB Tables | APIs | Reducers |
 | --- | --- | --- | --- | --- |
 | Login, register & users db | Users table | Refer to auth exercise | Refer to exercise | Refer to exercise |
-| Selecting desired charities | Charities, CharitiesAndUsers table | GET, POST /:userid/charitychoice | ActiveCharities |
-| Homepage | Animals, AnimalsAndUsers tables | GET, POST /users/:id/pets. GET /animals. GET, POST /users/:id/cosmetics. GET, POST /pets/:id/cosmetics/ | UserPets, Amenities, Clock, ActivePet |
+| Selecting desired charities | Charities, CharitiesAndUsers table | GET, POST /users/:id/charities | ActiveCharities |
+| Homepage | Animals, AnimalsAndUsers tables | GET, POST /users/:id/animals. GET, POST /users/:id/cosmetics. GET, POST /animals/:id/cosmetics/ | UserPets, Amenities, Clock, ActivePet |
 | News | News table | GET /news | NewsCarousel, ActiveNews |
 | Events | Events table | GET /events | EventsCarousel, ActiveEvent |
-| Store & "microtransactions" | Cosmetics, CosmeticsAndUsers, CosmeticsAndAnimals | GET /cosmetics. GET, POST /users/:id/cosmetics. GET, POST /pets/:id/cosmetics/ | StoreCarousel, ActiveStoreCarousel, ActiveItem |
+| Store & "microtransactions" | Cosmetics, CosmeticsAndUsers, CosmeticsAndAnimals | GET /store/inventory. GET, POST /users/:id/cosmetics. GET, POST /animals/:id/cosmetics/ | StoreCarousel, ActiveStoreCarousel, ActiveItem |
 | Rules page |   |   |   |
 | 3 starter pets | Animals, AnimalsAndUsers tables |   |   |
 
@@ -97,3 +97,30 @@ GenyMotion: Android emulator
 
 
 ### APIs
+
+| Method | Endpoint | Protected | Usage | Response |
+| --- | --- | --- | --- | --- |
+| GET | /users/:id/charities | --- | Gets the current user's charity choices | An array of charity objects |
+| POST | /users/:id/charities | --- | Sets the current user's charity choices | An array of charity objects |
+| GET | /users/:id/animals | --- | Returns all animals adopted by that user | An array of animal objects |
+| POST | /users/:id/animals | --- | Updates animals adopted by that user | The new animal object |
+| GET | /users/:id/inventory | --- | Returns the current user's inventory | An inventory object with keys/value pairs where each value is an array |
+| POST | /users/:id/inventory | --- | Updates the current user's inventory | The updated inventory object |
+| GET | /animals/:id/inventory/ | --- | Returns the current animal's inventory | An inventory object with keys/value pairs where each value is an array |
+| POST | /animals/:id/inventory/ | --- | Updates the current animal's inventory | The updated inventory object |
+| GET | /news | --- | Gets all news items | Returns an array of news objects |
+| GET | /events | --- | Gets all events | Returns an array of events objects |
+| GET | /store/inventory | --- | Gets entire store catalogue | Returns an object containing entire store inventory |
+
+Method	Endpoint	Protected	Usage	Response
+Post	/api/auth/login	Yes	Log In a User	The Users JWT Token
+Post	/api/auth/register	Yes	Register a User	The Users JWT Token
+Get	/api/meetings	Yes	Get a Users Meeting Histroy	An Array of Meetings
+
+
+{
+  Cosmetics: [
+    "hat", "jacket"
+  ],
+
+}
