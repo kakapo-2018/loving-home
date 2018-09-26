@@ -25,20 +25,23 @@
 - Treats in News & Events pages to be collected
 - Achievements page
 - Checkin rewards (new pets, new toys, treats upgrades)
+- Filter news and events from charities by user interest
 
 ## Technical Requirements
 
 | MVP | DB Tables | APIs | Reducers | Actions |
 | --- | --- | --- | --- | --- |
-| Homepage |   |   |   |   |
-| Login & users db | Users table: id, username, password, email | Refer to auth exercise | Refer to exercise | Refer to exercise |
+| Homepage | Animals, AnimalsAndPets tables | GET, POST /:userid/pets. GET /animals | ActivePets, Amenities, Clock | FILL_WATER, FILL_FOOD, REDUCE_WATER, REDUCE_FOOD, UPDATE_ACTIVE_PETS, UPDATE_ENTER_TIME, UPDATE EXIT_TIME |
+| Login & users db | Users table | Refer to auth exercise | Refer to exercise | Refer to exercise |
 | News |   |   |   |   |
 | Events |   |   |   |   |
 | Store & "microtransactions" |   |   |   |   |
 | Roaming pets |   |   |   |   |
 | 3 starter pets |   |   |   |   |
-| Selecting desired charities | Charities table: id, charityName. CharitiesAndUsers table: userId, charityId, donationPercent |   |   |   |
+| Selecting desired charities | Charities, CharitiesAndUsers table | GET, POST /:userid/charitychoice | ActiveCharities | 'UPDATE_ACTIVE_CHARITES' |
 | Rules page |   |   |   |   |
+
+
 | Stretch | DB Tables | APIs | Reducers | Actions |
 | --- | --- | --- | --- | --- |
 | Minigame |   |   |   |   |
@@ -50,3 +53,16 @@
 | Treats in News & Events pages |   |   |   |   |
 | Achievements page |   |   |   |   |
 | Checkin rewards |   |   |   |   |
+
+
+### Database Tables
+
+Users: id, username, password, email
+Animals: id, name, species, disposition
+AnimalsAndUsers: animal_id, user_id 
+Charities: id, charityName
+CharitiesAndUsers: userId, charityId, donationPercent
+
+
+### APIs
+
