@@ -240,20 +240,21 @@ Inventory structure here and in API TBR
 
 ### Action Info
 
-| Action Name | Description | Technical Details |
-| UPDATE_ACTIVE_CHARITIES | Passes select charities to reducer | |
-| UPDATE_ACTIVE_PET | Passes animalId to reducer | |
-| FILL_WATER | Onclick tops up water level | |
-| FILL_FOOD | Onclick tops up food level| |
-| REDUCE_WATER | On login reduces water by time difference | |
-| REDUCE_FOOD | On login reduces food by time difference | |
-| UPDATE_ENTER_TIME | Pushes new Date() to reducer on login | |
-| UPDATE_EXIT_TIME | Pushes new Date() to reducer on logout | |
-| UPDATE_ACTIVE_NEWS | Passes through selected newsId to reducer | |
-| UPDATE_ACTIVE_EVENT | Passes through selected eventId to reducer | |
-| BUY_ITEM | Passes selected cosmeticId to reducer | |
-| UPDATE_ACTIVE_STORE_CAROUSEL | Selects subset of inventory | |
-| UPDATE_ACTIVE_ITEM | Pass cosmeticId to reducer | |
+| Action Name                  | Description                                | Technical Details |
+| ---------------------------- | ------------------------------------------ | ----------------- |
+| UPDATE_ACTIVE_CHARITIES      | Passes select charities to reducer         |                   |
+| UPDATE_ACTIVE_PET            | Passes animalId to reducer                 |                   |
+| FILL_WATER                   | Onclick tops up water level                |                   |
+| FILL_FOOD                    | Onclick tops up food level                 |                   |
+| REDUCE_WATER                 | On login reduces water by time difference  |                   |
+| REDUCE_FOOD                  | On login reduces food by time difference   |                   |
+| UPDATE_ENTER_TIME            | Pushes new Date() to reducer on login      |                   |
+| UPDATE_EXIT_TIME             | Pushes new Date() to reducer on logout     |                   |
+| UPDATE_ACTIVE_NEWS           | Passes through selected newsId to reducer  |                   |
+| UPDATE_ACTIVE_EVENT          | Passes through selected eventId to reducer |                   |
+| BUY_ITEM                     | Passes selected cosmeticId to reducer      |                   |
+| UPDATE_ACTIVE_STORE_CAROUSEL | Selects subset of inventory                |                   |
+| UPDATE_ACTIVE_ITEM           | Pass cosmeticId to reducer                 |                   |
 
 ### APIs
 
