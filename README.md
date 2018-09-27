@@ -36,70 +36,70 @@ GenyMotion: Android emulator
 
 ## Technical Requirements
 
-| MVP | DB Tables | APIs | Reducers |
-| --- | --- | --- | --- |
-| Login, register & users db | Users table | Refer to auth exercise | Refer to exercise |
-| Selecting desired charities | Charities, CharitiesAndUsers table | GET, POST /users/:id/charities | ActiveCharities |
-| Homepage | Animals, AnimalsAndUsers tables | GET, POST /users/:id/animals. GET, POST /users/:id/cosmetics. GET, POST /animals/:id/cosmetics/ | UserAnimals, Amenities, Clock, ActiveAnimal |
-| News | News table | GET /news | NewsCarousel, ActiveNews |
-| Events | Events table | GET /events | EventsCarousel, ActiveEvent |
-| Store & "microtransactions" | Cosmetics, CosmeticsAndUsers, CosmeticsAndAnimals | GET /store/inventory. GET, POST /users/:id/cosmetics. GET, POST /animals/:id/cosmetics/ | StoreCarousel, ActiveStoreCarousel, ActiveItem |
-| Rules page |   |   |   |
-| 3 starter pets | Animals, AnimalsAndUsers tables |   |   |
+| MVP                         | DB Tables                                         | APIs                                                                                            | Reducers                                       |
+| --------------------------- | ------------------------------------------------- | ----------------------------------------------------------------------------------------------- | ---------------------------------------------- |
+| Login, register & users db  | Users table                                       | Refer to auth exercise                                                                          | Refer to exercise                              |
+| Selecting desired charities | Charities, CharitiesAndUsers table                | GET, POST /users/:id/charities                                                                  | ActiveCharities                                |
+| Homepage                    | Animals, AnimalsAndUsers tables                   | GET, POST /users/:id/animals. GET, POST /users/:id/cosmetics. GET, POST /animals/:id/cosmetics/ | UserAnimals, Amenities, Clock, ActiveAnimal    |
+| News                        | News table                                        | GET /news                                                                                       | NewsCarousel, ActiveNews                       |
+| Events                      | Events table                                      | GET /events                                                                                     | EventsCarousel, ActiveEvent                    |
+| Store & "microtransactions" | Cosmetics, CosmeticsAndUsers, CosmeticsAndAnimals | GET /store/inventory. GET, POST /users/:id/cosmetics. GET, POST /animals/:id/cosmetics/         | StoreCarousel, ActiveStoreCarousel, ActiveItem |
+| Rules page                  |                                                   |                                                                                                 |                                                |
+| 3 starter pets              | Animals, AnimalsAndUsers tables                   |                                                                                                 |                                                |
 
-
-| Stretch | DB Tables | APIs | Reducers | Actions |
-| --- | --- | --- | --- | --- |
-| Roaming pets |   |   |   |
-| Minigame |   |   |   |   |
-| Donation contribution progress bar |   |   |   |   |
-| Pet needs |   |   |   |   |
-| More pets! |   |   |   |   |
-| Aesthetic food + water |   |   |   |   |
-| Naming pets |   |   |   |   |
-| Treats in News & Events pages |   |   |   |   |
-| Achievements page |   |   |   |   |
-| Checkin rewards |   |   |   |   |
-
+| Stretch                            | DB Tables | APIs | Reducers | Actions |
+| ---------------------------------- | --------- | ---- | -------- | ------- |
+| Roaming pets                       |           |      |          |
+| Minigame                           |           |      |          |         |
+| Donation contribution progress bar |           |      |          |         |
+| Pet needs                          |           |      |          |         |
+| More pets!                         |           |      |          |         |
+| Aesthetic food + water             |           |      |          |         |
+| Naming pets                        |           |      |          |         |
+| Treats in News & Events pages      |           |      |          |         |
+| Achievements page                  |           |      |          |         |
+| Checkin rewards                    |           |      |          |         |
 
 ### Database Tables
 
-| Table Name | Columns |
-| --- | --- |
-| Users | id, username, password, email, coins |
-| Animals | id, name, species, disposition |
-| AnimalsAndUsers | animalId, userId |
-| Charities | id, charityName, mission, websiteURL, logo |
-| CharitiesAndUsers | userId, charityId, donationPercent |
-| News | id, organisation, headline, content, photo |
-| Events | id, organisation, headline, content, photo, location, dateAndTime |
-| Cosmetics | id, name, image, price |
-| CosmeticsAndUsers | userId, cosmeticId |
-| CosmeticsAndAnimals | animalId, cosmeticId |
+| Table Name          | Columns                                                           |
+| ------------------- | ----------------------------------------------------------------- |
+| Users               | id, username, password, email, coins, logout time                 |
+| Animals             | id, name, species, disposition                                    |
+| AnimalsAndUsers     | animalId, userId                                                  |
+| Charities           | id, charityName, mission, websiteURL, logo                        |
+| CharitiesAndUsers   | userId, charityId, donationPercent                                |
+| News                | id, organisation, headline, content, image                        |
+| Events              | id, organisation, headline, content, image, location, dateAndTime |
+| Cosmetics           | id, name, image, price                                            |
+| CosmeticsAndUsers   | userId, cosmeticId                                                |
+| CosmeticsAndAnimals | animalId, cosmeticId                                              |
 
 ### Redux Reducers
 
-| Section | Reducer | Use | Format | Actions |
-| --- | --- | --- | --- | --- |
-| Register/Login | ActiveCharities | The charities the user has chosen | An array of charity objects | UPDATE_ACTIVE_CHARITES |
-| Homepage | UserAnimals | Showing current animals | an array of all animals the current user owns. |  |
-| Homepage | ActiveAnimal | The current animal selected | An object with an id value, or null | UPDATE_ACTIVE_PET |
-| Homepage | Amenities | Food and drink info for friends | Object containing water and food levels | FILL_WATER, FILL_FOOD, REDUCE_WATER, REDUCE_FOOD |
-| Homepage | Clock | Stores info about time including time since last login | Object containing current time and last login time | UPDATE_ENTER_TIME, UPDATE EXIT_TIME |
-| News | NewsCarousel | Stores all news stories to be shown | An array of objects representing all news stories |  |
-| News | ActiveNews | Contains either the current news story, or nothing, to be used as a switch | An object with an id value, or null | UPDATE_ACTIVE_NEWS |
-| Events | EventsCarousel | Stores all events to be shown | An array of objects representing all events |  |
-| Events | ActiveEvent | Contains either the current event, or nothing, to be used as a switch | An object with an id value, or null | UPDATE_ACTIVE_EVENT |
-| Store | StoreCarousel | Stores entire purchase catalogue | Object of keys "Cosmetics", "Pets", etc, with entire store catalogue contained | BUY_ITEM |
-| Store | ActiveStoreCarousel | Used to switch between what catalogue subset is displayed | String of "Cosmetics", "Pets", etc | UPDATE_ACTIVE_STORE_CAROUSEL |
-| Store | ActiveItem | Contains a reference to the selected item, or nothing, to be used as a switch | An object with an id value, or null | UPDATE_ACTIVE_ITEM |
+| Section        | Reducer State       | Use                                                                           | Format                                                                         | Actions                                          |
+| -------------- | ------------------- | ----------------------------------------------------------------------------- | ------------------------------------------------------------------------------ | ------------------------------------------------ |
+| Register/Login | ActiveCharities     | The charities the user has chosen                                             | An array of charity objects                                                    | UPDATE_ACTIVE_CHARITIES                          |
+| Homepage       | UserAnimals         | Showing current animals                                                       | An array of all animals the current user owns.                                 |                                                  |
+| Homepage       | ActiveAnimal        | The current animal selected                                                   | An object with an id value, or null                                            | UPDATE_ACTIVE_PET                                |
+| Homepage       | Amenities           | Food and drink info for friends                                               | Object containing water and food levels                                        | FILL_WATER, FILL_FOOD, REDUCE_WATER, REDUCE_FOOD |
+| Homepage       | Clock               | Stores info about time including time since last login                        | Object containing current time and last login time                             | UPDATE_ENTER_TIME, UPDATE_EXIT_TIME              |
+| News           | NewsCarousel        | Stores all news stories to be shown                                           | An array of objects representing all news stories                              |                                                  |
+| News           | ActiveNews          | Contains either the current news story, or nothing, to be used as a switch    | An object with an id value, or null                                            | UPDATE_ACTIVE_NEWS                               |
+| Events         | EventsCarousel      | Stores all events to be shown                                                 | An array of objects representing all events                                    |                                                  |
+| Events         | ActiveEvent         | Contains either the current event, or nothing, to be used as a switch         | An object with an id value, or null                                            | UPDATE_ACTIVE_EVENT                              |
+| Store          | StoreCarousel       | Stores entire purchase catalogue                                              | Object of keys "Cosmetics", "Pets", etc, with entire store catalogue contained | BUY_ITEM                                         |
+| Store          | ActiveStoreCarousel | Used to switch between what catalogue subset is displayed                     | String of "Cosmetics", "Pets", etc                                             | UPDATE_ACTIVE_STORE_CAROUSEL                     |
+| Store          | ActiveItem          | Contains a reference to the selected item, or nothing, to be used as a switch | An object with an id value, or null                                            | UPDATE_ACTIVE_ITEM                               |
 
 #### Reducer State
 
 // Condense reducers with sub-keys
 
 ###### User
+
 Inventory structure here and in API TBR
+
 ```
 {
   inventory: [
@@ -113,7 +113,9 @@ Inventory structure here and in API TBR
   ]
 }
 ```
+
 ###### Animals
+
 ```
 {
   UserAnimals: [
@@ -129,7 +131,9 @@ Inventory structure here and in API TBR
   }
 }
 ```
+
 ###### Homepage
+
 ```
 {
   Amenities: {
@@ -141,7 +145,9 @@ Inventory structure here and in API TBR
   }
 }
 ```
+
 ###### News
+
 ```
 {
   NewsCarousel: [
@@ -150,7 +156,7 @@ Inventory structure here and in API TBR
       organisation: "Dog Motel",
       headline: "2 cute 4 skool",
       content: "pretty self extraplanetory",
-      photo: "subwoofer.png"
+      image: "subwoofer.png"
     }
   ],
   ActiveNews: {
@@ -158,7 +164,9 @@ Inventory structure here and in API TBR
   }
 }
 ```
+
 ###### Events
+
 ```
 {
   EventsCarousel: [
@@ -167,7 +175,7 @@ Inventory structure here and in API TBR
       organisation: "Alpaca Petting Society",
       headline: "National Petting Day!",
       content: "So soft",
-      photo: "woolfriend.png",
+      image: "woolfriend.png",
       location: "Wellington",
       dateAndTime: 1538021034314
     }
@@ -177,7 +185,9 @@ Inventory structure here and in API TBR
   }
 }
 ```
+
 ###### Store
+
 ```
 {
   storeCarousel: {
@@ -205,7 +215,9 @@ Inventory structure here and in API TBR
   }
 }
 ```
+
 ###### Charities
+
 ```
 {
   charities: [
@@ -226,30 +238,44 @@ Inventory structure here and in API TBR
 }
 ```
 
-#### Action Info
+### Action Info
+
+| Action Name | Description | Technical Details |
+| UPDATE_ACTIVE_CHARITIES | Passes select charities to reducer | |
+| UPDATE_ACTIVE_PET | Passes animalId to reducer | |
+| FILL_WATER | Onclick tops up water level | |
+| FILL_FOOD | Onclick tops up food level| |
+| REDUCE_WATER | On login reduces water by time difference | |
+| REDUCE_FOOD | On login reduces food by time difference | |
+| UPDATE_ENTER_TIME | Pushes new Date() to reducer on login | |
+| UPDATE_EXIT_TIME | Pushes new Date() to reducer on logout | |
+| UPDATE_ACTIVE_NEWS | Passes through selected newsId to reducer | |
+| UPDATE_ACTIVE_EVENT | Passes through selected eventId to reducer | |
+| BUY_ITEM | Passes selected cosmeticId to reducer | |
+| UPDATE_ACTIVE_STORE_CAROUSEL | Selects subset of inventory | |
+| UPDATE_ACTIVE_ITEM | Pass cosmeticId to reducer | |
 
 ### APIs
 
-| Method | Endpoint | Protected | Usage | Response |
-| --- | --- | --- | --- | --- |
-| GET | /charities/all | --- | Gets all charities available | An array of charity objects |
-| GET | /users/:id/charities | --- | Gets the current user's charity choices | An array of charity objects |
-| POST | /users/:id/charities | --- | Sets the current user's charity choices | An array of charity objects |
-| GET | /users/:id/animals | --- | Returns all animals adopted by that user | An array of animal objects |
-| POST | /users/:id/animals | --- | Updates animals adopted by that user | The new animal object |
-| GET | /users/:id/inventory | --- | Returns the current user's inventory | An inventory object with keys/value pairs where each value is an array |
-| POST | /users/:id/inventory | --- | Updates the current user's inventory | The updated inventory object |
-| GET | /animals/:id/inventory/ | --- | Returns the current animal's inventory | An inventory object with keys/value pairs where each value is an array |
-| POST | /animals/:id/inventory/ | --- | Updates the current animal's inventory | The updated inventory object |
-| GET | /news | --- | Gets all news items | Returns an array of news objects |
-| GET | /events | --- | Gets all events | Returns an array of events objects |
-| GET | /store/inventory | --- | Gets entire store catalogue | Returns an object containing entire store inventory |
+| Method | Endpoint                | Protected | Usage                                    | Response                                                               |
+| ------ | ----------------------- | --------- | ---------------------------------------- | ---------------------------------------------------------------------- |
+| GET    | /charities/all          | ---       | Gets all charities available             | An array of charity objects                                            |
+| GET    | /users/:id/charities    | ---       | Gets the current user's charity choices  | An array of charity objects                                            |
+| POST   | /users/:id/charities    | ---       | Sets the current user's charity choices  | An array of charity objects                                            |
+| GET    | /users/:id/animals      | ---       | Returns all animals adopted by that user | An array of animal objects                                             |
+| POST   | /users/:id/animals      | ---       | Updates animals adopted by that user     | The new animal object                                                  |
+| GET    | /users/:id/inventory    | ---       | Returns the current user's inventory     | An inventory object with keys/value pairs where each value is an array |
+| POST   | /users/:id/inventory    | ---       | Updates the current user's inventory     | The updated inventory object                                           |
+| GET    | /animals/:id/inventory/ | ---       | Returns the current animal's inventory   | An inventory object with keys/value pairs where each value is an array |
+| POST   | /animals/:id/inventory/ | ---       | Updates the current animal's inventory   | The updated inventory object                                           |
+| GET    | /news                   | ---       | Gets all news items                      | Returns an array of news objects                                       |
+| GET    | /events                 | ---       | Gets all events                          | Returns an array of events objects                                     |
+| GET    | /store/inventory        | ---       | Gets entire store catalogue              | Returns an object containing entire store inventory                    |
 
-Method	Endpoint	Protected	Usage	Response
-Post	/api/auth/login	Yes	Log In a User	The Users JWT Token
-Post	/api/auth/register	Yes	Register a User	The Users JWT Token
-Get	/api/meetings	Yes	Get a Users Meeting Histroy	An Array of Meetings
-
+Method Endpoint Protected Usage Response
+Post /api/auth/login Yes Log In a User The Users JWT Token
+Post /api/auth/register Yes Register a User The Users JWT Token
+Get /api/meetings Yes Get a Users Meeting Histroy An Array of Meetings
 
 #### Request & Response Formats
 
@@ -343,6 +369,7 @@ Get	/api/meetings	Yes	Get a Users Meeting Histroy	An Array of Meetings
 ```
 
 ##### GET /users/:id/inventory
+
 ```
 [
   {
@@ -355,7 +382,9 @@ Get	/api/meetings	Yes	Get a Users Meeting Histroy	An Array of Meetings
 ```
 
 ##### POST /users/:id/inventory
+
 ###### Request
+
 ```
 [
   {
@@ -367,7 +396,9 @@ Get	/api/meetings	Yes	Get a Users Meeting Histroy	An Array of Meetings
   }
 ]
 ```
+
 ###### Response
+
 ```
 [
   {
@@ -378,9 +409,13 @@ Get	/api/meetings	Yes	Get a Users Meeting Histroy	An Array of Meetings
   }
 ]
 ```
+
 ##### GET /animals/:id/inventory/
+
 ###### Response
+
 (only one item for each animal)
+
 ```
   {
     id: 2,
@@ -391,8 +426,11 @@ Get	/api/meetings	Yes	Get a Users Meeting Histroy	An Array of Meetings
 ```
 
 ##### POST /animals/:id/inventory/
+
 ###### Request
+
 (only one item for each animal)
+
 ```
 {
   animalId: 1,
@@ -402,8 +440,11 @@ Get	/api/meetings	Yes	Get a Users Meeting Histroy	An Array of Meetings
   price: 1750
 }
 ```
+
 ###### Response
+
 (only one item for each animal)
+
 ```
   {
     id: 2,
@@ -412,8 +453,11 @@ Get	/api/meetings	Yes	Get a Users Meeting Histroy	An Array of Meetings
     price: 1750
   }
 ```
+
 ##### GET /news
+
 ###### Response
+
 ```
 [
   {
@@ -421,12 +465,15 @@ Get	/api/meetings	Yes	Get a Users Meeting Histroy	An Array of Meetings
     organisation: "Dog Motel",
     headline: "2 cute 4 skool",
     content: "pretty self explainitory",
-    photo: "lilwoofer.png"
+    image: "lilwoofer.png"
   }
 ]
 ```
+
 ##### GET /events
+
 ###### Response
+
 ```
 [
   {
@@ -434,16 +481,19 @@ Get	/api/meetings	Yes	Get a Users Meeting Histroy	An Array of Meetings
     organisation: "Alpaca Petting Society",
     headline: "National Petting Day!",
     content: "So soft",
-    photo: "woolfriend.png",
+    image: "woolfriend.png",
     location: "Wellington",
-    dateAndTime: "Thursday 4 Oct 2018, 19:00" 
+    dateAndTime: "Thursday 4 Oct 2018, 19:00"
   }
 ]
 ```
 
 ##### GET /store/inventory
+
 Inventory structure here and in reducers TBR
+
 ###### Response
+
 ```
   {
     cosmetics: [
