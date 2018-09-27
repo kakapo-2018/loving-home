@@ -40,7 +40,7 @@ GenyMotion: Android emulator
 | --- | --- | --- | --- |
 | Login, register & users db | Users table | Refer to auth exercise | Refer to exercise |
 | Selecting desired charities | Charities, CharitiesAndUsers table | GET, POST /users/:id/charities | ActiveCharities |
-| Homepage | Animals, AnimalsAndUsers tables | GET, POST /users/:id/animals. GET, POST /users/:id/cosmetics. GET, POST /animals/:id/cosmetics/ | UserPets, Amenities, Clock, ActivePet |
+| Homepage | Animals, AnimalsAndUsers tables | GET, POST /users/:id/animals. GET, POST /users/:id/cosmetics. GET, POST /animals/:id/cosmetics/ | UserAnimals, Amenities, Clock, ActiveAnimal |
 | News | News table | GET /news | NewsCarousel, ActiveNews |
 | Events | Events table | GET /events | EventsCarousel, ActiveEvent |
 | Store & "microtransactions" | Cosmetics, CosmeticsAndUsers, CosmeticsAndAnimals | GET /store/inventory. GET, POST /users/:id/cosmetics. GET, POST /animals/:id/cosmetics/ | StoreCarousel, ActiveStoreCarousel, ActiveItem |
@@ -81,20 +81,152 @@ GenyMotion: Android emulator
 
 | Section | Reducer | Use | Format | Actions |
 | --- | --- | --- | --- | --- |
-| Homepage | UserPets | Showing current pets | an array of all pets the current user owns. |  |
+| Register/Login | ActiveCharities | The charities the user has chosen | An array of charity objects | UPDATE_ACTIVE_CHARITES |
+| Homepage | UserAnimals | Showing current animals | an array of all animals the current user owns. |  |
+| Homepage | ActiveAnimal | The current animal selected | An object with an id value, or null | UPDATE_ACTIVE_PET |
 | Homepage | Amenities | Food and drink info for friends | Object containing water and food levels | FILL_WATER, FILL_FOOD, REDUCE_WATER, REDUCE_FOOD |
 | Homepage | Clock | Stores info about time including time since last login | Object containing current time and last login time | UPDATE_ENTER_TIME, UPDATE EXIT_TIME |
-| Homepage | ActivePet | Stores info about the current user's pets | an array of all pets the current user owns. | UPDATE_ACTIVE_PETS |
 | News | NewsCarousel | Stores all news stories to be shown | An array of objects representing all news stories |  |
-| News | ActiveNews | Contains either the current news story, or nothing, to be used as a switch | A single News object, or null | UPDATE_ACTIVE_NEWS |
+| News | ActiveNews | Contains either the current news story, or nothing, to be used as a switch | An object with an id value, or null | UPDATE_ACTIVE_NEWS |
 | Events | EventsCarousel | Stores all events to be shown | An array of objects representing all events |  |
-| Events | ActiveEvent | Contains either the current event, or nothing, to be used as a switch | A single Event object, or null | UPDATE_ACTIVE_EVENT |
+| Events | ActiveEvent | Contains either the current event, or nothing, to be used as a switch | An object with an id value, or null | UPDATE_ACTIVE_EVENT |
 | Store | StoreCarousel | Stores entire purchase catalogue | Object of keys "Cosmetics", "Pets", etc, with entire store catalogue contained | BUY_ITEM |
 | Store | ActiveStoreCarousel | Used to switch between what catalogue subset is displayed | String of "Cosmetics", "Pets", etc | UPDATE_ACTIVE_STORE_CAROUSEL |
-| Store | ActiveItem | Displays the selected store item if not null, containing purchase info, details, description | Either active item object, or null | UPDATE_ACTIVE_ITEM |
-| Register/Login | ActiveCharities |  |  | UPDATE_ACTIVE_CHARITES |
+| Store | ActiveItem | Contains a reference to the selected item, or nothing, to be used as a switch | An object with an id value, or null | UPDATE_ACTIVE_ITEM |
 
+#### Reducer State
 
+// Condense reducers with sub-keys
+
+###### User
+Inventory structure here and in API TBR
+```
+{
+  inventory: [
+    cosmetics: {
+      userId: 1,
+      cosmeticId: 1,
+      name: "Raincoat",
+      image: "raincoat.jpg",
+      price: 2000
+    }
+  ]
+}
+```
+###### Animals
+```
+{
+  UserAnimals: [
+    {
+      id: 1,
+      name: "Chippy",
+      species: "dog",
+      disposition: "sassy"
+    }
+  ],
+  ActiveAnimal: {
+    id: 1
+  }
+}
+```
+###### Homepage
+```
+{
+  Amenities: {
+    water: 40,
+    food: 50
+  },
+  Clock: {
+    lastLogoutTime: 1538001217263
+  }
+}
+```
+###### News
+```
+{
+  NewsCarousel: [
+    {
+      id: 1,
+      organisation: "Dog Motel",
+      headline: "2 cute 4 skool",
+      content: "pretty self extraplanetory",
+      photo: "subwoofer.png"
+    }
+  ],
+  ActiveNews: {
+    id: 1
+  }
+}
+```
+###### Events
+```
+{
+  EventsCarousel: [
+    {
+      id: 1,
+      organisation: "Alpaca Petting Society",
+      headline: "National Petting Day!",
+      content: "So soft",
+      photo: "woolfriend.png",
+      location: "Wellington",
+      dateAndTime: 1538021034314
+    }
+  ],
+  ActiveEvent: {
+    id: 1
+  }
+}
+```
+###### Store
+```
+{
+  storeCarousel: {
+    cosmetics: [
+      { id: 1,
+        name: "Raincoat",
+        image: "raincoat.jpg",
+        price: 2000
+      }
+    ],
+    animals: [
+      {
+        id: 1,
+        name: "Chippy",
+        species: "Dog",
+        disposition: "Sassy"
+      }
+    ]
+  },
+  activeStoreCarousel: "cosmetics",
+  activeItem: {
+    cosmetics: {
+      id: 1
+    }
+  }
+}
+```
+###### Charities
+```
+{
+  charities: [
+    {
+      id: 1,
+      charityName: "Puppies Motel",
+      mission: "Just get it done",
+      websiteURL: "www.totes-puppies.com",
+      logo: "puppies-motel.jpg",
+      donationPercent: 40
+    }
+  ],
+  activeCharities: [
+    {
+      id: 1
+    }
+  ]
+}
+```
+
+#### Action Info
 
 ### APIs
 
@@ -310,6 +442,7 @@ Get	/api/meetings	Yes	Get a Users Meeting Histroy	An Array of Meetings
 ```
 
 ##### GET /store/inventory
+Inventory structure here and in reducers TBR
 ###### Response
 ```
   {
