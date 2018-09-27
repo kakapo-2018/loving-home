@@ -83,9 +83,9 @@ GenyMotion: Android emulator
 | --- | --- | --- | --- | --- |
 | Register/Login | ActiveCharities | The charities the user has chosen | An array of charity objects | UPDATE_ACTIVE_CHARITES |
 | Homepage | UserAnimals | Showing current animals | an array of all animals the current user owns. |  |
+| Homepage | ActiveAnimal | The current animal selected | An object with an id value, or null | UPDATE_ACTIVE_PET |
 | Homepage | Amenities | Food and drink info for friends | Object containing water and food levels | FILL_WATER, FILL_FOOD, REDUCE_WATER, REDUCE_FOOD |
 | Homepage | Clock | Stores info about time including time since last login | Object containing current time and last login time | UPDATE_ENTER_TIME, UPDATE EXIT_TIME |
-| Homepage | ActiveAnimal | The current animal selected | An object with an id value, or null | UPDATE_ACTIVE_PET |
 | News | NewsCarousel | Stores all news stories to be shown | An array of objects representing all news stories |  |
 | News | ActiveNews | Contains either the current news story, or nothing, to be used as a switch | An object with an id value, or null | UPDATE_ACTIVE_NEWS |
 | Events | EventsCarousel | Stores all events to be shown | An array of objects representing all events |  |
@@ -98,113 +98,133 @@ GenyMotion: Android emulator
 
 // Condense reducers with sub-keys
 
-###### UserPets
-```
-[
-  {
-    id: 1,
-    name: "Chippy",
-    species: "dog",
-    disposition: "sassy"
-  }
-]
-```
-###### Amenities
+###### User
+Inventory structure here and in API TBR
 ```
 {
-  water: 40,
-  food: 50
-}
-```
-###### Clock
-```
-{
-  currentTime: 1538001217263,
-  lastLoginTime: 1538001217263,
-  lastLogoutTime: 1538001217263
-}
-```
-###### ActivePet
-```
-{
-  id: 1
-}
-```
-###### NewsCarousel
-```
-[
-  {
-    id: 1,
-    organisation: "Dog Motel",
-    headline: "2 cute 4 skool",
-    content: "pretty self explainitory",
-    photo: "lilwoofer.png"
-  }
-]
-```
-
-###### ActiveNews
-```
-{
-  id: 1
-}
-```
-###### EventsCarousel
-```
-[
-  {
-    id: 1,
-    organisation: "Alpaca Petting Society",
-    headline: "National Petting Day!",
-    content: "So soft",
-    photo: "woolfriend.png",
-    location: "Wellington",
-    dateAndTime: "Thursday 4 Oct 2018, 19:00" 
-  }
-]
-```
-###### ActiveEvent
-```
-{
-  id: 1
-}
-```
-###### StoreCarousel
-```
-{
-  cosmetics: [
-    { id: 1,
+  inventory: [
+    cosmetics: {
+      userId: 1,
+      cosmeticId: 1,
       name: "Raincoat",
       image: "raincoat.jpg",
       price: 2000
     }
-  ],
-  animals: [
-    {
-      id: 1,
-      name: "Chippy",
-      species: "Dog",
-      disposition: "Sassy"
-    }
   ]
 }
 ```
-###### ActiveStoreCarousel
-```
-"cosmetics"
-```
-###### ActiveItem
+###### Animals
 ```
 {
-  cosmetics: {
+  UserAnimals: [
+    {
+      id: 1,
+      name: "Chippy",
+      species: "dog",
+      disposition: "sassy"
+    }
+  ],
+  ActiveAnimal: {
     id: 1
   }
 }
 ```
-###### ActiveCharities
+###### Homepage
 ```
+{
+  Amenities: {
+    water: 40,
+    food: 50
+  },
+  Clock: {
+    lastLogoutTime: 1538001217263
+  }
+}
 ```
-
+###### News
+```
+{
+  NewsCarousel: [
+    {
+      id: 1,
+      organisation: "Dog Motel",
+      headline: "2 cute 4 skool",
+      content: "pretty self extraplanetory",
+      photo: "subwoofer.png"
+    }
+  ],
+  ActiveNews: {
+    id: 1
+  }
+}
+```
+###### Events
+```
+{
+  EventsCarousel: [
+    {
+      id: 1,
+      organisation: "Alpaca Petting Society",
+      headline: "National Petting Day!",
+      content: "So soft",
+      photo: "woolfriend.png",
+      location: "Wellington",
+      dateAndTime: 1538021034314
+    }
+  ],
+  ActiveEvent: {
+    id: 1
+  }
+}
+```
+###### Store
+```
+{
+  storeCarousel: {
+    cosmetics: [
+      { id: 1,
+        name: "Raincoat",
+        image: "raincoat.jpg",
+        price: 2000
+      }
+    ],
+    animals: [
+      {
+        id: 1,
+        name: "Chippy",
+        species: "Dog",
+        disposition: "Sassy"
+      }
+    ]
+  },
+  activeStoreCarousel: "cosmetics",
+  activeItem: {
+    cosmetics: {
+      id: 1
+    }
+  }
+}
+```
+###### Charities
+```
+{
+  charities: [
+    {
+      id: 1,
+      charityName: "Puppies Motel",
+      mission: "Just get it done",
+      websiteURL: "www.totes-puppies.com",
+      logo: "puppies-motel.jpg",
+      donationPercent: 40
+    }
+  ],
+  activeCharities: [
+    {
+      id: 1
+    }
+  ]
+}
+```
 
 #### Action Info
 
@@ -422,6 +442,7 @@ Get	/api/meetings	Yes	Get a Users Meeting Histroy	An Array of Meetings
 ```
 
 ##### GET /store/inventory
+Inventory structure here and in reducers TBR
 ###### Response
 ```
   {
