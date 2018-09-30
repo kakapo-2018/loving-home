@@ -44,7 +44,7 @@ const styles = StyleSheet.create({
     }})
 
  
-export default class HomeScreen extends React.Component {
+export default class NewsScreen extends React.Component {
   constructor(props){
     super(props)
 
