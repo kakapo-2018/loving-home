@@ -6,6 +6,7 @@ import TabBarIcon from '../components/TabBarIcon';
 import HomeScreen from '../screens/HomeScreen';
 import LinksScreen from '../screens/LinksScreen';
 import SettingsScreen from '../screens/SettingsScreen';
+import StoreScreen from '../screens/StoreScreen';
 
 const HomeStack = createStackNavigator({
   Home: HomeScreen,
@@ -22,7 +23,7 @@ HomeStack.navigationOptions = {
           : 'md-information-circle'
       }
     />
-  ),
+  )
 };
 
 const LinksStack = createStackNavigator({
@@ -36,7 +37,7 @@ LinksStack.navigationOptions = {
       focused={focused}
       name={Platform.OS === 'ios' ? `ios-link${focused ? '' : '-outline'}` : 'md-link'}
     />
-  ),
+  )
 };
 
 const SettingsStack = createStackNavigator({
@@ -50,6 +51,24 @@ SettingsStack.navigationOptions = {
       focused={focused}
       name={Platform.OS === 'ios' ? `ios-options${focused ? '' : '-outline'}` : 'md-options'}
     />
+  )
+};
+
+const StoreStack = createStackNavigator({
+  Store: StoreScreen,
+});
+
+StoreStack.navigationOptions = {
+  tabBarLabel: 'Store',
+  tabBarIcon: ({ focused }) => (
+    <TabBarIcon
+      focused={focused}
+      name={
+        Platform.OS === 'ios'
+          ? `ios-cart${focused ? '' : '-outline'}`
+          : 'md-cart'
+      }
+    />
   ),
 };
 
@@ -57,4 +76,5 @@ export default createBottomTabNavigator({
   HomeStack,
   LinksStack,
   SettingsStack,
+  StoreStack
 });
