@@ -1,12 +1,12 @@
 import React from 'react';
 import { Platform, StatusBar, StyleSheet, View } from 'react-native';
 import { AppLoading, Asset, Font, Icon } from 'expo';
-import { createStore } from 'redux'
-import { provider } from 'react-redux'
+import { createStore, applyMiddleware, compose } from 'redux'
+import { Provider } from 'react-redux'
 import thunkMiddleware from 'redux-thunk'
 
 
-const reducers = import { combineReducers } from './reducers'
+import reducers from './reducers'
 
 import AppNavigator from './navigation/AppNavigator';
 

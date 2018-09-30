@@ -6,8 +6,9 @@ import {
   Image,
   Text
  } from 'react-native';
+ import { connect } from 'react-redux'
 
-export default class SettingsScreen extends React.Component {
+class SettingsScreen extends React.Component {
   // static navigationOptions = {
   //   title: 'app.json',
   // };
@@ -17,8 +18,16 @@ export default class SettingsScreen extends React.Component {
 
   render() {
     return(
-          <Text>Fill this</Text>
+          <Text>{this.props.news.id}</Text>
     )
 
   }
 }
+
+function MapStateToProps(state){
+  return{
+    news: state.news.ActiveNews
+  }
+}
+
+export default connect(MapStateToProps)(SettingsScreen)
