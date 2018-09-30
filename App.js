@@ -1,7 +1,19 @@
 import React from 'react';
 import { Platform, StatusBar, StyleSheet, View } from 'react-native';
 import { AppLoading, Asset, Font, Icon } from 'expo';
+import { createStore } from 'redux'
+import { provider } from 'react-redux'
+import thunkMiddleware from 'redux-thunk'
+
+
+const reducers = import { combineReducers } from './reducers'
+
 import AppNavigator from './navigation/AppNavigator';
+
+let store = createStore(reducers, compose(
+  applyMiddleware(thunkMiddleware),
+  window.devToolsExtension ? window.devToolsExtension() : f => f
+)) 
 
 export default class App extends React.Component {
   state = {
@@ -19,10 +31,12 @@ export default class App extends React.Component {
       );
     } else {
       return (
-        <View style={styles.container}>
-          {Platform.OS === 'ios' && <StatusBar barStyle="default" />}
-          <AppNavigator />
-        </View>
+        <Provider store={store}>
+          <View style={styles.container}>
+            {Platform.OS === 'ios' && <StatusBar barStyle="default" />}
+            <AppNavigator />
+          </View>
+        </Provider>
       );
     }
   }
