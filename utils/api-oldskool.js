@@ -1,8 +1,8 @@
-import request from 'superagent'
+const request = require('superagent')
 
-const baseURL = '/api'
+const baseURL = 'localhost:3000/api'
 
-export function getAllCharities (cb) {
+function getAllCharities (cb) {
     request
         .get(baseURL + '/charities/all')
         .end((err, res) => {
@@ -10,7 +10,7 @@ export function getAllCharities (cb) {
         })
 }
 
-export function getUserCharities (userId, cb) {
+function getUserCharities (userId, cb) {
     request
         .get(baseURL + '/users/' + userId + '/charities')
         .end((err, res) => {
@@ -18,7 +18,7 @@ export function getUserCharities (userId, cb) {
         })
 }
 
-export function updateUserCharities (userId, newCharities, cb) {
+function updateUserCharities (userId, newCharities, cb) {
     request
         .post(baseURL + '/users/' + userId + '/charities')
         .send(newCharities)
@@ -27,7 +27,7 @@ export function updateUserCharities (userId, newCharities, cb) {
         })
 }
 
-export function getUserAnimals (userId, cb) {
+function getUserAnimals (userId, cb) {
     request
         .get(baseURL + '/users/' + userId + '/animals')
         .end((err, res) => {
@@ -35,7 +35,7 @@ export function getUserAnimals (userId, cb) {
         })
 }
 
-export function updateUserAnimals (userId, newAnimals, cb) {
+function updateUserAnimals (userId, newAnimals, cb) {
     request
         .post(baseURL + '/users/' + userId + '/animals')
         .send(newAnimals)
@@ -44,7 +44,7 @@ export function updateUserAnimals (userId, newAnimals, cb) {
         })
 }
 
-export function getUserInventory (userId, cb) {
+function getUserInventory (userId, cb) {
     request
         .get(baseURL + '/users/' + userId + '/inventory')
         .end((err, res) => {
@@ -52,7 +52,7 @@ export function getUserInventory (userId, cb) {
         })
 }
 
-export function updateUserInventory (userId, newInventory, cb) {
+function updateUserInventory (userId, newInventory, cb) {
     request
         .post(baseURL + '/users/' + userId + '/inventory')
         .send(newInventory)
@@ -61,7 +61,7 @@ export function updateUserInventory (userId, newInventory, cb) {
         })
 }
 
-export function getAnimalInventory (animalId, cb) {
+function getAnimalInventory (animalId, cb) {
     request
         .get(baseURL + '/animals/' + animalId + '/inventory')
         .end((err, res) => {
@@ -69,16 +69,16 @@ export function getAnimalInventory (animalId, cb) {
         })
 }
 
-export function updateAnimalInventory (animalId, newInventory, cb) {
+function updateAnimalInventory (animalId, newInventory, cb) {
     request
         .post(baseURL + '/animals/' + animalId + '/inventory')
-        .send(JSON.stringify(newInventory))
+        .send(newInventory)
         .end((err, res) => {
             cb(err, res.body)
         })
 }
 
-export function getNews (cb) {
+function getNews (cb) {
     request
         .get(baseURL + '/news')
         .end((err, res) => {
@@ -86,7 +86,7 @@ export function getNews (cb) {
         })
 }
 
-export function getEvents (cb) {
+function getEvents (cb) {
     request
         .get(baseURL + '/events')
         .end((err, res) => {
@@ -94,7 +94,7 @@ export function getEvents (cb) {
         })
 }
 
-export function getStoreInventory (cb) {
+function getStoreInventory (cb) {
     request
         .get(baseURL + '/store/inventory')
         .end((err, res) => {
@@ -115,3 +115,18 @@ export function getStoreInventory (cb) {
 // }
 
 //------
+
+module.exports = {
+    getAllCharities,
+    getUserCharities,
+    updateUserCharities,
+    getUserAnimals,
+    updateUserAnimals,
+    getUserInventory,
+    updateUserInventory,
+    getAnimalInventory,
+    updateAnimalInventory,
+    getNews,
+    getEvents,
+    getStoreInventory
+}
