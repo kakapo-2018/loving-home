@@ -20,7 +20,7 @@ NewsStack.navigationOptions = {
       name={
         Platform.OS === 'ios'
           ? `ios-information-circle${focused ? '' : '-outline'}`
-          : 'md-information-circle'
+          : 'md-paper'
       }
     />
   )
@@ -35,7 +35,7 @@ GardenStack.navigationOptions = {
   tabBarIcon: ({ focused }) => (
     <TabBarIcon
       focused={focused}
-      name={Platform.OS === 'ios' ? `ios-link${focused ? '' : '-outline'}` : 'md-link'}
+      name={Platform.OS === 'ios' ? `ios-link${focused ? '' : '-outline'}` : 'md-paw'}
     />
   )
 };
@@ -49,7 +49,7 @@ EventsStack.navigationOptions = {
   tabBarIcon: ({ focused }) => (
     <TabBarIcon
       focused={focused}
-      name={Platform.OS === 'ios' ? `ios-options${focused ? '' : '-outline'}` : 'md-options'}
+      name={Platform.OS === 'ios' ? `ios-options${focused ? '' : '-outline'}` : 'md-megaphone'}
     />
   )
 };
@@ -66,7 +66,7 @@ StoreStack.navigationOptions = {
       name={
         Platform.OS === 'ios'
           ? `ios-cart${focused ? '' : '-outline'}`
-          : 'md-cart'
+          : 'logo-yen'
       }
     />
   ),
@@ -82,6 +82,7 @@ export default createBottomTabNavigator(
   StoreStack
 },{
 tabBarOptions: {
+  showLabel: false,
   activeTintColor: '#FFFFFF',
   inactiveTintColor: '#FFFFFF',
   style: {
