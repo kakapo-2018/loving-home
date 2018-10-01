@@ -7,23 +7,29 @@
     "android": "expo start --android",
     "ios": "expo start --ios",
     "eject": "expo eject",
-    "test": "node ./node_modules/jest/bin/jest.js --watchAll"
+    "test": "jest --watchAll",
+    "babel-test": "babel ./tests/api-test-lolz.js --watch --out-file ./tests/babel-test.js"
   },
   "jest": {
     "preset": "jest-expo"
   },
   "dependencies": {
+    "@babel/cli": "^7.1.2",
+    "@babel/core": "^7.1.2",
     "@expo/samples": "2.1.1",
+    "babel-cli": "^6.26.0",
+    "babel-preset-env": "^1.7.0",
     "expo": "^30.0.1",
     "expo-cli": "^2.1.3",
+    "jest": "^23.6.0",
     "react": "16.3.1",
     "react-native": "https://github.com/expo/react-native/archive/sdk-30.0.0.tar.gz",
     "react-navigation": "^2.16.0",
-    "superagent": "^4.0.0-beta.5",
-    "supertest": "^3.3.0",
     "react-redux": "^5.0.7",
     "redux": "^4.0.0",
-    "redux-thunk": "^2.3.0"
+    "redux-thunk": "^2.3.0",
+    "superagent": "^4.0.0-beta.5",
+    "supertest": "^3.3.0"
   },
   "devDependencies": {
     "jest-expo": "30.0.0"
