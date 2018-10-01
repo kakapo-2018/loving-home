@@ -1,30 +1,33 @@
 const initialState = {
-    charities: [
-        {
-            id: 1,
-            charityName: "Puppies Motel",
-            mission: "Just get it done",
-            websiteURL: "www.totes-puppies.com",
-            logo: "puppies-motel.jpg",
-            donationPercent: 40
-        }
-    ],
-    activeCharities: [
-        {
-            id: 1
-        }
-    ]
-}
+  Charities: [
+    {
+      id: 1,
+      charityName: "Puppies Motel",
+      mission: "Just get it done",
+      websiteURL: "www.totes-puppies.com",
+      logo: "puppies-motel.jpg",
+      donationPercent: 40
+    }
+  ],
+  activeCharities: [
+    {
+      id: 1
+    }
+  ]
+};
 
 const charities = (state = initialState, action) => {
-    switch (action.type) {
-        case 'UPDATE_ACTIVE_CHARITY':
-            return { ...state, activeCharities: [...state.activeCharities, { id: action.charity }] }
-        case 'SET_ALL_CHARITIES':
-            return { ...state, charities: [...action.allEvents] }
-        default:
-            return state
-    }
-}
+  switch (action.type) {
+    case "UPDATE_ACTIVE_CHARITY":
+      return {
+        ...state,
+        activeCharities: [...state.activeCharities, { id: action.charity }]
+      };
+    case "SET_ALL_CHARITIES":
+      return { ...state, Charities: [...action.allCharities] };
+    default:
+      return state;
+  }
+};
 
-export default charities
+export default charities;

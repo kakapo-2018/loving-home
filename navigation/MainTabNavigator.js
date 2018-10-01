@@ -1,107 +1,125 @@
-import React from 'react';
-import { Platform } from 'react-native';
-import { createStackNavigator, createBottomTabNavigator } from 'react-navigation';
+import React from "react";
+import { Platform } from "react-native";
+import {
+  createStackNavigator,
+  createBottomTabNavigator
+} from "react-navigation";
 
-import TabBarIcon from '../components/TabBarIcon';
-import GardenScreen from '../screens/GardenScreen'
-import NewsScreen from '../screens/NewsScreen';
-import EventsScreen from '../screens/EventsScreen';
-import CharitiesScreen from '../screens/CharitiesScreen';
-import StoreScreen from '../screens/StoreScreen';
-import Play from '../screens/Play'
+import TabBarIcon from "../components/TabBarIcon";
+import GardenScreen from "../screens/GardenScreen";
+import NewsScreen from "../screens/NewsScreen";
+import EventsScreen from "../screens/EventsScreen";
+import CharitiesScreen from "../screens/CharitiesScreen";
+import StoreScreen from "../screens/StoreScreen";
+import Play from "../screens/Play";
 
 const NewsStack = createStackNavigator({
-  News: NewsScreen,
+  News: NewsScreen
 });
 
 NewsStack.navigationOptions = {
-  tabBarLabel: 'News',
+  tabBarLabel: "News",
   tabBarIcon: ({ focused }) => (
     <TabBarIcon
       focused={focused}
       name={
-        Platform.OS === 'ios'
-          ? `ios-information-circle${focused ? '' : '-outline'}`
-          : 'md-paper'
+        Platform.OS === "ios"
+          ? `ios-information-circle${focused ? "" : "-outline"}`
+          : "md-paper"
       }
     />
   )
 };
 
 const GardenStack = createStackNavigator({
-  Garden: GardenScreen,
+  Garden: GardenScreen
 });
 
 GardenStack.navigationOptions = {
-  tabBarLabel: 'Garden',
+  tabBarLabel: "Garden",
   tabBarIcon: ({ focused }) => (
     <TabBarIcon
       focused={focused}
-      name={Platform.OS === 'ios' ? `ios-link${focused ? '' : '-outline'}` : 'md-paw'}
+      name={
+        Platform.OS === "ios"
+          ? `ios-link${focused ? "" : "-outline"}`
+          : "md-paw"
+      }
     />
   )
 };
 
 const EventsStack = createStackNavigator({
-  Events: EventsScreen,
+  Events: EventsScreen
 });
 
 EventsStack.navigationOptions = {
-  tabBarLabel: 'Events',
+  tabBarLabel: "Events",
   tabBarIcon: ({ focused }) => (
     <TabBarIcon
       focused={focused}
-      name={Platform.OS === 'ios' ? `ios-options${focused ? '' : '-outline'}` : 'md-megaphone'}
+      name={
+        Platform.OS === "ios"
+          ? `ios-options${focused ? "" : "-outline"}`
+          : "md-megaphone"
+      }
     />
   )
 };
 
 const StoreStack = createStackNavigator({
-  Store: StoreScreen,
+  Store: StoreScreen
 });
 
 StoreStack.navigationOptions = {
-  tabBarLabel: 'Store',
+  tabBarLabel: "Store",
   tabBarIcon: ({ focused }) => (
     <TabBarIcon
       focused={focused}
       name={
-        Platform.OS === 'ios'
-          ? `ios-cart${focused ? '' : '-outline'}`
-          : 'ios-pricetags-outline'
+        Platform.OS === "ios"
+          ? `ios-cart${focused ? "" : "-outline"}`
+          : "ios-pricetags-outline"
       }
     />
-  ),
+  )
 };
 
 const CharitiesStack = createStackNavigator({
-  Charities: CharitiesScreen,
+  Charities: CharitiesScreen
 });
 
 CharitiesStack.navigationOptions = {
-  tabBarLabel: 'Charities',
+  tabBarLabel: "Charities",
   tabBarIcon: ({ focused }) => (
     <TabBarIcon
       focused={focused}
-      name={Platform.OS === 'ios' ? `ios-options${focused ? '' : '-outline'}` : 'md-heart'}
+      name={
+        Platform.OS === "ios"
+          ? `ios-options${focused ? "" : "-outline"}`
+          : "md-heart"
+      }
     />
   )
 };
 
 const PlayStack = createStackNavigator({
-  Play: Play,
+  Play: Play
 });
 
 PlayStack.navigationOptions = {
-  tabBarLabel: 'Play',
+  tabBarLabel: "Play",
   tabBarIcon: ({ focused }) => (
     <TabBarIcon
       focused={focused}
-      name={Platform.OS === 'ios' ? `ios-options${focused ? '' : '-outline'}` : 'md-heart'}
+      name={
+        Platform.OS === "ios"
+          ? `ios-options${focused ? "" : "-outline"}`
+          : "md-play"
+      }
     />
   )
 };
-
 
 export default createBottomTabNavigator(
   {
@@ -111,13 +129,15 @@ export default createBottomTabNavigator(
     EventsStack,
     CharitiesStack,
     PlayStack
-  }, {
+  },
+  {
     tabBarOptions: {
       showLabel: false,
-      activeTintColor: '#FFFFFF',
-      inactiveTintColor: '#FFFFFF',
+      activeTintColor: "#FFFFFF",
+      inactiveTintColor: "#FFFFFF",
       style: {
-        backgroundColor: 'rgba(177, 223, 231, 0.9)'
+        backgroundColor: "rgba(177, 223, 231, 0.9)"
       }
     }
-  });
+  }
+);
