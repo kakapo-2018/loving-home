@@ -5,7 +5,7 @@ const initialState = {
             {
                 id: 1,
                 name: "Raincoat",
-                image: "raincoat.jpg",
+                image: "/assets/images/cat.png",
                 price: 2000
             }
         ],
@@ -28,21 +28,18 @@ const initialState = {
 }
 
 
-export const storeCarousel = (state = initialState, action) => {
+const store = (state = initialState, action) => {
     switch (action.type) {
         case 'UPDATE_ACTIVE_STORE_CAROUSEL':
             return { ...state, activeStoreCarousel: action.stores }
+        case 'UPDATE_ACTIVE_ITEM':
+            return { ...state, activeItem: { cosmetics: { id: action.items } } }   
         default:
             return state
     }
 }
 
-export const activeItem = (state = initialState, action) => {
-    switch (action.type) {
-        case 'UPDATE_ACTIVE_ITEM':
-            return { ...state, activeItem: { cosmetics: { id: action.items } } }
-        default:
-            return state
-    }
-}
+export default store
+
+
 

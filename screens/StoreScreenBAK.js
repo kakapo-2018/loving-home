@@ -8,8 +8,9 @@ import {
 } from 'react-native'
 
 import ReUse from '../ReUse'
+import { connect } from 'react-redux'
 
-export default class TestScreen extends Component {
+class TestScreen extends Component {
       state = {
             columns:3
       }
@@ -26,19 +27,9 @@ export default class TestScreen extends Component {
                   <Text style={styles.pageheader}>Store</Text>
                   <FlatList 
                   numColumns = {columns}
-                   data = {[
-                        require('../assets/images/cat.png'),
-                        require('../assets/images/dog.png'),
-                        require('../assets/images/robot-dev.png'),
-                        require('../assets/images/neko-atsume.jpg'),
-                        require('../assets/images/robot-prod.png'),
-                        require('../assets/images/store_background.jpg'),
-                        require('../assets/images/cat.png'),
-                        require('../assets/images/robot-dev.png'),
-                        require('../assets/images/robot-prod.png')
-                    ]}
+                   data = {this.props.storeItems.storeCarousel.cosmetics}
                     renderItem = {({ item }) => {
-                        return <ReUse  text={item} image={item}/>
+                        return <ReUse  text={item.name} image={item.image}/>
                     }}
                   //   keyExtractor = {
                   //         (index) => {return index}
@@ -50,6 +41,16 @@ export default class TestScreen extends Component {
             )
       }
 }
+
+function MapStateToProps(state){
+  console.log(state)
+  return {
+    storeItems: state.store
+  }
+}
+
+export default connect(MapStateToProps)(TestScreen)
+
 
 const styles = StyleSheet.create({
       container: {
@@ -68,3 +69,17 @@ const styles = StyleSheet.create({
             
       }
 })
+
+
+
+// [
+//   require('../assets/images/cat.png'),
+//   require('../assets/images/dog.png'),
+//   require('../assets/images/robot-dev.png'),
+//   require('../assets/images/neko-atsume.jpg'),
+//   require('../assets/images/robot-prod.png'),
+//   require('../assets/images/store_background.jpg'),
+//   require('../assets/images/cat.png'),
+//   require('../assets/images/robot-dev.png'),
+//   require('../assets/images/robot-prod.png')
+// ]
