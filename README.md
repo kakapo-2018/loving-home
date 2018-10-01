@@ -272,11 +272,7 @@ Inventory structure here and in API TBR
 | GET    | /news                   | ---       | Gets all news items                      | Returns an array of news objects                                       |
 | GET    | /events                 | ---       | Gets all events                          | Returns an array of events objects                                     |
 | GET    | /store/inventory        | ---       | Gets entire store catalogue              | Returns an object containing entire store inventory                    |
-
-Method Endpoint Protected Usage Response
-Post /api/auth/login Yes Log In a User The Users JWT Token
-Post /api/auth/register Yes Register a User The Users JWT Token
-Get /api/meetings Yes Get a Users Meeting Histroy An Array of Meetings
+| GET    | /store/cosmetics/all    | ---       | Gets all cosmetics in store catalogue    | Returns an array containing all cosmetics in store inventory           |
 
 #### Request & Response Formats
 
@@ -510,4 +506,17 @@ Inventory structure here and in reducers TBR
       }
     ]
   }
+```
+##### GET /store/cosmetics/all
+
+###### Response
+
+```
+  [
+    { id: 1,
+      name: "Raincoat",
+      image: "raincoat.jpg",
+      price: 2000
+    }
+  ]
 ```
