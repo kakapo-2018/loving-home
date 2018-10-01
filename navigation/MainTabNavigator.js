@@ -72,9 +72,10 @@ StoreStack.navigationOptions = {
   ),
 };
 
+
 export default createBottomTabNavigator({
   HomeStack,
   LinksStack,
   SettingsStack,
-  StoreStack
+  StoreStack,
 });
