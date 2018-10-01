@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import api from '../utils/api'
 import { setAllNews, newsAPI, fetchNews, updateNews } from '../actions'
 import {
@@ -19,41 +19,40 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
 const styles = StyleSheet.create({
-    container: {
-      flex: 1,
-      justifyContent: 'center',
-      alignItems: 'center',
-      borderColor: 'black',
-      
-    },
-    words: {
-      fontSize: 20,
-      alignItems: 'center',
-      justifyContent: 'center',
-      margin: 20,
-      marginTop: 20,
-      width: 200,
-      backgroundColor: 'green'
-    },
-    pageheader: {
-      fontSize: 40,
-      marginTop: 25
-    },
-    hidden:{
-      height:200,
-      width: 600,
-      backgroundColor:'green',
-      
-    }})
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderColor: 'black',
 
- 
+  },
+  words: {
+    fontSize: 20,
+    alignItems: 'center',
+    justifyContent: 'center',
+    margin: 20,
+    marginTop: 20,
+    width: 200,
+    backgroundColor: 'green'
+  },
+  pageheader: {
+    fontSize: 40,
+    marginTop: 25
+  },
+  hidden: {
+    height: 200,
+    width: 600,
+
+  }
+})
+
+
 class NewsScreen extends React.Component {
-  constructor(props){
+  constructor(props) {
     super(props)
 
     this.state = {
       hidden: true,
-      log: 'friend'
     }
 
     this.expandArticle = this.expandArticle.bind(this)
@@ -61,45 +60,46 @@ class NewsScreen extends React.Component {
     this.getAllNews = this.getAllNews.bind(this)
     this.findNewsStory = this.findNewsStory.bind(this)
   }
-  
+
   static navigationOptions = {
     header: null,
   };
 
-  componentDidMount(){
+  componentDidMount() {
     this.props.fetchNews()
   }
 
- getAllNews(err, res){
-  console.log(res)
- }
- 
- findNewsStory(){
-   console.log('NEWS', this.props.news.ActiveNews.id)
-   if(this.props.news.NewsCarousel.length>1){
-     console.log(JSON.stringify(this.props.news.NewsCarousel[0]))
-     let story = JSON.stringify(this.props.news.NewsCarousel[0])
-  //   let story =  this.props.news.NewsCarousel.find(function(item) {
-  //    return item.id == this.props.news.ActiveNews.id
-  //   })
-  console.log("STORY", story)
-   return story//story.content
-   } else {
-     return {content: 'no'}
-   }
+  getAllNews(err, res) {
+    console.log(res)
   }
 
- 
+  findNewsStory() {
+    console.log('NEWS', this.props.news.ActiveNews.id)
+    // this.props.news.NewsCarousel.map(thing => {
+    //   console.log(thing.id)
+
+    // })
+    let story = this.props.news.NewsCarousel.find(thing => {
+      console.log(thing)
+      return thing.id == this.props.news.ActiveNews.id
+    })
+    if (story != undefined){
+    return (story)
+    }
+    
+  }
+
+
   // getAllNews(err, news){
   //   this.props.setAllNews(news)
-    // console.log("here is news", news)
-    // this.setState({
-    //   log: news
-    // })
+  // console.log("here is news", news)
+  // this.setState({
+  //   log: news
+  // })
 
   // }
 
-  expandArticle(){
+  expandArticle() {
     this.setState({
       hidden: !this.state.hidden
     })
@@ -112,37 +112,40 @@ class NewsScreen extends React.Component {
   render() {
 
     return (
-      
-        
-<View style={styles.container}>
-<TouchableOpacity onPress={ () => this.expandArticle()}>
-  <Text style={styles.pageheader}>Welcome to the News</Text>  
-</TouchableOpacity>
-<Text style={this.state.hidden ? {height:0} : styles.hidden }>{this.props.news.NewsCarousel.length>1 && this.findNewsStory()["content"]}</Text>
-<FlatList
-  horizontal={true}
-  data={this.props.news.NewsCarousel}
-  keyExtractor={this.keyExtractor}
-  renderItem={({item}) => <Text style={styles.words} ><Image onClick={()=> this.props.updateNews(item.id)} source={require('../assets/images/neko-atsume.jpg')} />{item.headline}</Text>}
-/>  
-</View>    
 
-    )}}
 
-    function MapStateToProps(state){
-      return{
-        news: state.news
-      }
-    }
+      <View style={styles.container}>
+        <TouchableOpacity onPress={() => this.expandArticle()}>
+          <Text style={styles.pageheader}>Welcome to the News</Text>
+        </TouchableOpacity>
+        <Text style={this.state.hidden ? { height: 0 } : styles.hidden}>{{...this.findNewsStory()}.headline}</Text>
+        <FlatList
+          horizontal={true}
+          data={this.props.news.NewsCarousel}
+          keyExtractor={this.keyExtractor}
+          renderItem={({ item }) => <Text style={styles.words} ><Image onClick={() => this.props.updateNews(item.id)} source={require('../assets/images/neko-atsume.jpg')} />{item.headline}</Text>}
+        />
+      </View>
 
-    function mapDispatchToProps(dispatch){
-      return bindActionCreators( {
-        setAllNews: setAllNews, 
-        fetchNews: fetchNews,
-        updateNews: updateNews}, dispatch)
+    )
+  }
+}
 
-    }
-    export default connect(MapStateToProps, mapDispatchToProps)(NewsScreen)
+function MapStateToProps(state) {
+  return {
+    news: state.news
+  }
+}
+
+function mapDispatchToProps(dispatch) {
+  return bindActionCreators({
+    setAllNews: setAllNews,
+    fetchNews: fetchNews,
+    updateNews: updateNews
+  }, dispatch)
+
+}
+export default connect(MapStateToProps, mapDispatchToProps)(NewsScreen)
 
 
   // _maybeRenderDevelopmentModeWarning() {
