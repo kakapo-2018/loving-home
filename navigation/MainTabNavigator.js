@@ -6,6 +6,7 @@ import TabBarIcon from '../components/TabBarIcon';
 import GardenScreen from '../screens/GardenScreen'
 import NewsScreen from '../screens/NewsScreen';
 import EventsScreen from '../screens/EventsScreen';
+import CharitiesScreen from '../screens/CharitiesScreen';
 import StoreScreen from '../screens/StoreScreen';
 
 const NewsStack = createStackNavigator({
@@ -72,6 +73,23 @@ StoreStack.navigationOptions = {
   ),
 };
 
+const CharitiesStack = createStackNavigator({
+  Charities: CharitiesScreen,
+});
+
+StoreStack.navigationOptions = {
+  tabBarLabel: 'Charities',
+  tabBarIcon: ({ focused }) => (
+    <TabBarIcon
+      focused={focused}
+      name={
+        Platform.OS === 'ios'
+          ? `ios-cart${focused ? '' : '-outline'}`
+          : 'logo-yen'
+      }
+    />
+  ),
+};
 
 
 export default createBottomTabNavigator(
@@ -79,7 +97,8 @@ export default createBottomTabNavigator(
   GardenStack,
   NewsStack,
   EventsStack,
-  StoreStack
+  StoreStack,
+  CharitiesStack
 },{
 tabBarOptions: {
   showLabel: false,
