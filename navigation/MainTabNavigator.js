@@ -3,53 +3,53 @@ import { Platform } from 'react-native';
 import { createStackNavigator, createBottomTabNavigator } from 'react-navigation';
 
 import TabBarIcon from '../components/TabBarIcon';
-import HomeScreen from '../screens/HomeScreen';
-import LinksScreen from '../screens/LinksScreen';
-import SettingsScreen from '../screens/SettingsScreen';
+import GardenScreen from '../screens/GardenScreen'
+import NewsScreen from '../screens/NewsScreen';
+import EventsScreen from '../screens/EventsScreen';
 import StoreScreen from '../screens/StoreScreen';
 
-const HomeStack = createStackNavigator({
-  Home: HomeScreen,
+const NewsStack = createStackNavigator({
+  News: NewsScreen,
 });
 
-HomeStack.navigationOptions = {
-  tabBarLabel: 'Home',
+NewsStack.navigationOptions = {
+  tabBarLabel: 'News',
   tabBarIcon: ({ focused }) => (
     <TabBarIcon
       focused={focused}
       name={
         Platform.OS === 'ios'
           ? `ios-information-circle${focused ? '' : '-outline'}`
-          : 'md-information-circle'
+          : 'md-paper'
       }
     />
   )
 };
 
-const LinksStack = createStackNavigator({
-  Links: LinksScreen,
+const GardenStack = createStackNavigator({
+  Garden: GardenScreen,
 });
 
-LinksStack.navigationOptions = {
-  tabBarLabel: 'Links',
+GardenStack.navigationOptions = {
+  tabBarLabel: 'Garden',
   tabBarIcon: ({ focused }) => (
     <TabBarIcon
       focused={focused}
-      name={Platform.OS === 'ios' ? `ios-link${focused ? '' : '-outline'}` : 'md-link'}
+      name={Platform.OS === 'ios' ? `ios-link${focused ? '' : '-outline'}` : 'md-paw'}
     />
   )
 };
 
-const SettingsStack = createStackNavigator({
-  Settings: SettingsScreen,
+const EventsStack = createStackNavigator({
+  Events: EventsScreen,
 });
 
-SettingsStack.navigationOptions = {
-  tabBarLabel: 'Settings',
+EventsStack.navigationOptions = {
+  tabBarLabel: 'Events',
   tabBarIcon: ({ focused }) => (
     <TabBarIcon
       focused={focused}
-      name={Platform.OS === 'ios' ? `ios-options${focused ? '' : '-outline'}` : 'md-options'}
+      name={Platform.OS === 'ios' ? `ios-options${focused ? '' : '-outline'}` : 'md-megaphone'}
     />
   )
 };
@@ -66,16 +66,34 @@ StoreStack.navigationOptions = {
       name={
         Platform.OS === 'ios'
           ? `ios-cart${focused ? '' : '-outline'}`
-          : 'md-cart'
+          : 'logo-yen'
       }
     />
   ),
 };
 
 
+<<<<<<< HEAD
 export default createBottomTabNavigator({
   HomeStack,
   LinksStack,
   SettingsStack,
   StoreStack,
+=======
+
+export default createBottomTabNavigator(
+  {
+  GardenStack,
+  NewsStack,
+  EventsStack,
+  StoreStack
+},{
+tabBarOptions: {
+  showLabel: false,
+  activeTintColor: '#FFFFFF',
+  inactiveTintColor: '#FFFFFF',
+  style: {
+    backgroundColor: 'rgba(177, 223, 231, 0.9)'
+  }}
+>>>>>>> 9110694d4c97070b0b5b13a883accc9da7c519a8
 });

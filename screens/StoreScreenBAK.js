@@ -8,16 +8,8 @@ import {
 } from 'react-native'
 
 import ReUse from '../ReUse'
-import inventory from "../inventory";
 
 export default class TestScreen extends Component {
-      constructor(){
-            super()
-            this.state = {
-                  dataSource: []
-            }
-      }
-
       state = {
             columns:3
       }
@@ -25,33 +17,6 @@ export default class TestScreen extends Component {
       static navigationOptions = {
             header: null,
           };
-
-      renderItem = ({ item }) => {
-            let customData = require('../inventory');
-            return (
-                  <View>
-                  <Image source = {{ uri: customData.item.image}}/>
-                  <View>
-                        <Text>{customData.item.name}</Text>
-                        <Text>{customData.item.price}</Text>
-                  </View>
-            </View>
-            )
-      }
-
-      // componentDidMount() {
-      //       const file = '../inventory.json'
-      //       fetch(file)
-      //       .then((response) => response.json())
-      //       .then((responseJson) => {
-      //             this.setState({
-      //                   dataSource: responseJson.cosmetics
-      //             })
-      //       })
-      //       .catch((error) => {
-      //             console.log(error)
-      //       })
-      // }
 
       render(){
             const {columns} = this.state
@@ -61,8 +26,23 @@ export default class TestScreen extends Component {
                   <Text style={styles.pageheader}>Store</Text>
                   <FlatList 
                   numColumns = {columns}
-                   data = {this.state.dataSource}
-                    renderItem = {this.renderItem}
+                   data = {[
+                        require('../assets/images/cat.png'),
+                        require('../assets/images/dog.png'),
+                        require('../assets/images/robot-dev.png'),
+                        require('../assets/images/neko-atsume.jpg'),
+                        require('../assets/images/robot-prod.png'),
+                        require('../assets/images/store_background.jpg'),
+                        require('../assets/images/cat.png'),
+                        require('../assets/images/robot-dev.png'),
+                        require('../assets/images/robot-prod.png')
+                    ]}
+                    renderItem = {({ item }) => {
+                        return <ReUse  text={item} image={item}/>
+                    }}
+                  //   keyExtractor = {
+                  //         (index) => {return index}
+                  //   }
                     keyExtractor={(item) => item.toString()}
                   />
                   </ImageBackground>

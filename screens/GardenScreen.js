@@ -7,7 +7,7 @@ import {
   Text
  } from 'react-native';
 
-export default class LinksScreen extends React.Component {
+export default class GardenScreen extends React.Component {
   // static navigationOptions = {
   //   title: 'Links',
   // };
