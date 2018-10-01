@@ -2,7 +2,7 @@
 // import { bindActionCreators } from '../../../../../AppData/Local/Microsoft/TypeScript/3.0/node_modules/redux/index.js';
 
 const initialState = {
-    NewsCarousel: [{id:'1', headline: 'not Working'}],
+    NewsCarousel: [],
     ActiveNews: {
         id: 1
     }

@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import api from '../utils/api'
-import { setAllNews, newsAPI, fetchNews } from '../actions'
+import { setAllNews, newsAPI, fetchNews, updateNews } from '../actions'
 import {
   Image,
   Platform,
@@ -59,6 +59,7 @@ class NewsScreen extends React.Component {
     this.expandArticle = this.expandArticle.bind(this)
     this.keyExtractor = this.keyExtractor.bind(this)
     this.getAllNews = this.getAllNews.bind(this)
+    this.findNewsStory = this.findNewsStory.bind(this)
   }
   
   static navigationOptions = {
@@ -73,7 +74,22 @@ class NewsScreen extends React.Component {
   console.log(res)
  }
  
+ findNewsStory(){
+   console.log('NEWS', this.props.news.ActiveNews.id)
+   if(this.props.news.NewsCarousel.length>1){
+     console.log(JSON.stringify(this.props.news.NewsCarousel[0]))
+     let story = JSON.stringify(this.props.news.NewsCarousel[0])
+  //   let story =  this.props.news.NewsCarousel.find(function(item) {
+  //    return item.id == this.props.news.ActiveNews.id
+  //   })
+  console.log("STORY", story)
+   return story//story.content
+   } else {
+     return {content: 'no'}
+   }
+  }
 
+ 
   // getAllNews(err, news){
   //   this.props.setAllNews(news)
     // console.log("here is news", news)
@@ -102,12 +118,12 @@ class NewsScreen extends React.Component {
 <TouchableOpacity onPress={ () => this.expandArticle()}>
   <Text style={styles.pageheader}>Welcome to the News</Text>  
 </TouchableOpacity>
-<Text style={this.state.hidden ? {height:0} : styles.hidden }>More more more</Text>
+<Text style={this.state.hidden ? {height:0} : styles.hidden }>{this.props.news.NewsCarousel.length>1 && this.findNewsStory()["content"]}</Text>
 <FlatList
   horizontal={true}
   data={this.props.news.NewsCarousel}
   keyExtractor={this.keyExtractor}
-  renderItem={({item}) => <Text style={styles.words} ><Image source={require('../assets/images/neko-atsume.jpg')} />{item.headline}</Text>}
+  renderItem={({item}) => <Text style={styles.words} ><Image onClick={()=> this.props.updateNews(item.id)} source={require('../assets/images/neko-atsume.jpg')} />{item.headline}</Text>}
 />  
 </View>    
 
@@ -122,7 +138,8 @@ class NewsScreen extends React.Component {
     function mapDispatchToProps(dispatch){
       return bindActionCreators( {
         setAllNews: setAllNews, 
-        fetchNews: fetchNews}, dispatch)
+        fetchNews: fetchNews,
+        updateNews: updateNews}, dispatch)
 
     }
     export default connect(MapStateToProps, mapDispatchToProps)(NewsScreen)

@@ -39,7 +39,7 @@ export default class ReUse extends Component {
                                         }  
                                     ]
                         }}>
-                              <Image style = {{width:150, height:75}} source = {this.props.image}/>
+                              <Image style = {{width:150, height:75}} source={require('./assets/images/cat.png')}/>
                               <Text>{this.props.text}</Text>
                               </Animated.View>
                         </TouchableWithoutFeedback>     
