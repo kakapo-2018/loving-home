@@ -16,6 +16,8 @@ class SettingsScreen extends React.Component {
     header: null,
   };
 
+  
+
   render() {
     return(
           <Text>{this.props.news.id}</Text>
