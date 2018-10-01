@@ -9,15 +9,18 @@ import {
     TouchableOpacity,
     Platform,
     View,
-    Easing
+    Easing,
+    Dimensions
 } from 'react-native';
+var { width, height } = Dimensions.get('window');
 
 export default class Play extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
             fadeValue: new Animated.Value(0),
-            xValue: new Animated.Value(0)
+            xValue: new Animated.Value(0),
+            springValue: new Animated.Value(0.5),
         }
     }
 
@@ -31,17 +34,33 @@ export default class Play extends React.Component {
 
     _moveAnimation = () => {
         Animated.timing(this.state.xValue, {
-            toValue: 200,
-            duration: 3000,
-            easing: Easing.linear,
-        }).start()
-    }
+            toValue: width - 100,
+            duration: 1000,
+            easing: Easing.back(),     
+          }).start(() => {
 
+            Animated.timing(this.state.xValue, {
+              toValue: 0,
+              duration: 1000,
+              easing: Easing.back(),     
+            }).start(() => {
+              this._moveAnimation();
+            });
+          });
+        }
 
+        _springAnimation = () => {
+            Animated.spring(this.state.springValue,{
+                toValue: 1,
+                friction: 1
+              }).start();
+            }
     static navigationOptions = {
         header: null,
     };
 
+
+    
 
 
     render() {
@@ -49,7 +68,11 @@ export default class Play extends React.Component {
 
             <View style={styles.container}>
 
-
+                <Animated.Image
+                    source={require('../assets/images/bunny.png')}
+                    style={[styles.imageView,
+                     { transform: [{ scale: this.state.springValue }], alignSelf: 'center' } ]}>
+                </Animated.Image>
 
                 <Animated.View style={[styles.animationView,
                 // { opacity: this.state.fadeValue }
@@ -62,14 +85,11 @@ export default class Play extends React.Component {
                     </TouchableOpacity>
                 </Animated.View>
 
-                <Animated.Image
-                    source={require('../assets/images/dog.png')}
-                    style={[styles.imageView]}>
-                </Animated.Image>
+                
 
 
                 <TouchableOpacity style={styles.button}
-                    onPress={this._fadeAnimation}>
+                    onPress={this._springAnimation}>
                     <Text style={styles.buttonText}>Animate</Text>
                 </TouchableOpacity>
 
@@ -106,7 +126,8 @@ const styles = StyleSheet.create({
     },
     imageView: {
         width: 150,
-        height: 150
+        height: 150,
+        backgroundColor: 'transparent',
 
     }
 })
