@@ -348,10 +348,7 @@ Get /api/meetings Yes Get a Users Meeting Histroy An Array of Meetings
 [
   {
     userId: 1
-    animalId: 1,
-    name: "Chippy",
-    species: "Dog",
-    disposition: "Sassy"
+    animalId: 1
   }
 ]
 ```
