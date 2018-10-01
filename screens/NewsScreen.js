@@ -120,7 +120,9 @@ class NewsScreen extends React.Component {
     }
 
     function mapDispatchToProps(dispatch){
-      return bindActionCreators( {setAllNews: setAllNews, fetchNews: fetchNews}, dispatch)
+      return bindActionCreators( {
+        setAllNews: setAllNews, 
+        fetchNews: fetchNews}, dispatch)
 
     }
     export default connect(MapStateToProps, mapDispatchToProps)(NewsScreen)

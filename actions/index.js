@@ -53,21 +53,31 @@ export const setAllNews = (news) => {
 
 export function fetchNews(){
 
-    console.log('fetchNews')
     return dispatch => {
-        console.log('fetchNews dispatch')
-        console.log(baseURL + '/news')
         return request.get(baseURL + '/news')
-            .then(res => {
-                console.log(res)
-                return res
-            })
-            .then(res => res.body)
-            .then(json => dispatch(setAllNews(json)))
+            .then(res => dispatch(setAllNews(res.body)))
             .catch(err => {
                 console.log("ERRROOOOOORRRR")
                 console.log(err)
+            })
+    }
+}
+
+export const setAllEvents = (events) => {
+    return {
+        type: 'SET_ALL_EVENTS',
+        allEvents: events
+    }
+}
+
+export function fetchEvents(){
+
+    return dispatch => {
+        return request.get(baseURL + '/events')
+            .then(res => dispatch(setAllEvents(res.body)))
+            .catch(err => {
                 console.log("ERRROOOOOORRRR")
+                console.log(err)
             })
     }
 }
