@@ -20,6 +20,8 @@ const charities = (state = initialState, action) => {
     switch (action.type) {
         case 'UPDATE_ACTIVE_CHARITY':
             return { ...state, activeCharities: [...state.activeCharities, { id: action.charity }] }
+        case 'SET_ALL_CHARITIES':
+            return { ...state, charities: [...action.allEvents] }
         default:
             return state
     }

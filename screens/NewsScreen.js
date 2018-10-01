@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import api from '../utils/api'
 import { setAllNews, newsAPI, fetchNews } from '../actions'
 import {
@@ -19,36 +19,37 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
 const styles = StyleSheet.create({
-    container: {
-      flex: 1,
-      justifyContent: 'center',
-      alignItems: 'center',
-      borderColor: 'black',
-      
-    },
-    words: {
-      fontSize: 20,
-      alignItems: 'center',
-      justifyContent: 'center',
-      margin: 20,
-      marginTop: 20,
-      width: 200,
-      backgroundColor: 'green'
-    },
-    pageheader: {
-      fontSize: 40,
-      marginTop: 25
-    },
-    hidden:{
-      height:200,
-      width: 600,
-      backgroundColor:'green',
-      
-    }})
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderColor: 'black',
 
- 
+  },
+  words: {
+    fontSize: 20,
+    alignItems: 'center',
+    justifyContent: 'center',
+    margin: 20,
+    marginTop: 20,
+    width: 200,
+    backgroundColor: 'green'
+  },
+  pageheader: {
+    fontSize: 40,
+    marginTop: 25
+  },
+  hidden: {
+    height: 200,
+    width: 600,
+    backgroundColor: 'green',
+
+  }
+})
+
+
 class NewsScreen extends React.Component {
-  constructor(props){
+  constructor(props) {
     super(props)
 
     this.state = {
@@ -60,30 +61,30 @@ class NewsScreen extends React.Component {
     this.keyExtractor = this.keyExtractor.bind(this)
     this.getAllNews = this.getAllNews.bind(this)
   }
-  
+
   static navigationOptions = {
     header: null,
   };
 
-  componentDidMount(){
+  componentDidMount() {
     this.props.fetchNews()
   }
 
- getAllNews(err, res){
-  console.log(res)
- }
- 
+  getAllNews(err, res) {
+    console.log(res)
+  }
+
 
   // getAllNews(err, news){
   //   this.props.setAllNews(news)
-    // console.log("here is news", news)
-    // this.setState({
-    //   log: news
-    // })
+  // console.log("here is news", news)
+  // this.setState({
+  //   log: news
+  // })
 
   // }
 
-  expandArticle(){
+  expandArticle() {
     this.setState({
       hidden: !this.state.hidden
     })
@@ -96,36 +97,39 @@ class NewsScreen extends React.Component {
   render() {
 
     return (
-      
-        
-<View style={styles.container}>
-<TouchableOpacity onPress={ () => this.expandArticle()}>
-  <Text style={styles.pageheader}>Welcome to the News</Text>  
-</TouchableOpacity>
-<Text style={this.state.hidden ? {height:0} : styles.hidden }>More more more</Text>
-<FlatList
-  horizontal={true}
-  data={this.props.news.NewsCarousel}
-  keyExtractor={this.keyExtractor}
-  renderItem={({item}) => <Text style={styles.words} ><Image source={require('../assets/images/neko-atsume.jpg')} />{item.headline}</Text>}
-/>  
-</View>    
 
-    )}}
 
-    function MapStateToProps(state){
-      return{
-        news: state.news
-      }
-    }
+      <View style={styles.container}>
+        <TouchableOpacity onPress={() => this.expandArticle()}>
+          <Text style={styles.pageheader}>Welcome to the News</Text>
+        </TouchableOpacity>
+        <Text style={this.state.hidden ? { height: 0 } : styles.hidden}>More more more</Text>
+        <FlatList
+          horizontal={true}
+          data={this.props.news.NewsCarousel}
+          keyExtractor={this.keyExtractor}
+          renderItem={({ item }) => <Text style={styles.words} ><Image source={{ uri: item.image }} /> />{item.headline}</Text>}
+        />
+      </View>
 
-    function mapDispatchToProps(dispatch){
-      return bindActionCreators( {
-        setAllNews: setAllNews, 
-        fetchNews: fetchNews}, dispatch)
+    )
+  }
+}
 
-    }
-    export default connect(MapStateToProps, mapDispatchToProps)(NewsScreen)
+function MapStateToProps(state) {
+  return {
+    news: state.news
+  }
+}
+
+function mapDispatchToProps(dispatch) {
+  return bindActionCreators({
+    setAllNews: setAllNews,
+    fetchNews: fetchNews
+  }, dispatch)
+
+}
+export default connect(MapStateToProps, mapDispatchToProps)(NewsScreen)
 
 
   // _maybeRenderDevelopmentModeWarning() {

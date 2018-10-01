@@ -51,7 +51,7 @@ export const setAllNews = (news) => {
     }
 }
 
-export function fetchNews(){
+export function fetchNews() {
 
     return dispatch => {
         return request.get(baseURL + '/news')
@@ -70,11 +70,31 @@ export const setAllEvents = (events) => {
     }
 }
 
-export function fetchEvents(){
+export function fetchEvents() {
 
     return dispatch => {
         return request.get(baseURL + '/events')
             .then(res => dispatch(setAllEvents(res.body)))
+            .catch(err => {
+                console.log("ERRROOOOOORRRR")
+                console.log(err)
+            })
+    }
+}
+
+
+export const setAllCharities = (events) => {
+    return {
+        type: 'SET_ALL_CHARITIES',
+        allCharities: charities
+    }
+}
+
+export function fetchCharities() {
+
+    return dispatch => {
+        return request.get(baseURL + '/charities')
+            .then(res => dispatch(setAllCharities(res.body)))
             .catch(err => {
                 console.log("ERRROOOOOORRRR")
                 console.log(err)
