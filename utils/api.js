@@ -1,6 +1,8 @@
 import request from 'superagent'
+import { setAllNews } from '../actions';
 
-const baseURL = '/api'
+
+const baseURL = 'http://192.168.1.25:3000/api'
 
 export function getAllCharities (cb) {
     request
@@ -78,21 +80,25 @@ export function updateAnimalInventory (animalId, newInventory, cb) {
         })
 }
 
-export function getNews (cb) {
-    request
-        .get(baseURL + '/news')
-        .end((err, res) => {
-            cb(err, res.body)
-        })
-}
+// export function getNews (cb) {
+//     console.log("BING")
+//     request
+//         .get(baseURL + '/news')
+//         .end((err, res) => {
+//             cb(err, res.body)
+//         })
+// }
 
 export function getEvents (cb) {
+    
     request
         .get(baseURL + '/events')
         .end((err, res) => {
             cb(err, res.body)
         })
 }
+
+
 
 export function getStoreInventory (cb) {
     request

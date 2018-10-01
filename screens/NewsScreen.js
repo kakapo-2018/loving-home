@@ -1,4 +1,6 @@
 import React, {Component} from 'react';
+import api from '../utils/api'
+import { setAllNews, newsAPI, fetchNews } from '../actions'
 import {
   Image,
   Platform,
@@ -12,8 +14,9 @@ import {
   ImageBackground,
 } from 'react-native';
 import { WebBrowser } from 'expo';
-
 import { MonoText } from '../components/StyledText';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 
 const styles = StyleSheet.create({
     container: {
@@ -44,20 +47,41 @@ const styles = StyleSheet.create({
     }})
 
  
-export default class NewsScreen extends React.Component {
+class NewsScreen extends React.Component {
   constructor(props){
     super(props)
 
     this.state = {
-      hidden: true
+      hidden: true,
+      log: 'friend'
     }
 
     this.expandArticle = this.expandArticle.bind(this)
+    this.keyExtractor = this.keyExtractor.bind(this)
+    this.getAllNews = this.getAllNews.bind(this)
   }
   
   static navigationOptions = {
     header: null,
   };
+
+  componentDidMount(){
+    this.props.fetchNews()
+  }
+
+ getAllNews(err, res){
+  console.log(res)
+ }
+ 
+
+  // getAllNews(err, news){
+  //   this.props.setAllNews(news)
+    // console.log("here is news", news)
+    // this.setState({
+    //   log: news
+    // })
+
+  // }
 
   expandArticle(){
     this.setState({
@@ -65,7 +89,12 @@ export default class NewsScreen extends React.Component {
     })
   }
 
+
+  keyExtractor = (item, index) => String(item.id)
+
+
   render() {
+
     return (
       
         
@@ -76,57 +105,26 @@ export default class NewsScreen extends React.Component {
 <Text style={this.state.hidden ? {height:0} : styles.hidden }>More more more</Text>
 <FlatList
   horizontal={true}
-  data={[{key: 'Kittens cuter than ever'}, {key: 'Puppies smiles next big thing'}, {key: 'This funny bunny can certainly do standup'},{key: 'Piglet squeals around, has great time'}, {key: 'Adopt a kiwi is the ultimate goal of conservation'}, {key: 'Chickens are actually rather loving'}]}
-  renderItem={({item}) => <Text style={styles.words} ><Image source={require('../assets/images/neko-atsume.jpg')} />{item.key}</Text>}
+  data={this.props.news.NewsCarousel}
+  keyExtractor={this.keyExtractor}
+  renderItem={({item}) => <Text style={styles.words} ><Image source={require('../assets/images/neko-atsume.jpg')} />{item.headline}</Text>}
 />  
 </View>    
-// </ImageBackground>
 
-
-      // <View style={styles.container}>
-      //   <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
-      //     <View style={styles.welcomeContainer}>
-      //       <Image
-      //         source={
-      //           __DEV__
-      //             ? require('../assets/images/robot-dev.png')
-      //             : require('../assets/images/robot-prod.png')
-      //         }
-      //         style={styles.welcomeImage}
-      //       />
-      //     </View>
-
-      //     <View style={styles.getStartedContainer}>
-      //       {this._maybeRenderDevelopmentModeWarning()}
-
-      //       <Text style={styles.getStartedText}>Get started by opening</Text>
-
-      //       <View style={[styles.codeHighlightContainer, styles.homeScreenFilename]}>
-      //         <MonoText style={styles.codeHighlightText}>screens/HomeScreen.js</MonoText>
-      //       </View>
-
-      //       <Text style={styles.getStartedText}>
-      //         text and your app will automatically reload.
-      //       </Text>
-      //     </View>
-
-      //     <View style={styles.helpContainer}>
-      //       <TouchableOpacity onPress={this._handleHelpPress} style={styles.helpLink}>
-      //         <Text style={styles.helpLinkText}>Help, it didn’t automatically reload!</Text>
-      //       </TouchableOpacity>
-      //     </View>
-      //   </ScrollView>
-
-      //   <View style={styles.tabBarInfoContainer}>
-      //     <Text style={styles.tabBarInfoText}>This is a tab bar. You can edit it in:</Text>
-
-      //     <View style={[styles.codeHighlightContainer, styles.navigationFilename]}>
-      //       <MonoText style={styles.codeHighlightText}>navigation/MainTabNavigator.js</MonoText>
-      //     </View>
-      //   </View>
-      // </View>
-    // );
     )}}
+
+    function MapStateToProps(state){
+      return{
+        news: state.news
+      }
+    }
+
+    function mapDispatchToProps(dispatch){
+      return bindActionCreators( {setAllNews: setAllNews, fetchNews: fetchNews}, dispatch)
+
+    }
+    export default connect(MapStateToProps, mapDispatchToProps)(NewsScreen)
+
 
   // _maybeRenderDevelopmentModeWarning() {
   //   if (__DEV__) {
