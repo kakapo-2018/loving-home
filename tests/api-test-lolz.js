@@ -21,6 +21,13 @@ const newAnimals = [
     }
 ]
 
+const newUserInventory = [
+    {
+        userId: 1,
+        cosmeticId: 1
+    }
+]
+
 // api.getAllCharities(getAllCharitiesCB)
 // api.getUserCharities(userId, getUserCharitiesCB)
 // api.updateUserCharities(userId, newCharities, updateUserCharitiesCB)
@@ -30,8 +37,13 @@ const newAnimals = [
 
 // api.getStoreInventory(getStoreInventoryCB)
 
-api.getUserAnimals(userId, getUserAnimalsCB)
-api.updateUserAnimals(userId, newAnimals, updateUserAnimalsCB)
+// api.getUserAnimals(userId, getUserAnimalsCB)
+// api.updateUserAnimals(userId, newAnimals, updateUserAnimalsCB)
+
+api.getUserInventory(userId, getUserInventoryCB)
+api.updateUserInventory(userId, newUserInventory, updateUserInventoryCB)
+// api.getAnimalInventory(animalId, getAnimalInventoryCB)
+// api.updateAnimalInventory(animalId, newAnimalInventory, updateAnimalInventoryCB)
 
 function getAllCharitiesCB(err, charities) {
     console.log("\n--------------")
@@ -140,10 +152,28 @@ function updateUserAnimalsCB(err, animals) {
     console.log("--------------")
 }
 function getUserInventoryCB(err, inventory) {
-
+    console.log("\n--------------")
+    console.log("GET User Inventory")
+    if (inventory) {
+        inventory.forEach(item => {
+            console.log(`Output: ${item.name} for sale at $${price}!`)
+        })
+    } else {
+        console.log("Output: " + "it broked")
+    }
+    console.log("--------------")
 }
 function updateUserInventoryCB(err, inventory) {
-
+    console.log("\n--------------")
+    console.log("POST User Inventory")
+    if (inventory) {
+        inventory.forEach(item => {
+            console.log(`Output: ${item.name} for sale at $${price}!`)
+        })
+    } else {
+        console.log("Output: " + "it broked")
+    }
+    console.log("--------------")
 }
 function getAnimalInventoryCB(err, inventory) {
 
