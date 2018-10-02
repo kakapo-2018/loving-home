@@ -7,8 +7,8 @@ import GardenScreen from '../screens/GardenScreen'
 import NewsScreen from '../screens/NewsScreen';
 import EventsScreen from '../screens/EventsScreen';
 import CharitiesScreen from "../screens/CharitiesScreen";
-import StoreScreen from '../screens/StoreScreenBAK';
-import Play from "../screens/Play";
+import StoreScreen from '../screens/StoreScreen';
+
 
 const NewsStack = createStackNavigator({
   News: NewsScreen,
@@ -92,23 +92,7 @@ CharitiesStack.navigationOptions = {
   )
 };
 
-const PlayStack = createStackNavigator({
-  Play: Play
-});
 
-PlayStack.navigationOptions = {
-  tabBarLabel: "Play",
-  tabBarIcon: ({ focused }) => (
-    <TabBarIcon
-      focused={focused}
-      name={
-        Platform.OS === "ios"
-          ? `ios-options${focused ? "" : "-outline"}`
-          : "md-play"
-      }
-    />
-  )
-};
 
 export default createBottomTabNavigator(
   {
@@ -117,7 +101,6 @@ export default createBottomTabNavigator(
     EventsStack,
     StoreStack,
     CharitiesStack,
-    PlayStack
   }, {
     tabBarOptions: {
       showLabel: false,

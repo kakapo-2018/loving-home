@@ -97,21 +97,20 @@ class CharitiesScreen extends React.Component {
   render() {
     return (
       <View style={styles.container}>
-<View style={[styles.overlay, { height: 360}]} />
+
           <Text style={styles.pageheader}>Select your Charities</Text>
           <ScrollView contentContainerStyle={styles.contentContainer}>
           
           <TouchableOpacity 
             onPress={() => this.showMission()}>
-
           <View style={styles.hidden}>
-          
           <Text style={!this.state.hidden ? { height: 0 } : styles.hidden}><Image source={require('../assets/images/charities/huha.jpg')}/></Text>
-
           </View>
           </TouchableOpacity>
 
-          
+          <CheckBox 
+            title="support"
+            checked={false} />
           </ScrollView>
        
          
