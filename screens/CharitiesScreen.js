@@ -68,7 +68,7 @@ class CharitiesScreen extends React.Component {
 
     this.state = {
       hidden: true,
-      hi: 'hi'
+      arr: ['../assets/images/charities/spca.png', '../assets/images/charities/huha', '../assets/images/charities/uhars.png']
     };
 
     this.showMission = this.showMission.bind(this);
@@ -85,35 +85,49 @@ class CharitiesScreen extends React.Component {
 
   showMission () {
     this.setState({
-      hidden: !this.state.hidden,
-      hi: 'hi'
+      hidden: !this.state.hidden
     });
     console.log(this.state.hidden)
   }
 
   keyExtractor = (item, index) => String(item.id);
+ 
 
 
   render() {
     return (
       <View style={styles.container}>
 
-          <Text style={styles.pageheader}>Select your Charities</Text>
+          <Text style={styles.pageheader}>Select your Charities brah</Text>
           <ScrollView contentContainerStyle={styles.contentContainer}>
+
+
           
           <TouchableOpacity 
             onPress={() => this.showMission()}>
           <View style={styles.hidden}>
-          <Text style={!this.state.hidden ? { height: 0 } : styles.hidden}><Image source={require('../assets/images/charities/huha.jpg')}/></Text>
+          <Text style={!this.state.hidden ? { height: 0 } : styles.hidden}>
+
+          {/* {this.state.arr.map(charity => {
+            console.log(charity)
+            return <Image key={charity} source={require(charity)} style={{width: 200, height: 200}}/>
+                  
+              
+       
+          })} */}
+
+           {/* <Image source={require('../assets/images/charities/huha.jpg')}/> */}
+          
+          </Text>
           </View>
           </TouchableOpacity>
 
-          <CheckBox 
-            title="support"
-            checked={false} />
+
           </ScrollView>
        
-         
+         {/*  {this.props.charities.charities.map(charity => {
+            return <Image source={require(charity.logo)} />
+          })} */}
       </View>
     )}}
   
