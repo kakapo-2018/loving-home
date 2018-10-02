@@ -23,7 +23,9 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    borderColor: "black"
+    borderColor: "black",
+    flexDirection: "row",
+    flexWrap: "wrap"
   },
   words: {
     fontSize: 20,
@@ -80,17 +82,16 @@ class CharitiesScreen extends React.Component {
         <TouchableOpacity onPress={() => this.expandArticle()}>
           <Text style={styles.pageheader}>Select your Charities</Text>
         </TouchableOpacity>
-        <Text style={this.state.hidden ? { height: 0 } : styles.hidden}>
-          Charitieseihfrakjhfksjdhfkj
-        </Text>
+        <Text style={this.state.hidden ? { height: 0 } : styles.hidden} />
         <FlatList
           horizontal={true}
           data={this.props.charities.Charities}
           keyExtractor={this.keyExtractor}
           renderItem={({ item }) => (
             <Text style={styles.words}>
-              <Image source={{ uri: item.logo }} />
-              {{ ...item }.charityName}
+              {item.charityName}
+              {item.mission}
+              <Image className={styles.imgg} source={{ uri: item.logo }} />
             </Text>
           )}
         />

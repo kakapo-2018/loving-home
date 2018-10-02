@@ -1,6 +1,6 @@
-import React, { Component } from 'react';
-import api from '../utils/api'
-import { setAllNews, newsAPI, fetchNews } from '../actions'
+import React, { Component } from "react";
+import api from "../utils/api";
+import { setAllNews, newsAPI, fetchNews } from "../actions";
 import {
   Image,
   Platform,
@@ -11,29 +11,28 @@ import {
   FlatList,
   TouchableOpacity,
   View,
-  ImageBackground,
-} from 'react-native';
-import { WebBrowser } from 'expo';
-import { MonoText } from '../components/StyledText';
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
+  ImageBackground
+} from "react-native";
+import { WebBrowser } from "expo";
+import { MonoText } from "../components/StyledText";
+import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    borderColor: 'black',
-
+    justifyContent: "center",
+    alignItems: "center",
+    borderColor: "black"
   },
   words: {
     fontSize: 20,
-    alignItems: 'center',
-    justifyContent: 'center',
+    alignItems: "center",
+    justifyContent: "center",
     margin: 20,
     marginTop: 20,
     width: 200,
-    backgroundColor: 'green'
+    backgroundColor: "green"
   },
   pageheader: {
     fontSize: 40,
@@ -42,38 +41,34 @@ const styles = StyleSheet.create({
   hidden: {
     height: 200,
     width: 600,
-    backgroundColor: 'green',
-
+    backgroundColor: "green"
   }
-})
-
+});
 
 class NewsScreen extends React.Component {
   constructor(props) {
-    super(props)
+    super(props);
 
     this.state = {
-      hidden: true,
-      log: 'friend'
-    }
+      hidden: true
+    };
 
-    this.expandArticle = this.expandArticle.bind(this)
-    this.keyExtractor = this.keyExtractor.bind(this)
-    this.getAllNews = this.getAllNews.bind(this)
+    this.expandArticle = this.expandArticle.bind(this);
+    this.keyExtractor = this.keyExtractor.bind(this);
+    this.getAllNews = this.getAllNews.bind(this);
   }
 
   static navigationOptions = {
-    header: null,
+    header: null
   };
 
   componentDidMount() {
-    this.props.fetchNews()
+    this.props.fetchNews();
   }
 
   getAllNews(err, res) {
-    console.log(res)
+    console.log(res);
   }
-
 
   // getAllNews(err, news){
   //   this.props.setAllNews(news)
@@ -87,77 +82,80 @@ class NewsScreen extends React.Component {
   expandArticle() {
     this.setState({
       hidden: !this.state.hidden
-    })
+    });
   }
 
-
-  keyExtractor = (item, index) => String(item.id)
-
+  keyExtractor = (item, index) => String(item.id);
 
   render() {
-
     return (
-
-
       <View style={styles.container}>
         <TouchableOpacity onPress={() => this.expandArticle()}>
           <Text style={styles.pageheader}>Welcome to the News</Text>
         </TouchableOpacity>
-        <Text style={this.state.hidden ? { height: 0 } : styles.hidden}>More more more</Text>
+        <Text style={this.state.hidden ? { height: 0 } : styles.hidden} />
         <FlatList
           horizontal={true}
           data={this.props.news.NewsCarousel}
           keyExtractor={this.keyExtractor}
-          renderItem={({ item }) => <Text style={styles.words} ><Image source={{ uri: item.image }} /> />{item.headline}</Text>}
+          renderItem={({ item }) => (
+            <Text style={styles.words}>
+              <Image source={{ uri: item.image }} />
+              {item.headline}
+            </Text>
+          )}
         />
       </View>
-
-    )
+    );
   }
 }
 
 function MapStateToProps(state) {
   return {
     news: state.news
-  }
+  };
 }
 
 function mapDispatchToProps(dispatch) {
-  return bindActionCreators({
-    setAllNews: setAllNews,
-    fetchNews: fetchNews
-  }, dispatch)
-
+  return bindActionCreators(
+    {
+      setAllNews: setAllNews,
+      fetchNews: fetchNews
+    },
+    dispatch
+  );
 }
-export default connect(MapStateToProps, mapDispatchToProps)(NewsScreen)
+export default connect(
+  MapStateToProps,
+  mapDispatchToProps
+)(NewsScreen);
 
+// _maybeRenderDevelopmentModeWarning() {
+//   if (__DEV__) {
+//     const learnMoreButton = (
+//       <Text onPress={this._handleLearnMorePress} style={styles.helpLinkText}>
+//         Learn more
+//       </Text>
+//     );
 
-  // _maybeRenderDevelopmentModeWarning() {
-  //   if (__DEV__) {
-  //     const learnMoreButton = (
-  //       <Text onPress={this._handleLearnMorePress} style={styles.helpLinkText}>
-  //         Learn more
-  //       </Text>
-  //     );
+//     return (
+//       <Text style={styles.developmentModeText}>
+//         Development mode is enabled, your app will be slower but you can use useful development
+//         tools. {learnMoreButton}
+//       </Text>
+//     );
+//   } else {
+//     return (
+//       <Text style={styles.developmentModeText}>
+//         You are not in development mode, your app will run at full speed.
+//       </Text>
+//     );
+//   }
+// }
 
-  //     return (
-  //       <Text style={styles.developmentModeText}>
-  //         Development mode is enabled, your app will be slower but you can use useful development
-  //         tools. {learnMoreButton}
-  //       </Text>
-  //     );
-  //   } else {
-  //     return (
-  //       <Text style={styles.developmentModeText}>
-  //         You are not in development mode, your app will run at full speed.
-  //       </Text>
-  //     );
-  //   }
-  // }
-
-  // _handleLearnMorePress = () => {
-  //   WebBrowser.openBrowserAsync('https://docs.expo.io/versions/latest/guides/development-mode');
-  // };
+// _handleLearnMorePress = () => {
+//   WebBrowser.openBrowserAsync('https://docs.expo.io/versions/latest/guides/development-mode');
+// };
 
 //   _handleHelpPress = () => {
 //     WebBrowser.openBrowserAsync(
