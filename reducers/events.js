@@ -1,15 +1,5 @@
 const initialState = {
-    EventsCarousel: [
-        {
-            id: 1,
-            organisation: "Alpaca Petting Society",
-            headline: "National Petting Day!",
-            content: "So soft",
-            image: "woolfriend.png",
-            location: "Wellington",
-            dateAndTime: 1538021034314
-        }
-    ],
+    EventsCarousel: [],
     ActiveEvent: {
         id: 1
     }

@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import api from '../utils/api'
-import { fetchEvents } from '../actions'
+import { fetchEvents, updateEvent } from '../actions'
 import {
   Image,
   Platform,
@@ -44,7 +44,19 @@ const styles = StyleSheet.create({
       width: 600,
       backgroundColor:'green',
       
-    }})
+    },
+    hiddeninfo:{
+      fontSize: 12
+    },
+  hiddenHeader: {
+    fontSize: 20
+  },
+  hiddenContent: {
+    fontSize: 15
+  },
+  hiddenImage: {
+   height: 100
+  }})
 
  
 class EventsScreen extends React.Component {
@@ -57,11 +69,12 @@ class EventsScreen extends React.Component {
 
     this.expandArticle = this.expandArticle.bind(this)
     this.keyExtractor = this.keyExtractor.bind(this)
+    this.findEventsStory = this.findEventsStory.bind(this)
   }
   
   static navigationOptions = {
     header: null,
-  };
+  }
 
   componentDidMount () {
     this.props.fetchEvents()
@@ -71,6 +84,17 @@ class EventsScreen extends React.Component {
     this.setState({
       hidden: !this.state.hidden
     })
+  }
+
+  findEventsStory() {
+ 
+    let story = this.props.events.EventsCarousel.find(thing => {
+      return thing.id == this.props.events.ActiveEvent.id
+    })
+    if (story != undefined){
+    return (story)
+    }
+    
   }
 
 
@@ -83,15 +107,21 @@ class EventsScreen extends React.Component {
       
         
 <View style={styles.container}>
-<TouchableOpacity onPress={ () => this.expandArticle()}>
-  <Text style={styles.pageheader}>Welcome to Events</Text>  
-</TouchableOpacity>
-<Text style={this.state.hidden ? {height:0} : styles.hidden }>More more more</Text>
+
+  <Text style={styles.pageheader}>Events</Text>  
+  <ScrollView>
+    <View style={this.state.hidden ? { height: 0 } : styles.hidden}>
+        <Text style={this.state.hidden ? { height: 0 } : styles.hiddenHeader}>{{...this.findEventsStory()}.headline}</Text>
+        <Text style={this.state.hidden ? { height: 0 } : styles.hiddeninfo}>{{...this.findEventsStory()}.organisation}, {{...this.findEventsStory()}.location} at {{...this.findEventsStory()}.dateAndTime}</Text>
+        <Text style={this.state.hidden ? { height: 0 } : styles.hiddenContent}>{{...this.findEventsStory()}.content}</Text>
+        <TouchableOpacity onPress={() => this.expandArticle()}><Image style={this.state.hidden ? { height: 0 } : styles.hiddenImage} source={{uri:'https://www.petmd.com/sites/default/files/petmd-kitten-development.jpg'}} /></TouchableOpacity>
+    </View>
+  </ScrollView>
 <FlatList
   horizontal={true}
   data={this.props.events.EventsCarousel}
   keyExtractor={this.keyExtractor}
-  renderItem={({item}) => <Text style={styles.words} ><Image source={require('../assets/images/neko-atsume.jpg')} />{item.headline}</Text>}
+  renderItem={({item}) => <TouchableOpacity onPress={() => {this.expandArticle(); this.props.updateEvent(item.id)}}><Text style={styles.words}><Image  source={require('../assets/images/neko-atsume.jpg')} />{item.headline}</Text></TouchableOpacity>}
 />  
 </View>    
 
@@ -105,7 +135,8 @@ class EventsScreen extends React.Component {
 
     function mapDispatchToProps(dispatch){
       return bindActionCreators( { 
-        fetchEvents: fetchEvents}, dispatch)
+        fetchEvents: fetchEvents,
+        updateEvent: updateEvent}, dispatch)
 
     }
     export default connect(MapStateToProps, mapDispatchToProps)(EventsScreen)
