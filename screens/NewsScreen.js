@@ -126,14 +126,16 @@ class NewsScreen extends React.Component {
 
       <View style={styles.container}>
         <TouchableOpacity onPress={() => this.expandArticle()}>
-          <Text style={styles.pageheader}>Welcome t the News</Text>
+          <Text style={styles.pageheader}>Welcome to the News</Text>
         </TouchableOpacity>
         {/* <Text style={this.state.hidden ? { height: 0 } : styles.hidden}>{{...this.findNewsStory()}.headline}</Text> */}
-        <ScrollView  ><View style={this.state.hidden ? { height: 0 } : styles.hidden}>
+        <ScrollView  >
+          <View style={this.state.hidden ? { height: 0 } : styles.hidden}>
           <Text style={this.state.hidden ? { height: 0 } : styles.hiddenHeader}>{{...this.findNewsStory()}.headline}</Text>
           <Text style={this.state.hidden ? { height: 0 } : styles.hiddenContent}>{{...this.findNewsStory()}.content}</Text>
           <TouchableOpacity onPress={() => this.expandArticle()}><Image style={this.state.hidden ? { height: 0 } : styles.hiddenImage} source={{uri:'https://www.petmd.com/sites/default/files/petmd-kitten-development.jpg'}} /></TouchableOpacity>
         </View></ScrollView>
+        
         <FlatList
           horizontal={true}
           data={this.props.news.NewsCarousel}

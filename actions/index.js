@@ -101,6 +101,25 @@ export function fetchCosmetics(){
     }
 }
 
+export const setAllCharities = charities => {
+    return {
+      type: "SET_ALL_CHARITIES",
+      allCharities: charities
+    };
+  };
+  
+  export function fetchCharities() {
+    return dispatch => {
+      return request
+        .get(baseURL + "/charities/all")
+        .then(res => dispatch(setAllCharities(res.body)))
+        .catch(err => {
+          console.log("ERRROOOOOORRRR");
+          console.log(err);
+        });
+    };
+  }
+
 // export const newsAPI = () =>{
 //     return fetch('http://localhost:3000/api/news')
 //         .then((res) => {

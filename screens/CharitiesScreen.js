@@ -8,10 +8,12 @@ import {
   Alert,
   StyleSheet,
   Text,
+  Overlay,
   FlatList,
   TouchableOpacity,
   View,
-  ImageBackground
+  ImageBackground,
+  CheckBox
 } from "react-native";
 import { WebBrowser } from "expo";
 import { MonoText } from "../components/StyledText";
@@ -26,7 +28,7 @@ const styles = StyleSheet.create({
     borderColor: "black"
   },
   words: {
-    fontSize: 20,
+    fontSize: 15,
     alignItems: "center",
     justifyContent: "center",
     margin: 20,
@@ -35,13 +37,28 @@ const styles = StyleSheet.create({
     backgroundColor: "green"
   },
   pageheader: {
-    fontSize: 40,
+    fontSize: 20,
     marginTop: 25
   },
   hidden: {
     height: 200,
-    width: 600,
-    backgroundColor: "green"
+    width: 200
+  },
+  infoholder: {
+    width: 200,
+    height:200
+  },
+  mission:{
+    fontSize: 12
+  },
+  overlay: {
+    flex: 1,
+    position: 'absolute',
+    left: 0,
+    top: 0,
+    opacity: 0.3,
+    backgroundColor: 'black',
+    width: '100%'
   }
 });
 
@@ -50,10 +67,11 @@ class CharitiesScreen extends React.Component {
     super(props);
 
     this.state = {
-      hidden: true
+      hidden: true,
+      hi: 'hi'
     };
 
-    this.expandArticle = this.expandArticle.bind(this);
+    this.showMission = this.showMission.bind(this);
     this.keyExtractor = this.keyExtractor.bind(this);
   }
 
@@ -65,44 +83,47 @@ class CharitiesScreen extends React.Component {
     this.props.fetchCharities();
   }
 
-  expandArticle() {
+  showMission () {
     this.setState({
-      hidden: !this.state.hidden
+      hidden: !this.state.hidden,
+      hi: 'hi'
     });
+    console.log(this.state.hidden)
   }
 
   keyExtractor = (item, index) => String(item.id);
 
+
   render() {
-    console.log(this.props.charities);
     return (
       <View style={styles.container}>
-        <TouchableOpacity onPress={() => this.expandArticle()}>
+<View style={[styles.overlay, { height: 360}]} />
           <Text style={styles.pageheader}>Select your Charities</Text>
-        </TouchableOpacity>
-        <Text style={this.state.hidden ? { height: 0 } : styles.hidden}>
-          Charitieseihfrakjhfksjdhfkj
-        </Text>
-        <FlatList
-          horizontal={true}
-          data={this.props.charities.Charities}
-          keyExtractor={this.keyExtractor}
-          renderItem={({ item }) => (
-            <Text style={styles.words}>
-              <Image source={{ uri: item.logo }} />
-              {item.charityName}
-            </Text>
-          )}
-        />
+          <ScrollView contentContainerStyle={styles.contentContainer}>
+          
+          <TouchableOpacity 
+            onPress={() => this.showMission()}>
+
+          <View style={styles.hidden}>
+          
+          <Text style={!this.state.hidden ? { height: 0 } : styles.hidden}><Image source={require('../assets/images/charities/huha.jpg')}/></Text>
+
+          </View>
+          </TouchableOpacity>
+
+          
+          </ScrollView>
+       
+         
       </View>
-    );
-  }
-}
+    )}}
+  
+
 
 function MapStateToProps(state) {
   return {
     charities: state.charities
-  };
+  }
 }
 
 function mapDispatchToProps(dispatch) {
@@ -111,9 +132,6 @@ function mapDispatchToProps(dispatch) {
       fetchCharities: fetchCharities
     },
     dispatch
-  );
+  )
 }
-export default connect(
-  MapStateToProps,
-  mapDispatchToProps
-)(CharitiesScreen);
+export default connect(MapStateToProps,mapDispatchToProps)(CharitiesScreen)
