@@ -123,8 +123,10 @@ class NewsScreen extends React.Component {
 
     return (
 
+     
 
       <View style={styles.container}>
+       <ImageBackground source={require('../assets/images/pastel-wallpaper.png')} style={{height:'100%'}}>
         <TouchableOpacity onPress={() => this.expandArticle()}>
           <Text style={styles.pageheader}>Welcome to the News</Text>
         </TouchableOpacity>
@@ -142,8 +144,9 @@ class NewsScreen extends React.Component {
           keyExtractor={this.keyExtractor}
           renderItem={({ item }) => <TouchableOpacity onPress={() => {this.expandArticle(); this.props.updateNews(item.id)}}><Text style={styles.words}><Image  source={require('../assets/images/neko-atsume.jpg')} />{item.headline}</Text></TouchableOpacity>}
         />
-      </View>
+      </ImageBackground>
 
+      </View>
     )
   }
 }
