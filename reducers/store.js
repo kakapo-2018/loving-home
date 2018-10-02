@@ -23,7 +23,8 @@ const initialState = {
         cosmetics: {
             id: 1
         }
-    }
+    },
+    currentCoins: 1000
 
 }
 
@@ -34,6 +35,8 @@ const store = (state = initialState, action) => {
             return { ...state, activeStoreCarousel: action.stores }
         case 'UPDATE_ACTIVE_ITEM':
             return { ...state, activeItem: { cosmetics: { id: action.items } } }   
+        case 'SET_ALL_COSMETICS':
+            return {...state, storeCarousel: {...state, cosmetics: [...action.allCosmetics]}}
         default:
             return state
     }

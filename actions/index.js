@@ -1,5 +1,5 @@
 
-const baseURL = 'http://192.168.1.25:3000/api'
+const baseURL = 'http://furever-home.herokuapp.com/api'
 import request from 'superagent'
 
 export const updateActivePet = (animalId) => {
@@ -75,6 +75,25 @@ export function fetchEvents(){
     return dispatch => {
         return request.get(baseURL + '/events')
             .then(res => dispatch(setAllEvents(res.body)))
+            .catch(err => {
+                console.log("ERRROOOOOORRRR")
+                console.log(err)
+            })
+    }
+}
+
+export const setAllCosmetics = (cosmetics) => {
+    return {
+        type: 'SET_ALL_COSMETICS',
+        allCosmetics: cosmetics
+    }
+}
+
+export function fetchCosmetics(){
+
+    return dispatch => {
+        return request.get(baseURL + '/animals') //this needs to be the cosmetics route
+            .then(res => dispatch(setAllCosmetics(res.body)))
             .catch(err => {
                 console.log("ERRROOOOOORRRR")
                 console.log(err)
