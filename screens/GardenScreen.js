@@ -24,6 +24,8 @@ export default class GardenScreen extends React.Component {
                 {/* {this.props.children} */}
             <Image style={{ width: 150, height: 150, top: 20, left: 115}} source={require('../assets/images/cat.png')} />
             <Image style={{ width: 150, height: 150, top: -10, left: 370}} source={require('../assets/images/dog.png')} />
+            {/* <Image style={{ width: 150, height: 150, top: -10, left: 115}} source={require('../assets/images/bunny.png')} /> */}
+            
           </ImageBackground>
       )
   }
