@@ -2,9 +2,9 @@
 const baseURL = 'http://furever-home.herokuapp.com/api'
 import request from 'superagent'
 
-export const updateActivePet = (animalId) => {
+export const updateActiveAnimal = (animalId) => {
     return {
-        type: 'UPDATE_ACTIVE_PET',
+        type: 'UPDATE_ACTIVE_ANIMAL',
         animal: animalId
     }
 }
@@ -44,6 +44,25 @@ export const updateActiveItem = (item) => {
     }
 }
 
+export const setAllAnimals = (animals) => {
+    return {
+        type: 'SET_ALL_ANIMALS',
+        allAnimals: animals
+    }
+}
+
+export function fetchAnimals() {
+
+    return dispatch => {
+        return request.get(baseURL + '/users/1/animals')
+            .then(res => dispatch(setAllAnimals(res.body)))
+            .catch(err => {
+                console.log("ERRROOOOOORRRR")
+                console.log(err)
+            })
+    }
+}
+
 export const setAllNews = (news) => {
     return {
         type: 'SET_ALL_NEWS',
@@ -51,7 +70,7 @@ export const setAllNews = (news) => {
     }
 }
 
-export function fetchNews(){
+export function fetchNews() {
 
     return dispatch => {
         return request.get(baseURL + '/news')
@@ -70,7 +89,7 @@ export const setAllEvents = (events) => {
     }
 }
 
-export function fetchEvents(){
+export function fetchEvents() {
 
     return dispatch => {
         return request.get(baseURL + '/events')
@@ -89,7 +108,7 @@ export const setAllCosmetics = (cosmetics) => {
     }
 }
 
-export function fetchCosmetics(){
+export function fetchCosmetics() {
 
     return dispatch => {
         return request.get(baseURL + '/animals') //this needs to be the cosmetics route
