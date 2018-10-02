@@ -6,7 +6,9 @@ import TabBarIcon from '../components/TabBarIcon';
 import GardenScreen from '../screens/GardenScreen'
 import NewsScreen from '../screens/NewsScreen';
 import EventsScreen from '../screens/EventsScreen';
+import CharitiesScreen from "../screens/CharitiesScreen";
 import StoreScreen from '../screens/StoreScreenBAK';
+import Play from "../screens/Play";
 
 const NewsStack = createStackNavigator({
   News: NewsScreen,
@@ -72,20 +74,57 @@ StoreStack.navigationOptions = {
   ),
 };
 
+const CharitiesStack = createStackNavigator({
+  Charities: CharitiesScreen
+});
 
+CharitiesStack.navigationOptions = {
+  tabBarLabel: "Charities",
+  tabBarIcon: ({ focused }) => (
+    <TabBarIcon
+      focused={focused}
+      name={
+        Platform.OS === "ios"
+          ? `ios-options${focused ? "" : "-outline"}`
+          : "md-heart"
+      }
+    />
+  )
+};
+
+const PlayStack = createStackNavigator({
+  Play: Play
+});
+
+PlayStack.navigationOptions = {
+  tabBarLabel: "Play",
+  tabBarIcon: ({ focused }) => (
+    <TabBarIcon
+      focused={focused}
+      name={
+        Platform.OS === "ios"
+          ? `ios-options${focused ? "" : "-outline"}`
+          : "md-play"
+      }
+    />
+  )
+};
 
 export default createBottomTabNavigator(
   {
-  GardenStack,
-  NewsStack,
-  EventsStack,
-  StoreStack
-},{
-tabBarOptions: {
-  showLabel: false,
-  activeTintColor: '#FFFFFF',
-  inactiveTintColor: '#FFFFFF',
-  style: {
-    backgroundColor: 'rgba(177, 223, 231, 0.9)'
-  }}
-});
+    GardenStack,
+    NewsStack,
+    EventsStack,
+    StoreStack,
+    CharitiesStack,
+    PlayStack
+  }, {
+    tabBarOptions: {
+      showLabel: false,
+      activeTintColor: '#FFFFFF',
+      inactiveTintColor: '#FFFFFF',
+      style: {
+        backgroundColor: 'rgba(177, 223, 231, 0.9)'
+      }
+    }
+  });
