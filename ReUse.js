@@ -1,13 +1,16 @@
 import React, { Component } from 'react'
 import {
-     Image,
+      Image,
       TouchableWithoutFeedback,
       Animated,
-      View,
       Text
 } from 'react-native'
 
-export default class ReUse extends Component {
+import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux';
+import { spendMoney } from './actions';
+
+export  class ReUse extends Component {
       state = {
             animatePress: new Animated.Value(1)
       }
@@ -30,7 +33,7 @@ export default class ReUse extends Component {
             return (
                   
                         <TouchableWithoutFeedback 
-                        onPressIn = {()=>this.animateIn()}
+                        onPressIn={() => {this.props.spendMoney(this.props.price); this.animateIn()}}
                         onPressOut = {()=>this.animateOut()}
                         >
                               <Animated.View style = {{margin: 5, width:150, height:100, backgroundColor: 'tomato',
@@ -43,16 +46,22 @@ export default class ReUse extends Component {
                               <Image style = {{width:150, height:75}} source={require('./assets/images/cat.png')}/>
                               <Text>{this.props.name} ${this.props.price}</Text>
                               </Animated.View>
-                        </TouchableWithoutFeedback>    
-                        
-                              // <View style = {{margin: 5, width:150, height:100, backgroundColor: 'tomato'}}>
-                              // <Image style = {{width:150, height:75}} source={require('./assets/images/cat.png')}/>
-                              // <Text>{this.props.name} ${this.props.price}</Text>
-                              // </View>
-                             
-                             
-                  
+                        </TouchableWithoutFeedback>                 
             )
       }
 }
+
+function MapStateToProps(state){
+      return {
+          storeItems: state.store
+        }}
+    
+    
+    function MapDispatchToProps(dispatch){
+          return bindActionCreators({
+                spendMoney: spendMoney
+          }, dispatch)
+          }
+    
+    export default connect(MapStateToProps, MapDispatchToProps)(ReUse)
 

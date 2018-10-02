@@ -5,7 +5,6 @@ import {
       FlatList,
       Text,
       ImageBackground,
-      TouchableOpacity,
       TouchableWithoutFeedback
 } from 'react-native'
 
@@ -38,25 +37,8 @@ class TestScreen extends Component {
                   numColumns = {columns}
                    data = {this.props.storeItems.storeCarousel.cosmetics}
                     renderItem = {({ item }) => {
-                        return 
-                        // <TouchableOpacity onPress={() => this.props.spendMoney(item.price)}>
-                        // <ReUse  name={item.name} price={item.price} image={'./assets/images/cat.png'}/>
-                        // </TouchableOpacity>
-                        <TouchableWithoutFeedback 
-                        onPressIn = {()=>this.animateIn()}
-                        onPressOut = {()=>this.animateOut()}
-                        >
-                              <Animated.View style = {{margin: 5, width:150, height:100, backgroundColor: 'tomato',
-                                    transform:[
-                                        {
-                                              scale:this.state.animatePress
-                                        }  
-                                    ]
-                        }}>
-                              <Image style = {{width:150, height:75}} source={require('../assets/images/cat.png')}/>
-                              <Text>{item.name} ${item.price}</Text>
-                              </Animated.View>
-                        </TouchableWithoutFeedback>
+                        return <TouchableWithoutFeedback onPress={() => this.props.spendMoney(item.price)}>
+                        <ReUse  name={item.name} price={item.price} image={'./assets/images/cat.png'}/></TouchableWithoutFeedback>
                   }}
                     keyExtractor = {
                           (index) => {return index}
@@ -107,17 +89,3 @@ const styles = StyleSheet.create({
             
       }
 })
-
-
-
-// [
-//   require('../assets/images/cat.png'),
-//   require('../assets/images/dog.png'),
-//   require('../assets/images/robot-dev.png'),
-//   require('../assets/images/neko-atsume.jpg'),
-//   require('../assets/images/robot-prod.png'),
-//   require('../assets/images/store_background.jpg'),
-//   require('../assets/images/cat.png'),
-//   require('../assets/images/robot-dev.png'),
-//   require('../assets/images/robot-prod.png')
-// ]
