@@ -1,23 +1,19 @@
 import React, { Component } from 'react'
 import {
       StyleSheet,
-      View, Image,
+      View,
       FlatList,
       Text,
-      ImageBackground
+      ImageBackground,
+      TouchableWithoutFeedback
 } from 'react-native'
 
 import ReUse from '../ReUse'
-import inventory from "../inventory";
+import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux';
+import { fetchCosmetics, updateActiveStoreCarousel, setAllCosmetics, spendMoney } from '../actions';
 
-export default class TestScreen extends Component {
-      constructor(){
-            super()
-            this.state = {
-                  dataSource: []
-            }
-      }
-
+class TestScreen extends Component {
       state = {
             columns:3
       }
@@ -26,43 +22,27 @@ export default class TestScreen extends Component {
             header: null,
           };
 
-      renderItem = ({ item }) => {
-            let customData = require('../inventory');
-            return (
-                  <View>
-                  <Image source = {{ uri: customData.item.image}}/>
-                  <View>
-                        <Text>{customData.item.name}</Text>
-                        <Text>{customData.item.price}</Text>
-                  </View>
-            </View>
-            )
+      componentDidMount(){
+            this.props.fetchCosmetics()
       }
-
-      // componentDidMount() {
-      //       const file = '../inventory.json'
-      //       fetch(file)
-      //       .then((response) => response.json())
-      //       .then((responseJson) => {
-      //             this.setState({
-      //                   dataSource: responseJson.cosmetics
-      //             })
-      //       })
-      //       .catch((error) => {
-      //             console.log(error)
-      //       })
-      // }
 
       render(){
             const {columns} = this.state
             return (
                   <View style = {styles.container}>
                   <ImageBackground style={styles.landing} source={require('../assets/images/store_background.jpg')} resizeMode='cover'>
-                  <Text style={styles.pageheader}>Store</Text>
+                  
+                  <Text style={styles.pageheader}>${this.props.storeItems.currentCoins}</Text>
                   <FlatList 
                   numColumns = {columns}
-                   data = {this.state.dataSource}
-                    renderItem = {this.renderItem}
+                   data = {this.props.storeItems.storeCarousel.cosmetics}
+                    renderItem = {({ item }) => {
+                        return <TouchableWithoutFeedback onPress={() => this.props.spendMoney(item.price)}>
+                        <ReUse  name={item.name} price={item.price} image={'./assets/images/cat.png'}/></TouchableWithoutFeedback>
+                  }}
+                    keyExtractor = {
+                          (index) => {return index}
+                    }
                     keyExtractor={(item) => item.toString()}
                   />
                   </ImageBackground>
@@ -70,6 +50,24 @@ export default class TestScreen extends Component {
             )
       }
 }
+
+function MapStateToProps(state){
+  return {
+      storeItems: state.store
+    }}
+
+
+function MapDispatchToProps(dispatch){
+      return bindActionCreators({
+            fetchCosmetics: fetchCosmetics,
+            updateActiveStoreCarousel: updateActiveStoreCarousel,
+            setAllCosmetics: setAllCosmetics,
+            spendMoney: spendMoney
+      }, dispatch)
+      }
+
+export default connect(MapStateToProps, MapDispatchToProps)(TestScreen)
+
 
 const styles = StyleSheet.create({
       container: {
@@ -79,12 +77,15 @@ const styles = StyleSheet.create({
             
       },
       pageheader: {
+            backgroundColor: 'white',
             fontSize: 40,
             marginTop: 25
       },
       landing:{
-            
+            flex: 1,
             height: '100%',
+            justifyContent: 'center',
+            alignItems: 'center'
             
       }
 })

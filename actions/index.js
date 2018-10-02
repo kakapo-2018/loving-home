@@ -92,7 +92,7 @@ export const setAllCosmetics = (cosmetics) => {
 export function fetchCosmetics(){
 
     return dispatch => {
-        return request.get(baseURL + '/animals') //this needs to be the cosmetics route
+        return request.get(baseURL + '/store/cosmetics/all') 
             .then(res => dispatch(setAllCosmetics(res.body)))
             .catch(err => {
                 console.log("ERRROOOOOORRRR")
@@ -101,6 +101,7 @@ export function fetchCosmetics(){
     }
 }
 
+<<<<<<< HEAD
 export const setAllCharities = charities => {
     return {
       type: "SET_ALL_CHARITIES",
@@ -130,3 +131,14 @@ export const setAllCharities = charities => {
 //             throw err
 //         })
 // }
+=======
+export const spendMoney = (price) => {
+    return {
+        type: 'SPEND_MONEY',
+        price: price
+    }
+}
+
+
+
+>>>>>>> 01ce1e893db8fc0ad1445758627a0b078a4792f9
