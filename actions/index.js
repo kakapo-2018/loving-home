@@ -101,13 +101,3 @@ export function fetchCosmetics(){
     }
 }
 
-// export const newsAPI = () =>{
-//     return fetch('http://localhost:3000/api/news')
-//         .then((res) => {
-//             console.log('hello', res)
-//             setAllNews(res.body)
-//         })
-//         .catch(err=>{
-//             throw err
-//         })
-// }
