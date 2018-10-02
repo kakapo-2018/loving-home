@@ -1,23 +1,6 @@
 const initialState = {
 
-    storeCarousel: {
-        cosmetics: [
-            {
-                id: 1,
-                name: "Raincoat",
-                image: "/assets/images/cat.png",
-                price: 2000
-            }
-        ],
-        animals: [
-            {
-                id: 1,
-                name: "Chippy",
-                species: "Dog",
-                disposition: "Sassy"
-            }
-        ]
-    },
+    storeCarousel: [],
     activeStoreCarousel: "cosmetics",
     activeItem: {
         cosmetics: {
@@ -37,6 +20,8 @@ const store = (state = initialState, action) => {
             return { ...state, activeItem: { cosmetics: { id: action.items } } }   
         case 'SET_ALL_COSMETICS':
             return {...state, storeCarousel: {...state, cosmetics: [...action.allCosmetics]}}
+        case 'SPEND_MONEY':
+            return { ...state, currentCoins: state.currentCoins - action.price}
         default:
             return state
     }
