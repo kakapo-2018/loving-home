@@ -4,13 +4,15 @@ import {
       View, Image,
       FlatList,
       Text,
-      ImageBackground
+      ImageBackground,
+      TouchableOpacity,
+      TouchableWithoutFeedback
 } from 'react-native'
 
 import ReUse from '../ReUse'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux';
-import { fetchCosmetics } from '../actions';
+import { fetchCosmetics, updateActiveStoreCarousel, setAllCosmetics, spendMoney } from '../actions';
 
 class TestScreen extends Component {
       state = {
@@ -36,8 +38,26 @@ class TestScreen extends Component {
                   numColumns = {columns}
                    data = {this.props.storeItems.storeCarousel.cosmetics}
                     renderItem = {({ item }) => {
-                        return <ReUse  text={item.name} image={'./assets/images/cat.png'}/> //image needs changing
-                    }}
+                        return 
+                        // <TouchableOpacity onPress={() => this.props.spendMoney(item.price)}>
+                        // <ReUse  name={item.name} price={item.price} image={'./assets/images/cat.png'}/>
+                        // </TouchableOpacity>
+                        <TouchableWithoutFeedback 
+                        onPressIn = {()=>this.animateIn()}
+                        onPressOut = {()=>this.animateOut()}
+                        >
+                              <Animated.View style = {{margin: 5, width:150, height:100, backgroundColor: 'tomato',
+                                    transform:[
+                                        {
+                                              scale:this.state.animatePress
+                                        }  
+                                    ]
+                        }}>
+                              <Image style = {{width:150, height:75}} source={require('../assets/images/cat.png')}/>
+                              <Text>{item.name} ${item.price}</Text>
+                              </Animated.View>
+                        </TouchableWithoutFeedback>
+                  }}
                     keyExtractor = {
                           (index) => {return index}
                     }
@@ -57,7 +77,11 @@ function MapStateToProps(state){
 
 function MapDispatchToProps(dispatch){
       return bindActionCreators({
-            fetchCosmetics: fetchCosmetics}, dispatch)
+            fetchCosmetics: fetchCosmetics,
+            updateActiveStoreCarousel: updateActiveStoreCarousel,
+            setAllCosmetics: setAllCosmetics,
+            spendMoney: spendMoney
+      }, dispatch)
       }
 
 export default connect(MapStateToProps, MapDispatchToProps)(TestScreen)

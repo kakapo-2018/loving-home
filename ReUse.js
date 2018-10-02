@@ -3,6 +3,7 @@ import {
      Image,
       TouchableWithoutFeedback,
       Animated,
+      View,
       Text
 } from 'react-native'
 
@@ -40,9 +41,16 @@ export default class ReUse extends Component {
                                     ]
                         }}>
                               <Image style = {{width:150, height:75}} source={require('./assets/images/cat.png')}/>
-                              <Text>{this.props.text}</Text>
+                              <Text>{this.props.name} ${this.props.price}</Text>
                               </Animated.View>
-                        </TouchableWithoutFeedback>     
+                        </TouchableWithoutFeedback>    
+                        
+                              // <View style = {{margin: 5, width:150, height:100, backgroundColor: 'tomato'}}>
+                              // <Image style = {{width:150, height:75}} source={require('./assets/images/cat.png')}/>
+                              // <Text>{this.props.name} ${this.props.price}</Text>
+                              // </View>
+                             
+                             
                   
             )
       }
