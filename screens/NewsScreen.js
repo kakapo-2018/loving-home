@@ -126,7 +126,6 @@ class NewsScreen extends React.Component {
      
 
       <View style={styles.container}>
-<<<<<<< HEAD
        <ImageBackground source={require('../assets/images/pastel-wallpaper.png')} style={{height:'100%'}}>
         <TouchableOpacity onPress={() => this.expandArticle()}>
           <Text style={styles.pageheader}>Welcome to the News</Text>
@@ -134,11 +133,6 @@ class NewsScreen extends React.Component {
         {/* <Text style={this.state.hidden ? { height: 0 } : styles.hidden}>{{...this.findNewsStory()}.headline}</Text> */}
         <ScrollView  >
           <View style={this.state.hidden ? { height: 0 } : styles.hidden}>
-=======
-          <Text style={styles.pageheader}>News</Text>
-        
-        <ScrollView  ><View style={this.state.hidden ? { height: 0 } : styles.hidden}>
->>>>>>> 01ce1e893db8fc0ad1445758627a0b078a4792f9
           <Text style={this.state.hidden ? { height: 0 } : styles.hiddenHeader}>{{...this.findNewsStory()}.headline}</Text>
           <Text style={this.state.hidden ? { height: 0 } : styles.hiddenContent}>{{...this.findNewsStory()}.content}</Text>
           <TouchableOpacity onPress={() => this.expandArticle()}><Image style={this.state.hidden ? { height: 0 } : styles.hiddenImage} source={{uri:'https://www.petmd.com/sites/default/files/petmd-kitten-development.jpg'}} /></TouchableOpacity>

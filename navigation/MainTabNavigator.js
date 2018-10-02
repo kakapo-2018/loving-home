@@ -6,13 +6,9 @@ import TabBarIcon from '../components/TabBarIcon';
 import GardenScreen from '../screens/GardenScreen'
 import NewsScreen from '../screens/NewsScreen';
 import EventsScreen from '../screens/EventsScreen';
-<<<<<<< HEAD
 import CharitiesScreen from "../screens/CharitiesScreen";
 import StoreScreen from '../screens/StoreScreen';
 
-=======
-import StoreScreen from '../screens/StoreScreen';
->>>>>>> 01ce1e893db8fc0ad1445758627a0b078a4792f9
 
 const NewsStack = createStackNavigator({
   News: NewsScreen,

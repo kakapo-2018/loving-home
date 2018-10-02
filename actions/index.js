@@ -101,13 +101,12 @@ export function fetchCosmetics(){
     }
 }
 
-<<<<<<< HEAD
 export const setAllCharities = charities => {
     return {
       type: "SET_ALL_CHARITIES",
       allCharities: charities
-    };
-  };
+    }
+  }
   
   export function fetchCharities() {
     return dispatch => {
@@ -121,24 +120,10 @@ export const setAllCharities = charities => {
     };
   }
 
-// export const newsAPI = () =>{
-//     return fetch('http://localhost:3000/api/news')
-//         .then((res) => {
-//             console.log('hello', res)
-//             setAllNews(res.body)
-//         })
-//         .catch(err=>{
-//             throw err
-//         })
-// }
-=======
+
 export const spendMoney = (price) => {
     return {
         type: 'SPEND_MONEY',
         price: price
     }
 }
-
-
-
->>>>>>> 01ce1e893db8fc0ad1445758627a0b078a4792f9
