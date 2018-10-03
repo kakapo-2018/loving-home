@@ -59,7 +59,6 @@ export const setLoading = (bool) => {
 }
 
 export function fetchAnimals(cb) {
-
     return dispatch => {
         return request.get(baseURL + '/users/1/animals')
             .then(res => {
@@ -104,7 +103,6 @@ export const setAllNews = (news) => {
 }
 
 export function fetchNews() {
-
     return dispatch => {
         return request.get(baseURL + '/news')
             .then(res => dispatch(setAllNews(res.body)))
@@ -123,7 +121,6 @@ export const setAllEvents = (events) => {
 }
 
 export function fetchEvents() {
-
     return dispatch => {
         return request.get(baseURL + '/events')
             .then(res => dispatch(setAllEvents(res.body)))
@@ -142,9 +139,8 @@ export const setAllCosmetics = (cosmetics) => {
 }
 
 export function fetchCosmetics() {
-
     return dispatch => {
-        return request.get(baseURL + '/animals') //this needs to be the cosmetics route
+        return request.get(baseURL + '/store/cosmetics/all') 
             .then(res => dispatch(setAllCosmetics(res.body)))
             .catch(err => {
                 console.log("ERRROOOOOORRRR")
@@ -154,8 +150,6 @@ export function fetchCosmetics() {
 }
 
 export const setAnimalInventory = (inventory, animalId) => {
-    //console.log(`action: new inventory of animal #${animalId} is ${JSON.stringify(inventory)}`)
-
     return {
         type: 'SET_ANIMAL_INVENTORY',
         animal: animalId,
@@ -172,5 +166,32 @@ export function fetchAnimalInventory(animalId) {
                 console.log("ERRROOOOOORRRR")
                 console.log(err)
             })
+    }
+}
+
+export const setAllCharities = charities => {
+    return {
+      type: "SET_ALL_CHARITIES",
+      allCharities: charities
+    }
+  }
+  
+  export function fetchCharities() {
+    return dispatch => {
+      return request
+        .get(baseURL + "/charities/all")
+        .then(res => dispatch(setAllCharities(res.body)))
+        .catch(err => {
+          console.log("ERRROOOOOORRRR");
+          console.log(err);
+        });
+    };
+  }
+
+
+export const spendMoney = (price) => {
+    return {
+        type: 'SPEND_MONEY',
+        price: price
     }
 }
