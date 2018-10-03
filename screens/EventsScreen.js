@@ -56,7 +56,15 @@ const styles = StyleSheet.create({
   },
   hiddenImage: {
    height: 100
-  }})
+  },
+  picwrapper: {
+    width: 500, 
+    height: 500, 
+    resizeMode:'contain',
+    paddingHorizontal: 20,
+    alignItems: 'center',
+  },
+})
 
  
 class EventsScreen extends React.Component {
@@ -64,7 +72,8 @@ class EventsScreen extends React.Component {
     super(props)
 
     this.state = {
-      hidden: true
+      hidden: true,
+      eventspics: [ require('../assets/images/events/petsatwork.jpg'), require('../assets/images/events/rehabbunny.png'), require('../assets/images/events/puppywalk.jpg'), require('../assets/images/events/oldcat.jpg'),   require('../assets/images/events/appreciationday.jpg')]
     }
 
     this.expandArticle = this.expandArticle.bind(this)
@@ -121,7 +130,7 @@ class EventsScreen extends React.Component {
   horizontal={true}
   data={this.props.events.EventsCarousel}
   keyExtractor={this.keyExtractor}
-  renderItem={({item}) => <TouchableOpacity onPress={() => {this.expandArticle(); this.props.updateEvent(item.id)}}><Text style={styles.words}><Image  source={require('../assets/images/neko-atsume.jpg')} />{item.headline}</Text></TouchableOpacity>}
+  renderItem={({item}) => <TouchableOpacity onPress={() => {this.expandArticle(); this.props.updateEvent(item.id)}}><Text style={styles.words}><Image style={styles.picwrapper} source={this.state.eventspics[(item.id)-1]} />{item.headline}</Text></TouchableOpacity>}
 />  
 </View>    
 

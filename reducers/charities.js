@@ -1,14 +1,5 @@
 const initialState = {
-    charities: [
-        {
-            id: 1,
-            charityName: "Puppies Motel",
-            mission: "Just get it done",
-            websiteURL: "www.totes-puppies.com",
-            logo: "puppies-motel.jpg",
-            donationPercent: 40
-        }
-    ],
+    charities: [],
     activeCharities: [
         {
             id: 1

@@ -40,7 +40,7 @@ const styles = StyleSheet.create({
     marginTop: 25
   },
   hidden: {
-    height: 300,
+    height: 1000,
     width: 400,
     backgroundColor: 'green'
   },
@@ -52,6 +52,17 @@ const styles = StyleSheet.create({
   },
   hiddenImage: {
    height: 100
+  },
+  picwrapper: {
+    width: 1000,
+    height: 400, 
+    resizeMode:'contain',
+    paddingHorizontal: 20,
+    alignItems: 'center',
+  },
+  scroll:{
+    height: 800
+
   }
 })
 
@@ -62,12 +73,16 @@ class NewsScreen extends React.Component {
 
     this.state = {
       hidden: true,
+      pic: require('../assets/images/pastel-wallpaper.png'),
+      newspics: [ require('../assets/images/news/grumpycat.jpg'), require('../assets/images/news/bantrade.jpg'), require('../assets/images/news/kakapo.jpg'), require('../assets/images/news/faircow.jpg'),   require('../assets/images/news/seaworld.jpg')]
+      
     }
 
     this.expandArticle = this.expandArticle.bind(this)
     this.keyExtractor = this.keyExtractor.bind(this)
     this.getAllNews = this.getAllNews.bind(this)
     this.findNewsStory = this.findNewsStory.bind(this)
+    this.showPic = this.showPic.bind(this)
   }
 
   static navigationOptions = {
@@ -99,6 +114,17 @@ class NewsScreen extends React.Component {
     
   }
 
+  showPic(id){
+    let pic = this.props.news.NewsCarousel.find(thing => {
+      return thing.id == id
+    })
+    if (pic != undefined){
+      console.log('the thing' + pic)
+    // return require(`../assets${png}`)
+    }
+
+  }
+
 
   // getAllNews(err, news){
   //   this.props.setAllNews(news)
@@ -126,12 +152,12 @@ class NewsScreen extends React.Component {
      
 
       <View style={styles.container}>
-       <ImageBackground source={require('../assets/images/pastel-wallpaper.png')} style={{height:'100%'}}>
+       <ImageBackground source={this.state.pic} style={{height:'100%'}}>
         <TouchableOpacity onPress={() => this.expandArticle()}>
           <Text style={styles.pageheader}>Welcome to the News</Text>
         </TouchableOpacity>
         {/* <Text style={this.state.hidden ? { height: 0 } : styles.hidden}>{{...this.findNewsStory()}.headline}</Text> */}
-        <ScrollView  >
+        <ScrollView style={styles.scroll} >
           <View style={this.state.hidden ? { height: 0 } : styles.hidden}>
           <Text style={this.state.hidden ? { height: 0 } : styles.hiddenHeader}>{{...this.findNewsStory()}.headline}</Text>
           <Text style={this.state.hidden ? { height: 0 } : styles.hiddenContent}>{{...this.findNewsStory()}.content}</Text>
@@ -142,7 +168,7 @@ class NewsScreen extends React.Component {
           horizontal={true}
           data={this.props.news.NewsCarousel}
           keyExtractor={this.keyExtractor}
-          renderItem={({ item }) => <TouchableOpacity onPress={() => {this.expandArticle(); this.props.updateNews(item.id)}}><Text style={styles.words}><Image  source={require('../assets/images/neko-atsume.jpg')} />{item.headline}</Text></TouchableOpacity>}
+          renderItem={({ item }) => <TouchableOpacity onPress={() => {this.expandArticle(); this.props.updateNews(item.id)}}><Text style={styles.words}><Image style={styles.picwrapper} source={this.state.newspics[(item.id)-1]} />{item.headline}</Text></TouchableOpacity>}
         />
       </ImageBackground>
 
