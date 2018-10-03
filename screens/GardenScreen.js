@@ -120,7 +120,8 @@ const styles = StyleSheet.create({
   invListIcon: {
     flex: 0.9,
     width: '90%',
-    margin: 3
+    margin: 3,
+    marginTop: 5
   },
   invListItemDescription: {
     flex: 1,
@@ -181,6 +182,14 @@ const styles = StyleSheet.create({
   }
 })
 
+const cosmeticsImgRef = {
+  hat: require(`../assets/images/cosmetics/bowler-hat-inv.png`),
+  crown: require(`../assets/images/cosmetics/crown-inv.png`),
+  glasses: require(`../assets/images/cosmetics/glasses-inv.png`),
+  moustache: require(`../assets/images/cosmetics/moustache-inv.png`),
+  tie: require(`../assets/images/cosmetics/tie-inv.png`),
+}
+
 class GardenScreen extends React.Component {
   constructor(props) {
     super(props)
@@ -195,7 +204,6 @@ class GardenScreen extends React.Component {
     this.getImage = this.getImage.bind(this)
     this.setAnimalCosmetic = this.setAnimalCosmetic.bind(this)
   }
-
 
   static navigationOptions = {
     header: null,
@@ -290,12 +298,18 @@ class GardenScreen extends React.Component {
     }
   }
 
+  getIconImage(cosmeticType) {
+    if (cosmeticType == 'Bowler Hat') cosmeticType = 'hat'
+    cosmeticType = cosmeticType.toLowerCase()
+    return cosmeticsImgRef[cosmeticType]
+  }
+
   keyExtractor = (item, index) => String(item.id)
 
   render() {
     if (this.state.hidden) {
       return (
-        <ImageBackground source={require('../assets/images/backyard.jpg')} style={styles.backgroundImage}>
+        <ImageBackground source={require('../assets/images/backyard-final.jpg')} style={styles.backgroundImage}>
           <View>
             <TouchableWithoutFeedback onPress={() => { this.showAnimalInventory(2) }}>
               <Image style={{ width: 150, height: 150, top: 20, left: 115 }} source={this.state.cat} />
@@ -320,7 +334,7 @@ class GardenScreen extends React.Component {
               renderItem={({ item }) => (
                 <View style={styles.invListItem}>
                   <View style={styles.invListIconWrapper}>
-                    <Image style={styles.invListIcon} source={require(`../assets/images/cosmetics/bowler-hat-512.png`)} />
+                    <Image style={styles.invListIcon} source={this.getIconImage(item.name)} />
                   </View>
                   <TouchableOpacity onPress={() => { this.setAnimalCosmetic(item) }} style={styles.invListItemDescription}>
                     <Text style={styles.invListItemDescriptionText}>{item.name}</Text>
@@ -334,7 +348,7 @@ class GardenScreen extends React.Component {
             </View>
           </View>
 
-          <ImageBackground source={require('../assets/images/backyard.jpg')} style={styles.backgroundImageFaded}>
+          <ImageBackground source={require('../assets/images/backyard-final.jpg')} style={styles.backgroundImageFaded}>
             <View>
               <Image style={{ width: 150, height: 150, top: 20, left: 115 }} source={this.state.cat} />
               <Image style={{ width: 150, height: 150, top: -10, left: 370 }} source={this.state.dog} />
