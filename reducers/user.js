@@ -9,7 +9,6 @@ const user = (state = initialState, action) => {
     case 'SET_USER_INVENTORY':
       return { ...state, inventory: [...action.inventory] }
     case 'SET_LOADING':
-      console.log('set loading: ' + action.loading)
       return { ...state, loading: action.loading }
     default:
       return state

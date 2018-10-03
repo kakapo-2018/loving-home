@@ -77,7 +77,6 @@ export function fetchAnimals(cb) {
 }
 
 export const setUserInventory = (inventory) => {
-    console.log('User inventory being set')
     return {
         type: 'SET_USER_INVENTORY',
         inventory: inventory
@@ -86,7 +85,6 @@ export const setUserInventory = (inventory) => {
 
 export function fetchUserInventory() {
     return dispatch => {
-        console.log('User inventory being fetched')
         return request.get(baseURL + '/users/1/inventory')
             .then(res => {
                 dispatch(setUserInventory(res.body))
@@ -156,7 +154,8 @@ export function fetchCosmetics() {
 }
 
 export const setAnimalInventory = (inventory, animalId) => {
-    //console.log(`inventory of animal #${animalId} is ${JSON.stringify(inventory)}`)
+    //console.log(`action: new inventory of animal #${animalId} is ${JSON.stringify(inventory)}`)
+
     return {
         type: 'SET_ANIMAL_INVENTORY',
         animal: animalId,

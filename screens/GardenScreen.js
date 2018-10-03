@@ -185,10 +185,15 @@ class GardenScreen extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      hidden: true
+      hidden: true,
+      dog: require(`../assets/images/anims/dog-anim-hat.gif`),
+      cat: require(`../assets/images/anims/cat-anim-glasses.gif`)
     }
     this.showAnimalInventory = this.showAnimalInventory.bind(this)
     this.closeAnimalInventory = this.closeAnimalInventory.bind(this)
+    this.getAnimalImage = this.getAnimalImage.bind(this)
+    this.getImage = this.getImage.bind(this)
+    this.setAnimalCosmetic = this.setAnimalCosmetic.bind(this)
   }
 
 
@@ -203,6 +208,7 @@ class GardenScreen extends React.Component {
     promiseArr.push(this.props.fetchUserInventory())
     Promise.all(promiseArr)
       .then(() => {
+        //this.getAllAnimalImages()
         this.props.setLoading(false)
       })
   }
@@ -212,19 +218,76 @@ class GardenScreen extends React.Component {
       this.props.updateActiveAnimal(animal)
       this.setState({
         hidden: false
+      }, () => {
+        this.getAnimalImage(animal)
       })
     }
   }
 
-  closeAnimalInventory() {
+  closeAnimalInventory(animalId) {
     this.props.updateActiveAnimal(null)
     this.setState({
       hidden: true
+    }, () => {
+      this.getAnimalImage(animalId)
     })
   }
 
   setAnimalCosmetic(cosmetic) {
-    this.props.setAnimalInventory({ ...cosmetic }, this.props.animals.ActiveAnimal.id)
+    this.props.setAnimalInventory({ ...cosmetic }, this.props.animals.ActiveAnimal.animalId)
+    this.getAnimalImage(this.props.animals.ActiveAnimal.animalId)
+  }
+
+  getAnimalImage(animalId) {
+    let thisActiveAnimal = this.props.animals.UserAnimals.find(animal => {
+      return animal.animalId === animalId
+    })
+    let animSpecies = thisActiveAnimal.species.toLowerCase()
+    let cosmetic = thisActiveAnimal.inventory.name.toLowerCase()
+    if (cosmetic == "bowler hat") cosmetic = 'hat'
+    const animalImageRef = {
+      hat: {
+        dog: require(`../assets/images/anims/dog-anim-hat.gif`),
+        cat: require(`../assets/images/anims/cat-anim-hat.gif`)
+      },
+      moustache: {
+        dog: require(`../assets/images/anims/dog-anim-moustache.gif`),
+        cat: require(`../assets/images/anims/cat-anim-moustache.gif`)
+      },
+      tie: {
+        dog: require(`../assets/images/anims/dog-anim-tie.gif`),
+        cat: require(`../assets/images/anims/cat-anim-tie.gif`)
+      },
+      crown: {
+        dog: require(`../assets/images/anims/dog-anim-crown.gif`),
+        cat: require(`../assets/images/anims/cat-anim-crown.gif`)
+      },
+      glasses: {
+        dog: require(`../assets/images/anims/dog-anim-glasses.gif`),
+        cat: require(`../assets/images/anims/cat-anim-glasses.gif`)
+      },
+      none: {
+        dog: require(`../assets/images/anims/dog-anim.gif`),
+        cat: require(`../assets/images/anims/cat-anim.gif`)
+      }
+    }
+    animSpecies === 'dog' ?
+      this.setState({
+        dog: animalImageRef[cosmetic][animSpecies]
+      })
+      :
+      this.setState({
+        cat: animalImageRef[cosmetic][animSpecies]
+      })
+    return animalImageRef[cosmetic][animSpecies]
+  }
+
+  getImage() {
+    if (this.props.animals.ActiveAnimal.species === 'dog') {
+      return this.state.dog
+    } else {
+      return this.state.cat
+    }
   }
 
   keyExtractor = (item, index) => String(item.id)
@@ -235,10 +298,10 @@ class GardenScreen extends React.Component {
         <ImageBackground source={require('../assets/images/backyard.jpg')} style={styles.backgroundImage}>
           <View>
             <TouchableWithoutFeedback onPress={() => { this.showAnimalInventory(2) }}>
-              <Image style={{ width: 150, height: 150, top: 20, left: 115 }} source={require('../assets/images/cat.png')} />
+              <Image style={{ width: 150, height: 150, top: 20, left: 115 }} source={this.state.cat} />
             </TouchableWithoutFeedback>
             <TouchableWithoutFeedback onPress={() => { this.showAnimalInventory(1) }}>
-              <Image style={{ width: 150, height: 150, top: -10, left: 370 }} source={require('../assets/images/dog.png')} />
+              <Image style={{ width: 150, height: 150, top: -10, left: 370 }} source={this.state.dog} />
             </TouchableWithoutFeedback>
           </View>
         </ImageBackground>
@@ -246,7 +309,7 @@ class GardenScreen extends React.Component {
     } else {
       return (
         <View style={{ flex: 1 }}>
-          <TouchableOpacity onPress={this.closeAnimalInventory} style={styles.inventoryExit}>
+          <TouchableOpacity onPress={() => { this.closeAnimalInventory(this.props.animals.ActiveAnimal.animalId) }} style={styles.inventoryExit}>
             <Text style={styles.inventoryExitX}>X</Text>
           </TouchableOpacity>
           <View style={styles.inventoryContainer}>
@@ -257,7 +320,7 @@ class GardenScreen extends React.Component {
               renderItem={({ item }) => (
                 <View style={styles.invListItem}>
                   <View style={styles.invListIconWrapper}>
-                    <Image style={styles.invListIcon} source={require('../assets/images/cosmetics/bowler-hat-512.png')} />
+                    <Image style={styles.invListIcon} source={require(`../assets/images/cosmetics/bowler-hat-512.png`)} />
                   </View>
                   <TouchableOpacity onPress={() => { this.setAnimalCosmetic(item) }} style={styles.invListItemDescription}>
                     <Text style={styles.invListItemDescriptionText}>{item.name}</Text>
@@ -265,7 +328,7 @@ class GardenScreen extends React.Component {
                 </View>
               )}
             />
-            <Image style={styles.invAnimalImg} source={require('../assets/images/anims/dog-anim-glasses.gif')} />
+            <Image style={styles.invAnimalImg} source={this.getImage()} />
             <View style={styles.invAnimalDesc}>
               <Text style={styles.invAnimalDescText}>{this.props.animals.ActiveAnimal.name} is a {this.props.animals.ActiveAnimal.disposition} {this.props.animals.ActiveAnimal.species}!</Text>
             </View>
@@ -273,8 +336,8 @@ class GardenScreen extends React.Component {
 
           <ImageBackground source={require('../assets/images/backyard.jpg')} style={styles.backgroundImageFaded}>
             <View>
-              <Image style={{ width: 150, height: 150, top: 20, left: 115 }} source={require('../assets/images/cat.png')} />
-              <Image style={{ width: 150, height: 150, top: -10, left: 370 }} source={require('../assets/images/dog.png')} />
+              <Image style={{ width: 150, height: 150, top: 20, left: 115 }} source={this.state.cat} />
+              <Image style={{ width: 150, height: 150, top: -10, left: 370 }} source={this.state.dog} />
             </View>
           </ImageBackground>
         </View>
@@ -282,10 +345,6 @@ class GardenScreen extends React.Component {
     }
   }
 }
-
-{/* <View style={this.state.hidden ? { height: 0 } : styles.hidden}>
-  <Text style={this.state.hidden ? { height: 0 } : styles.hiddenHeader}>Inventory</Text>
-</View> */}
 
 function MapStateToProps(state) {
   return {
