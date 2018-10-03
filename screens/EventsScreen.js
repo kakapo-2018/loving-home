@@ -1,11 +1,8 @@
-import React, {Component} from 'react';
-import api from '../utils/api'
+import React  from 'react';
 import { fetchEvents, updateEvent } from '../actions'
 import {
   Image,
-  Platform,
   ScrollView,
-  Alert,
   StyleSheet,
   Text,
   FlatList,
@@ -13,8 +10,7 @@ import {
   View,
   ImageBackground,
 } from 'react-native';
-import { WebBrowser } from 'expo';
-import { MonoText } from '../components/StyledText';
+import { AppLoading, Font } from 'expo';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
@@ -23,8 +19,7 @@ const styles = StyleSheet.create({
       flex: 1,
       justifyContent: 'center',
       alignItems: 'center',
-      borderColor: 'black',
-      
+      borderColor: 'black',   
     },
     words: {
       fontSize: 18,
@@ -34,26 +29,37 @@ const styles = StyleSheet.create({
       marginTop: 20,
       height: 210,
       width: 200,
-      backgroundColor: 'lightblue'
+      backgroundColor: 'lightblue',
+      fontFamily: 'droid-serif-regular'
     },
     pageheader: {
       fontSize: 40,
-      marginTop: 25
+      marginTop: 25,
+      fontFamily: 'droid-serif-regular'
     },
     hidden:{
       width: '100%',
-      backgroundColor:'rgba(0,0,0,0.4)'
+      backgroundColor:'rgba(0,0,0,0.8)'
       
     },
     hiddeninfo:{
       fontSize: 12,
-      height: 100
+      height: 100,
+      padding: 5,
+      fontFamily: 'droid-serif-regular',
+      color: 'white'
     },
   hiddenHeader: {
-    fontSize: 20
+    fontSize: 20,
+    textDecorationLine: 'underline',
+    paddingLeft: 5,
+    color: 'white'
   },
   hiddenContent: {
-    fontSize: 15
+    fontSize: 15,
+    padding: 5,
+    fontFamily: 'droid-serif-regular',
+    color: 'white'
   },
   hiddenImage: {
    height: 100
@@ -75,6 +81,7 @@ class EventsScreen extends React.Component {
     this.state = {
       pic: require('../assets/images/pastel-wallpaper.png'), 
       hidden: true,
+      fontLoaded: false,
       eventspics: [ require('../assets/images/events/petsatwork.jpg'), require('../assets/images/events/rehabbunny.png'), require('../assets/images/events/puppywalk.jpg'), require('../assets/images/events/oldcat.jpg'),   require('../assets/images/events/appreciationday.jpg')]
     }
 
@@ -87,7 +94,22 @@ class EventsScreen extends React.Component {
     header: null,
   }
 
-  componentDidMount () {
+  async componentDidMount () {
+    try{
+      await Font.loadAsync({
+        'droid-serif-regular': require('../assets/fonts/DroidSerif-Regular.ttf'),
+      });
+
+      this.setState({ fontLoaded: true });
+
+
+    } catch (error) {
+
+
+      console.log('error loading icon fonts', error);
+
+
+    }
     this.props.fetchEvents()
   }
 
@@ -113,7 +135,13 @@ class EventsScreen extends React.Component {
 
 
   render() {
+    if (!this.state.fontLoaded) {
 
+
+      return <AppLoading />;
+
+
+    }
     return (
       
         
@@ -126,7 +154,6 @@ class EventsScreen extends React.Component {
         <Text style={this.state.hidden ? { height: 0 } : styles.hiddenHeader}>{{...this.findEventsStory()}.headline}</Text>
         <Text style={this.state.hidden ? { height: 0 } : styles.hiddeninfo}>{{...this.findEventsStory()}.organisation}, {{...this.findEventsStory()}.location} at {{...this.findEventsStory()}.dateAndTime}</Text>
         <Text style={this.state.hidden ? { height: 0 } : styles.hiddenContent}>{{...this.findEventsStory()}.content}</Text>
-        {/* <TouchableOpacity onPress={() => this.expandArticle()}><Image style={this.state.hidden ? { height: 0 } : styles.hiddenImage} source={{uri:'https://www.petmd.com/sites/default/files/petmd-kitten-development.jpg'}} /></TouchableOpacity> */}
     </View>
   </ScrollView>
 <FlatList
