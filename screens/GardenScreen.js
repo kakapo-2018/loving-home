@@ -1,5 +1,5 @@
 import React from 'react';
-import { fetchAnimals, updateActiveAnimal, fetchUserInventory, setLoading } from '../actions'
+import { fetchAnimals, updateActiveAnimal, fetchUserInventory, setLoading, setAnimalInventory } from '../actions'
 import {
   ScrollView,
   StyleSheet,
@@ -9,6 +9,7 @@ import {
   TouchableWithoutFeedback,
   TouchableOpacity,
   Text,
+  Button,
   FlatList
 } from 'react-native';
 import { connect } from 'react-redux';
@@ -37,17 +38,10 @@ const styles = StyleSheet.create({
     zIndex: 0
   },
   inventoryContainer: {
-    // position: 'absolute',
-    // top: 90,
-    // left: 100,
-    // width: 450,
-    // height: 150,
     margin: '10%',
     marginBottom: '5%',
     padding: 20,
     flex: 1,
-    // width: 530,
-    // height: 200,
     borderStyle: 'solid',
     borderColor: 'black',
     borderWidth: 2,
@@ -57,8 +51,6 @@ const styles = StyleSheet.create({
     zIndex: 1
   },
   inventoryExit: {
-    // marginTop: '5%',
-    // marginRight: '5%',
     position: 'absolute',
     right: '8.5%',
     top: '18%',
@@ -95,6 +87,7 @@ const styles = StyleSheet.create({
   },
   invListItem: {
     flex: 1,
+    flexDirection: 'column',
     height: 80,
     margin: 2,
     padding: 5,
@@ -103,17 +96,97 @@ const styles = StyleSheet.create({
     borderWidth: 2,
     borderRadius: 5,
     backgroundColor: 'green'
+  },
+  // invListEquipBtn: {
+  //   width: 10,
+  //   // width: 30,
+  //   position: 'absolute',
+  //   top: -67,
+  // },
+  invListIconWrapper: {
+    // flex: 1,
+    position: 'relative',
+    left: 0,
+    top: 0,
+    width: 67,
+    height: 67,
+    margin: 'auto',
+    backgroundColor: 'white',
+    borderStyle: 'solid',
+    borderColor: 'black',
+    borderWidth: 2,
+    borderRadius: 5,
+  },
+  invListIcon: {
+    flex: 0.9,
+    width: '90%',
+    margin: 3
+  },
+  invListItemDescription: {
+    flex: 1,
+    position: 'absolute',
+    left: 76,
+    top: 20,
+    height: 30,
+    width: 184,
+    backgroundColor: 'lightgreen',
+    borderStyle: 'solid',
+    borderColor: 'black',
+    borderWidth: 1,
+    borderRadius: 5,
+    padding: 3
+  },
+  invListItemDescriptionEquipped: {
+    flex: 1,
+    position: 'absolute',
+    left: 76,
+    top: 20,
+    height: 30,
+    width: 184,
+    backgroundColor: 'white',
+    borderStyle: 'solid',
+    borderColor: 'black',
+    borderWidth: 1,
+    borderRadius: 5,
+    padding: 3
+  },
+  invListItemDescriptionText: {
+    textAlign: 'center',
+    textAlignVertical: 'center'
+  },
+  invAnimalDesc: {
+    position: 'absolute',
+    bottom: 18,
+    right: 18,
+    width: 175,
+    height: 30,
+    backgroundColor: 'white',
+    borderStyle: 'solid',
+    borderColor: 'black',
+    borderWidth: 1,
+    borderRadius: 5,
+    padding: 3,
+    paddingLeft: 0
+  },
+  invAnimalDescText: {
+    textAlign: 'center',
+    textAlignVertical: 'center'
+  },
+  invAnimalImg: {
+    position: 'absolute',
+    top: 10,
+    right: 18,
+    width: 170,
+    height: 170
   }
 })
 
 class GardenScreen extends React.Component {
   constructor(props) {
     super(props)
-
     this.state = {
       hidden: true
     }
-
     this.showAnimalInventory = this.showAnimalInventory.bind(this)
     this.closeAnimalInventory = this.closeAnimalInventory.bind(this)
   }
@@ -150,6 +223,10 @@ class GardenScreen extends React.Component {
     })
   }
 
+  setAnimalCosmetic(cosmetic) {
+    this.props.setAnimalInventory({ ...cosmetic }, this.props.animals.ActiveAnimal.id)
+  }
+
   keyExtractor = (item, index) => String(item.id)
 
   render() {
@@ -179,14 +256,21 @@ class GardenScreen extends React.Component {
               keyExtractor={this.keyExtractor}
               renderItem={({ item }) => (
                 <View style={styles.invListItem}>
-                  <Text>{item.name}</Text>
+                  <View style={styles.invListIconWrapper}>
+                    <Image style={styles.invListIcon} source={require('../assets/images/cosmetics/bowler-hat-512.png')} />
+                  </View>
+                  <TouchableOpacity onPress={() => { this.setAnimalCosmetic(item) }} style={styles.invListItemDescription}>
+                    <Text style={styles.invListItemDescriptionText}>{item.name}</Text>
+                  </TouchableOpacity>
                 </View>
               )}
             />
-
-            <Text>Inventory. {this.props.user.inventory.length}</Text>
-            {/* <Text>{this.props.animals.ActiveAnimal.name} is a {this.props.animals.ActiveAnimal.disposition} {this.props.animals.ActiveAnimal.species}</Text> */}
+            <Image style={styles.invAnimalImg} source={require('../assets/images/anims/dog-anim-glasses.gif')} />
+            <View style={styles.invAnimalDesc}>
+              <Text style={styles.invAnimalDescText}>{this.props.animals.ActiveAnimal.name} is a {this.props.animals.ActiveAnimal.disposition} {this.props.animals.ActiveAnimal.species}!</Text>
+            </View>
           </View>
+
           <ImageBackground source={require('../assets/images/backyard.jpg')} style={styles.backgroundImageFaded}>
             <View>
               <Image style={{ width: 150, height: 150, top: 20, left: 115 }} source={require('../assets/images/cat.png')} />
@@ -215,6 +299,7 @@ function mapDispatchToProps(dispatch) {
     fetchAnimals: fetchAnimals,
     updateActiveAnimal: updateActiveAnimal,
     fetchUserInventory: fetchUserInventory,
+    setAnimalInventory: setAnimalInventory,
     setLoading: setLoading
   }, dispatch)
 }
