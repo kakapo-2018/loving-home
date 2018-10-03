@@ -27,22 +27,22 @@ const styles = StyleSheet.create({
 
   },
   words: {
-    fontSize: 20,
+    fontSize: 18,
     alignItems: 'center',
     justifyContent: 'center',
     margin: 20,
     marginTop: 20,
+    height: 300,
     width: 200,
-    backgroundColor: 'green'
+    backgroundColor: 'lightgreen'
   },
   pageheader: {
     fontSize: 40,
     marginTop: 25
   },
   hidden: {
-    height: 1000,
-    width: 400,
-    backgroundColor: 'green'
+    width: '100%',
+    backgroundColor: 'rgba(0,0,0,0.5)'
   },
   hiddenHeader: {
     fontSize: 20
@@ -55,14 +55,10 @@ const styles = StyleSheet.create({
   },
   picwrapper: {
     width: 1000,
-    height: 400, 
+    height: 500, 
     resizeMode:'contain',
     paddingHorizontal: 20,
     alignItems: 'center',
-  },
-  scroll:{
-    height: 800
-
   }
 })
 
@@ -157,7 +153,7 @@ class NewsScreen extends React.Component {
           <Text style={styles.pageheader}>Welcome to the News</Text>
         </TouchableOpacity>
         {/* <Text style={this.state.hidden ? { height: 0 } : styles.hidden}>{{...this.findNewsStory()}.headline}</Text> */}
-        <ScrollView style={styles.scroll} >
+        <ScrollView >
           <View style={this.state.hidden ? { height: 0 } : styles.hidden}>
           <Text style={this.state.hidden ? { height: 0 } : styles.hiddenHeader}>{{...this.findNewsStory()}.headline}</Text>
           <Text style={this.state.hidden ? { height: 0 } : styles.hiddenContent}>{{...this.findNewsStory()}.content}</Text>
