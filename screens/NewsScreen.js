@@ -131,7 +131,6 @@ class NewsScreen extends React.Component {
     }
 
   }
-
   expandArticle() {
     this.setState({
       hidden: !this.state.hidden
@@ -152,10 +151,10 @@ class NewsScreen extends React.Component {
     }
     return (
 
-     
+      <ImageBackground source={this.state.pic} style={{height:'100%'}}>
 
       <View style={styles.container}>
-       <ImageBackground source={this.state.pic} style={{height:'100%'}}>
+       
         <TouchableOpacity onPress={() => this.expandArticle()}>
           <Text style={styles.pageheader}>News</Text>
         </TouchableOpacity>
@@ -170,11 +169,17 @@ class NewsScreen extends React.Component {
           horizontal={true}
           data={this.props.news.NewsCarousel}
           keyExtractor={this.keyExtractor}
-          renderItem={({ item }) => <TouchableOpacity onPress={() => {this.expandArticle(); this.props.updateNews(item.id)}}><Text style={styles.words}><Image style={styles.picwrapper} source={this.state.newspics[(item.id)-1]} />{item.headline}</Text></TouchableOpacity>}
+          renderItem={({ item }) => 
+          <TouchableOpacity onPress={() => {this.expandArticle(); this.props.updateNews(item.id)}}>
+          <Text style={styles.words}>
+          <Image style={styles.picwrapper} source={this.state.newspics[(item.id)-1]} />
+          {item.headline}
+          </Text>
+          </TouchableOpacity>}
         />
-      </ImageBackground>
 
       </View>
+      </ImageBackground>
     )
   }
 }

@@ -22,7 +22,7 @@ const styles = StyleSheet.create({
       borderColor: 'black',   
     },
     words: {
-      fontSize: 18,
+      fontSize: 17,
       alignItems: 'center',
       justifyContent: 'center',
       margin: 20,
@@ -40,7 +40,6 @@ const styles = StyleSheet.create({
     hidden:{
       width: '100%',
       backgroundColor:'rgba(0,0,0,0.8)'
-      
     },
     hiddeninfo:{
       fontSize: 12,
@@ -143,10 +142,10 @@ class EventsScreen extends React.Component {
 
     }
     return (
-      
+      <ImageBackground source={this.state.pic} style={{height:'100%'}}>
         
 <View style={styles.container}>
-<ImageBackground source={this.state.pic} style={{height:'100%'}}>
+
 
   <Text style={styles.pageheader}>Events</Text>  
   <ScrollView>
@@ -162,8 +161,9 @@ class EventsScreen extends React.Component {
   keyExtractor={this.keyExtractor}
   renderItem={({item}) => <TouchableOpacity onPress={() => {this.expandArticle(); this.props.updateEvent(item.id)}}><Text style={styles.words}><Image style={styles.picwrapper} source={this.state.eventspics[(item.id)-1]} />{item.headline}</Text></TouchableOpacity>}
 />  
-</ImageBackground>
+
 </View>    
+</ImageBackground>
 
     )}}
 
