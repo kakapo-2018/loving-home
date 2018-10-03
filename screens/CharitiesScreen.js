@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import api from "../utils/api";
-import { fetchCharities } from "../actions";
+import { fetchCharities, updateActiveCharities } from "../actions";
 import {
   Image,
   Platform,
@@ -12,11 +12,12 @@ import {
   FlatList,
   TouchableOpacity,
   View,
-  ImageBackground,
-  CheckBox
+  CheckBox,
+  Button,
+  ImageBackground
 } from "react-native";
+// import { CheckBox } from 'react-native-elements'
 import { WebBrowser } from "expo";
-import { MonoText } from "../components/StyledText";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 
@@ -25,41 +26,19 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    borderColor: "black"
-  },
-  words: {
-    fontSize: 15,
-    alignItems: "center",
-    justifyContent: "center",
-    margin: 20,
-    marginTop: 20,
-    width: 200,
-    backgroundColor: "green"
+    borderColor: "black",
+    justifyContent: "space-evenly"
   },
   pageheader: {
-    fontSize: 20,
-    marginTop: 25
+    fontSize: 30,
+    marginTop: 21
   },
-  hidden: {
-    height: 200,
-    width: 200
-  },
-  infoholder: {
-    width: 200,
-    height:200
-  },
-  mission:{
-    fontSize: 12
-  },
- 
   wrapper:{
     flex: 1,
     flexDirection: 'row',
     flexWrap: 'wrap',
     alignItems: 'stretch'
   },
-
-
   charitywrapper: {
     width: 400, 
     height: 400, 
@@ -67,15 +46,19 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     alignItems: 'center',
   },
-
   checkboxwrapper: {
     width:700,
     height:700,
     alignItems: "center",
     borderColor: "blue"
+  },
+  picwrapper: {
+    width: 90,
+    height: 90, 
+    resizeMode:'contain',
+    paddingHorizontal: 2,
+    alignItems: 'center',
   }
-
-
 });
 
 class CharitiesScreen extends React.Component {
@@ -84,13 +67,15 @@ class CharitiesScreen extends React.Component {
 
     this.state = {
       hidden: true,
-      arr: [require('../assets/images/charities/spca.png'), require('../assets/images/charities/huha.jpg'), require('../assets/images/charities/uhars.png')],
+      pic: require('../assets/images/charitybackground.png'),
+      charitypics: [ require('../assets/images/charities/spca.png'), require('../assets/images/charities/huha.jpg'), require('../assets/images/charities/wcpl.png'), require('../assets/images/charities/petrescue.png'), 
+      require('../assets/images/charities/uhars.png'),require('../assets/images/charities/kitteninn.png')],
       checked: false
     };
 
     this.showMission = this.showMission.bind(this);
-    this.showPic = this.showPic.bind(this)
     this.keyExtractor = this.keyExtractor.bind(this);
+    // this.findMission = this.findMission.bind(this);
   }
 
   static navigationOptions = {
@@ -101,18 +86,16 @@ class CharitiesScreen extends React.Component {
     this.props.fetchCharities();
   }
 
-  showPic(id){
-    let pic = this.props.charities.charities.find(thing => {
-      return thing.id == id
+  keyExtractor = (item, index) => String(item.id);
+ 
+  findMission(id) {
+    let mission = this.props.charities.Charities.find(charityMission => {
+      console.log('hjer', charityMission)
+      return charityMission.id == id
     })
-    if (pic != undefined){
-      console.log('charitiy', pic)
-    // return require(`../assets${png}`)
-    }
-
+    return mission
   }
-
-
+9
   showMission () {
     this.setState({
       hidden: !this.state.hidden
@@ -120,128 +103,34 @@ class CharitiesScreen extends React.Component {
     console.log(this.state.hidden)
   }
 
-  keyExtractor = (item, index) => String(item.id);
- 
-
-
   render() {
     return (
-      <ImageBackground source={require('../assets/images/pastel-wallpaper.png')} style={{height:'100%'}}>
+      <ImageBackground source={this.state.pic} style={{width:'100%', height: '100%'}}>
       <View style={styles.container}>
  
-          {/* <Text style={styles.pageheader}>Support Your Charities</Text> */}
+          <Text style={styles.pageheader}>Support Your Charities</Text>
 
     <FlatList
-          horizontal={true}
+          numColumns={3}
           data={this.props.charities.Charities}
           keyExtractor={this.keyExtractor}
-          renderItem={({ item }) => <Text>{item.charityName}, {item.logo}
-          <Image source={item.logo}/></Text>}
+          renderItem={({ item }) => 
+          <TouchableOpacity onPress={() => this.props.findMission(item.id)}>
+            <View style={{width: 180, margin: 1}}>
+              <Image style={styles.picwrapper} source={this.state.charitypics[(item.id)-1]} />
+              <View style={{flexDirection: 'row'}}>
+              <CheckBox checked={false} />
+              <Text style={{fontSize: 9, paddingTop: 10 }}>{item.charityName}</Text>
+              </View>
+          </View>
+          </TouchableOpacity>} 
         />
-
-
-         {/* {this.props.charities.charities.map(charity => {
-          console.log(charity)
-            return <Image key={charity} source={require('../assets/images/charities/spca.png')} style={{height:'50%'}} />
-              
-          })} */}
-     {this.props.charities.charities.map(char => {
-       console.log(char)
-           return <Text>{char}</Text>
-    })} 
-
-
-         <View style={{flex:1, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'stretch'}}>
-
-          <View>
-          <TouchableOpacity 
-            onPress={() => this.showMission()}>
-          <Text>
-          <Image style={styles.charitywrapper} source={require('../assets/images/charities/huha.jpg')} />
-          </Text>
-          <CheckBox title='support'
-          checked={this.state.checked} /><Text>Support</Text>
-          </TouchableOpacity>
-          </View>
-
-          <View>
-          <TouchableOpacity 
-            onPress={() => this.showMission()}>
-          <Text>
-          <Image style={styles.charitywrapper} source={require('../assets/images/charities/kitteninn.png')} />
-          </Text>
-          <CheckBox 
-          center
-          checked={this.state.checked} />
-          </TouchableOpacity>
-          </View>
-
-          <View>
-          <TouchableOpacity 
-            onPress={() => this.showMission()}>
-          <Text>
-          <Image style={styles.charitywrapper} source={require('../assets/images/charities/petrescue.png')} />
-          </Text>
-          <CheckBox title='support'
-          checked={this.state.checked} /><Text>Support</Text>
-          </TouchableOpacity>
-          </View>
-
-        </View>
-
-<View style={{flex:1, flexDirection: 'row'}}>
- 
-          <View>
-          <TouchableOpacity 
-            onPress={() => this.showMission()}>
-          <Text>
-          <Image  style={styles.charitywrapper} source={require('../assets/images/charities/spca.png')} />
-          </Text>
-          <CheckBox title='support'
-          checked={this.state.checked} /><Text>Support</Text>
-          </TouchableOpacity>
-          </View>
-
-          <View>
-          <TouchableOpacity 
-            onPress={() => this.showMission()}>
-          <Text>
-          <Image style={styles.charitywrapper} source={require('../assets/images/charities/uhars.png')} />
-          </Text>
-          <CheckBox
-          checked={this.state.checked} /><Text>Support</Text>
-          </TouchableOpacity>
-        </View>
-
-          <View>
-          <TouchableOpacity 
-            onPress={() => this.showMission()}>
-          <Text>
-          <Image style={styles.charitywrapper} source={require('../assets/images/charities/wcpl.png')} />
-          </Text>
-
-         
-          <CheckBox title='support'
-          checked={this.state.checked} /><Text>Support</Text>
-          </TouchableOpacity>
-         </View>
-         
-
-  
-
-           {/* <Image source={require('../assets/images/charities/huha.jpg')}/> */}
-          </View>
-       
-         {/*  {this.props.charities.charities.map(charity => {
-            return <Image source={require(charity.logo)} />
-          })} */}
-      </View>
-          </ImageBackground>
-    )}}
-  
-
-
-    
+      
+           </View>
+           </ImageBackground>
+    )
+  } 
+}  
 
 function MapStateToProps(state) {
   return {

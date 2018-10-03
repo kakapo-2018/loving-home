@@ -24,7 +24,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     borderColor: 'black',
-
   },
   words: {
     fontSize: 18,
@@ -42,7 +41,7 @@ const styles = StyleSheet.create({
   },
   hidden: {
     width: '100%',
-    backgroundColor: 'rgba(0,0,0,0.5)'
+    backgroundColor: 'rgba(0,0,0,0.2)'
   },
   hiddenHeader: {
     fontSize: 20
@@ -122,15 +121,6 @@ class NewsScreen extends React.Component {
   }
 
 
-  // getAllNews(err, news){
-  //   this.props.setAllNews(news)
-  // console.log("here is news", news)
-  // this.setState({
-  //   log: news
-  // })
-
-  // }
-
   expandArticle() {
     this.setState({
       hidden: !this.state.hidden
@@ -145,10 +135,10 @@ class NewsScreen extends React.Component {
 
     return (
 
-     
+      <ImageBackground source={this.state.pic} style={{height:'100%'}}>
 
       <View style={styles.container}>
-       <ImageBackground source={this.state.pic} style={{height:'100%'}}>
+       
         <TouchableOpacity onPress={() => this.expandArticle()}>
           <Text style={styles.pageheader}>Welcome to the News</Text>
         </TouchableOpacity>
@@ -164,11 +154,17 @@ class NewsScreen extends React.Component {
           horizontal={true}
           data={this.props.news.NewsCarousel}
           keyExtractor={this.keyExtractor}
-          renderItem={({ item }) => <TouchableOpacity onPress={() => {this.expandArticle(); this.props.updateNews(item.id)}}><Text style={styles.words}><Image style={styles.picwrapper} source={this.state.newspics[(item.id)-1]} />{item.headline}</Text></TouchableOpacity>}
+          renderItem={({ item }) => 
+          <TouchableOpacity onPress={() => {this.expandArticle(); this.props.updateNews(item.id)}}>
+          <Text style={styles.words}>
+          <Image style={styles.picwrapper} source={this.state.newspics[(item.id)-1]} />
+          {item.headline}
+          </Text>
+          </TouchableOpacity>}
         />
-      </ImageBackground>
 
       </View>
+      </ImageBackground>
     )
   }
 }
