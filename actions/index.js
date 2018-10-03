@@ -51,11 +51,46 @@ export const setAllAnimals = (animals) => {
     }
 }
 
-export function fetchAnimals() {
+export const setLoading = (bool) => {
+    return {
+        type: 'SET_LOADING',
+        loading: bool
+    }
+}
+
+export function fetchAnimals(cb) {
 
     return dispatch => {
         return request.get(baseURL + '/users/1/animals')
-            .then(res => dispatch(setAllAnimals(res.body)))
+            .then(res => {
+                dispatch(setAllAnimals(res.body))
+                let allAnimals = res.body
+                allAnimals.forEach(animal => {
+                    dispatch(fetchAnimalInventory(animal.animalId))
+                })
+            })
+            .catch(err => {
+                console.log("ERRROOOOOORRRR")
+                console.log(err)
+            })
+    }
+}
+
+export const setUserInventory = (inventory) => {
+    console.log('User inventory being set')
+    return {
+        type: 'SET_USER_INVENTORY',
+        inventory: inventory
+    }
+}
+
+export function fetchUserInventory() {
+    return dispatch => {
+        console.log('User inventory being fetched')
+        return request.get(baseURL + '/users/1/inventory')
+            .then(res => {
+                dispatch(setUserInventory(res.body))
+            })
             .catch(err => {
                 console.log("ERRROOOOOORRRR")
                 console.log(err)
@@ -120,3 +155,23 @@ export function fetchCosmetics() {
     }
 }
 
+export const setAnimalInventory = (inventory, animalId) => {
+    //console.log(`inventory of animal #${animalId} is ${JSON.stringify(inventory)}`)
+    return {
+        type: 'SET_ANIMAL_INVENTORY',
+        animal: animalId,
+        inventory: inventory
+    }
+}
+
+export function fetchAnimalInventory(animalId) {
+    return dispatch => {
+        return request
+            .get(baseURL + '/animals/' + animalId + '/inventory')
+            .then(res => dispatch(setAnimalInventory(res.body, animalId)))
+            .catch(err => {
+                console.log("ERRROOOOOORRRR")
+                console.log(err)
+            })
+    }
+}

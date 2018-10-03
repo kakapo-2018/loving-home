@@ -1,5 +1,5 @@
 import React from 'react';
-import { fetchAnimals, updateActiveAnimal } from '../actions'
+import { fetchAnimals, updateActiveAnimal, fetchUserInventory, setLoading } from '../actions'
 import {
   ScrollView,
   StyleSheet,
@@ -8,13 +8,15 @@ import {
   View,
   TouchableWithoutFeedback,
   TouchableOpacity,
-  Text
+  Text,
+  FlatList
 } from 'react-native';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
 const styles = StyleSheet.create({
   backgroundImage: {
+    flex: 1,
     position: 'absolute',
     top: 0,
     left: 0,
@@ -24,6 +26,7 @@ const styles = StyleSheet.create({
     zIndex: 0
   },
   backgroundImageFaded: {
+    flex: 1,
     position: 'absolute',
     top: 0,
     left: 0,
@@ -40,9 +43,11 @@ const styles = StyleSheet.create({
     // width: 450,
     // height: 150,
     margin: '10%',
+    marginBottom: '5%',
     padding: 20,
-    minWidth: 300,
-    minHeight: 200,
+    flex: 1,
+    // width: 530,
+    // height: 200,
     borderStyle: 'solid',
     borderColor: 'black',
     borderWidth: 2,
@@ -52,9 +57,11 @@ const styles = StyleSheet.create({
     zIndex: 1
   },
   inventoryExit: {
+    // marginTop: '5%',
+    // marginRight: '5%',
     position: 'absolute',
-    right: 5,
-    top: 5,
+    right: '8.5%',
+    top: '18%',
     borderStyle: 'solid',
     borderColor: 'black',
     borderWidth: 2,
@@ -63,13 +70,39 @@ const styles = StyleSheet.create({
     width: 35,
     height: 35,
     paddingLeft: 8.5,
-    paddingTop: 1
+    paddingTop: 1,
+    opacity: 1,
+    zIndex: 2
   },
   inventoryExitX: {
     fontSize: 20,
     textAlign: 'left',
     padding: 0,
     margin: 0
+  },
+  invList: {
+    flex: 1,
+    margin: 0,
+    padding: 2,
+    paddingBottom: 2,
+    maxWidth: '60%',
+    maxHeight: '80%',
+    borderStyle: 'solid',
+    borderColor: 'black',
+    borderWidth: 2,
+    borderRadius: 5,
+    backgroundColor: 'white'
+  },
+  invListItem: {
+    flex: 1,
+    height: 80,
+    margin: 2,
+    padding: 5,
+    borderStyle: 'solid',
+    borderColor: 'black',
+    borderWidth: 2,
+    borderRadius: 5,
+    backgroundColor: 'green'
   }
 })
 
@@ -83,7 +116,6 @@ class GardenScreen extends React.Component {
 
     this.showAnimalInventory = this.showAnimalInventory.bind(this)
     this.closeAnimalInventory = this.closeAnimalInventory.bind(this)
-    this.currentAnimalInfo = this.currentAnimalInfo.bind(this)
   }
 
 
@@ -92,14 +124,23 @@ class GardenScreen extends React.Component {
   };
 
   componentDidMount() {
-    this.props.fetchAnimals()
+    this.props.setLoading(true)
+    let promiseArr = []
+    promiseArr.push(this.props.fetchAnimals())
+    promiseArr.push(this.props.fetchUserInventory())
+    Promise.all(promiseArr)
+      .then(() => {
+        this.props.setLoading(false)
+      })
   }
 
   showAnimalInventory(animal) {
-    this.props.updateActiveAnimal(animal)
-    this.setState({
-      hidden: false
-    })
+    if (this.props.user.loading === false) {
+      this.props.updateActiveAnimal(animal)
+      this.setState({
+        hidden: false
+      })
+    }
   }
 
   closeAnimalInventory() {
@@ -109,23 +150,9 @@ class GardenScreen extends React.Component {
     })
   }
 
-  currentAnimalInfo() {
-    if (this.props.animals.ActiveAnimal.id) {
-      return this.props.animals.UserAnimals.find(animal => {
-        return animal.animalId === this.props.animals.ActiveAnimal.id
-      })
-    } else {
-      return {
-        animalId: null,
-        name: "",
-        species: "",
-        disposition: ""
-      }
-    }
-  }
+  keyExtractor = (item, index) => String(item.id)
 
   render() {
-    let currentAnimal = { ...this.currentAnimalInfo() }
     if (this.state.hidden) {
       return (
         <ImageBackground source={require('../assets/images/backyard.jpg')} style={styles.backgroundImage}>
@@ -141,13 +168,24 @@ class GardenScreen extends React.Component {
       )
     } else {
       return (
-        <View>
+        <View style={{ flex: 1 }}>
+          <TouchableOpacity onPress={this.closeAnimalInventory} style={styles.inventoryExit}>
+            <Text style={styles.inventoryExitX}>X</Text>
+          </TouchableOpacity>
           <View style={styles.inventoryContainer}>
-            <TouchableOpacity onPress={this.closeAnimalInventory} style={styles.inventoryExit}>
-              <Text style={styles.inventoryExitX}>X</Text>
-            </TouchableOpacity>
-            <Text>Inventory</Text>
-            <Text>{currentAnimal.name} is a {currentAnimal.disposition} {currentAnimal.species}</Text>
+            <FlatList
+              style={styles.invList}
+              data={this.props.user.inventory}
+              keyExtractor={this.keyExtractor}
+              renderItem={({ item }) => (
+                <View style={styles.invListItem}>
+                  <Text>{item.name}</Text>
+                </View>
+              )}
+            />
+
+            <Text>Inventory. {this.props.user.inventory.length}</Text>
+            {/* <Text>{this.props.animals.ActiveAnimal.name} is a {this.props.animals.ActiveAnimal.disposition} {this.props.animals.ActiveAnimal.species}</Text> */}
           </View>
           <ImageBackground source={require('../assets/images/backyard.jpg')} style={styles.backgroundImageFaded}>
             <View>
@@ -167,14 +205,17 @@ class GardenScreen extends React.Component {
 
 function MapStateToProps(state) {
   return {
-    animals: state.animals
+    animals: state.animals,
+    user: state.user
   }
 }
 
 function mapDispatchToProps(dispatch) {
   return bindActionCreators({
     fetchAnimals: fetchAnimals,
-    updateActiveAnimal: updateActiveAnimal
+    updateActiveAnimal: updateActiveAnimal,
+    fetchUserInventory: fetchUserInventory,
+    setLoading: setLoading
   }, dispatch)
 }
 
