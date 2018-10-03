@@ -2,9 +2,9 @@
 const baseURL = 'http://furever-home.herokuapp.com/api'
 import request from 'superagent'
 
-export const updateActivePet = (animalId) => {
+export const updateActiveAnimal = (animalId) => {
     return {
-        type: 'UPDATE_ACTIVE_PET',
+        type: 'UPDATE_ACTIVE_ANIMAL',
         animal: animalId
     }
 }
@@ -44,6 +44,57 @@ export const updateActiveItem = (item) => {
     }
 }
 
+export const setAllAnimals = (animals) => {
+    return {
+        type: 'SET_ALL_ANIMALS',
+        allAnimals: animals
+    }
+}
+
+export const setLoading = (bool) => {
+    return {
+        type: 'SET_LOADING',
+        loading: bool
+    }
+}
+
+export function fetchAnimals(cb) {
+    return dispatch => {
+        return request.get(baseURL + '/users/1/animals')
+            .then(res => {
+                dispatch(setAllAnimals(res.body))
+                let allAnimals = res.body
+                allAnimals.forEach(animal => {
+                    dispatch(fetchAnimalInventory(animal.animalId))
+                })
+            })
+            .catch(err => {
+                console.log("ERRROOOOOORRRR")
+                console.log(err)
+            })
+    }
+}
+
+export const setUserInventory = (inventory) => {
+    return {
+        type: 'SET_USER_INVENTORY',
+        inventory: inventory
+    }
+}
+
+export function fetchUserInventory() {
+    return dispatch => {
+        return request.get(baseURL + '/users/1/inventory')
+            .then(res => {
+                dispatch(setUserInventory(res.body))
+            })
+            .catch(err => {
+                console.log("ERRROOOOOORRRR")
+                console.log(err)
+            })
+    }
+}
+
 export const setAllNews = (news) => {
     return {
         type: 'SET_ALL_NEWS',
@@ -51,8 +102,7 @@ export const setAllNews = (news) => {
     }
 }
 
-export function fetchNews(){
-
+export function fetchNews() {
     return dispatch => {
         return request.get(baseURL + '/news')
             .then(res => dispatch(setAllNews(res.body)))
@@ -70,8 +120,7 @@ export const setAllEvents = (events) => {
     }
 }
 
-export function fetchEvents(){
-
+export function fetchEvents() {
     return dispatch => {
         return request.get(baseURL + '/events')
             .then(res => dispatch(setAllEvents(res.body)))
@@ -89,11 +138,30 @@ export const setAllCosmetics = (cosmetics) => {
     }
 }
 
-export function fetchCosmetics(){
-
+export function fetchCosmetics() {
     return dispatch => {
         return request.get(baseURL + '/store/cosmetics/all') 
             .then(res => dispatch(setAllCosmetics(res.body)))
+            .catch(err => {
+                console.log("ERRROOOOOORRRR")
+                console.log(err)
+            })
+    }
+}
+
+export const setAnimalInventory = (inventory, animalId) => {
+    return {
+        type: 'SET_ANIMAL_INVENTORY',
+        animal: animalId,
+        inventory: inventory
+    }
+}
+
+export function fetchAnimalInventory(animalId) {
+    return dispatch => {
+        return request
+            .get(baseURL + '/animals/' + animalId + '/inventory')
+            .then(res => dispatch(setAnimalInventory(res.body, animalId)))
             .catch(err => {
                 console.log("ERRROOOOOORRRR")
                 console.log(err)

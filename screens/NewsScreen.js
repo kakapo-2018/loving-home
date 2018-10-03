@@ -54,7 +54,7 @@ const styles = StyleSheet.create({
     color: 'white'
   },
   hiddenImage: {
-   height: 100
+    height: 100
   },
   picwrapper: {
     width: 1000,
@@ -105,24 +105,21 @@ class NewsScreen extends React.Component {
 
     }
     this.props.fetchNews()
-    }
-    
-    
-  
+  }
 
   getAllNews(err, res) {
-    console.log(res)
+    //console.log(res)
   }
 
   findNewsStory() {
     let story = this.props.news.NewsCarousel.find(thing => {
-      console.log(thing)
+      //console.log(thing)
       return thing.id == this.props.news.ActiveNews.id
     })
-    if (story != undefined){
-    return (story)
+    if (story != undefined) {
+      return (story)
     }
-    
+
   }
 
   showPic(id){
