@@ -27,26 +27,27 @@ const styles = StyleSheet.create({
       
     },
     words: {
-      fontSize: 20,
+      fontSize: 18,
       alignItems: 'center',
       justifyContent: 'center',
       margin: 20,
       marginTop: 20,
+      height: 210,
       width: 200,
-      backgroundColor: 'green'
+      backgroundColor: 'lightblue'
     },
     pageheader: {
       fontSize: 40,
       marginTop: 25
     },
     hidden:{
-      height:200,
-      width: 600,
-      backgroundColor:'green',
+      width: '100%',
+      backgroundColor:'rgba(0,0,0,0.4)'
       
     },
     hiddeninfo:{
-      fontSize: 12
+      fontSize: 12,
+      height: 100
     },
   hiddenHeader: {
     fontSize: 20
@@ -56,7 +57,15 @@ const styles = StyleSheet.create({
   },
   hiddenImage: {
    height: 100
-  }})
+  },
+  picwrapper: {
+    width: 1000, 
+    height: 500, 
+    resizeMode:'contain',
+    paddingHorizontal: 20,
+    alignItems: 'center',
+  },
+})
 
  
 class EventsScreen extends React.Component {
@@ -64,7 +73,9 @@ class EventsScreen extends React.Component {
     super(props)
 
     this.state = {
-      hidden: true
+      pic: require('../assets/images/pastel-wallpaper.png'), 
+      hidden: true,
+      eventspics: [ require('../assets/images/events/petsatwork.jpg'), require('../assets/images/events/rehabbunny.png'), require('../assets/images/events/puppywalk.jpg'), require('../assets/images/events/oldcat.jpg'),   require('../assets/images/events/appreciationday.jpg')]
     }
 
     this.expandArticle = this.expandArticle.bind(this)
@@ -107,6 +118,7 @@ class EventsScreen extends React.Component {
       
         
 <View style={styles.container}>
+<ImageBackground source={this.state.pic} style={{height:'100%'}}>
 
   <Text style={styles.pageheader}>Events</Text>  
   <ScrollView>
@@ -114,15 +126,16 @@ class EventsScreen extends React.Component {
         <Text style={this.state.hidden ? { height: 0 } : styles.hiddenHeader}>{{...this.findEventsStory()}.headline}</Text>
         <Text style={this.state.hidden ? { height: 0 } : styles.hiddeninfo}>{{...this.findEventsStory()}.organisation}, {{...this.findEventsStory()}.location} at {{...this.findEventsStory()}.dateAndTime}</Text>
         <Text style={this.state.hidden ? { height: 0 } : styles.hiddenContent}>{{...this.findEventsStory()}.content}</Text>
-        <TouchableOpacity onPress={() => this.expandArticle()}><Image style={this.state.hidden ? { height: 0 } : styles.hiddenImage} source={{uri:'https://www.petmd.com/sites/default/files/petmd-kitten-development.jpg'}} /></TouchableOpacity>
+        {/* <TouchableOpacity onPress={() => this.expandArticle()}><Image style={this.state.hidden ? { height: 0 } : styles.hiddenImage} source={{uri:'https://www.petmd.com/sites/default/files/petmd-kitten-development.jpg'}} /></TouchableOpacity> */}
     </View>
   </ScrollView>
 <FlatList
   horizontal={true}
   data={this.props.events.EventsCarousel}
   keyExtractor={this.keyExtractor}
-  renderItem={({item}) => <TouchableOpacity onPress={() => {this.expandArticle(); this.props.updateEvent(item.id)}}><Text style={styles.words}><Image  source={require('../assets/images/neko-atsume.jpg')} />{item.headline}</Text></TouchableOpacity>}
+  renderItem={({item}) => <TouchableOpacity onPress={() => {this.expandArticle(); this.props.updateEvent(item.id)}}><Text style={styles.words}><Image style={styles.picwrapper} source={this.state.eventspics[(item.id)-1]} />{item.headline}</Text></TouchableOpacity>}
 />  
+</ImageBackground>
 </View>    
 
     )}}
