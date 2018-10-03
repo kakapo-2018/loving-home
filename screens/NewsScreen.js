@@ -1,11 +1,8 @@
 import React, { Component } from 'react';
-import api from '../utils/api'
 import { setAllNews, newsAPI, fetchNews, updateNews } from '../actions'
 import {
   Image,
-  Platform,
   ScrollView,
-  Alert,
   StyleSheet,
   Text,
   FlatList,
@@ -13,8 +10,7 @@ import {
   View,
   ImageBackground,
 } from 'react-native';
-import { WebBrowser } from 'expo';
-import { MonoText } from '../components/StyledText';
+import { AppLoading, Font } from 'expo';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
@@ -33,24 +29,32 @@ const styles = StyleSheet.create({
     marginTop: 20,
     height: 210,
     width: 200,
-    backgroundColor: 'lightgreen'
+    backgroundColor: 'lightgreen',
+    fontFamily: 'droid-serif-regular'
   },
   pageheader: {
     fontSize: 40,
-    marginTop: 25
+    marginTop: 25,
+    fontFamily: 'droid-serif-regular'
   },
   hidden: {
     width: '100%',
-    backgroundColor: 'rgba(0,0,0,0.2)'
+    backgroundColor: 'rgba(0,0,0,0.8)',
   },
   hiddenHeader: {
-    fontSize: 20
+    fontSize: 20,
+    textDecorationLine: 'underline',
+    paddingLeft: 5,
+    color: 'white'
   },
   hiddenContent: {
-    fontSize: 15
+    fontSize: 15,
+    padding: 5,
+    fontFamily: 'droid-serif-regular',
+    color: 'white'
   },
   hiddenImage: {
-   height: 100
+    height: 100
   },
   picwrapper: {
     width: 1000,
@@ -69,8 +73,8 @@ class NewsScreen extends React.Component {
     this.state = {
       hidden: true,
       pic: require('../assets/images/pastel-wallpaper.png'),
-      newspics: [ require('../assets/images/news/grumpycat.jpg'), require('../assets/images/news/bantrade.jpg'), require('../assets/images/news/kakapo.jpg'), require('../assets/images/news/faircow.jpg'),   require('../assets/images/news/seaworld.jpg')]
-      
+      newspics: [ require('../assets/images/news/grumpycat.jpg'), require('../assets/images/news/bantrade.jpg'), require('../assets/images/news/kakapo.jpg'), require('../assets/images/news/faircow.jpg'),   require('../assets/images/news/seaworld.jpg')],
+      fontLoaded: false
     }
 
     this.expandArticle = this.expandArticle.bind(this)
@@ -84,29 +88,38 @@ class NewsScreen extends React.Component {
     header: null,
   };
 
-  componentDidMount() {
+  async componentDidMount() {
+    try{
+      await Font.loadAsync({
+        'droid-serif-regular': require('../assets/fonts/DroidSerif-Regular.ttf'),
+      });
+
+      this.setState({ fontLoaded: true });
+
+
+    } catch (error) {
+
+
+      console.log('error loading icon fonts', error);
+
+
+    }
     this.props.fetchNews()
-    
   }
 
   getAllNews(err, res) {
-    console.log(res)
+    //console.log(res)
   }
 
   findNewsStory() {
-    // console.log('NEWS', this.props.news.ActiveNews.id)
-    // this.props.news.NewsCarousel.map(thing => {
-    //   console.log(thing.id)
-
-    // })
     let story = this.props.news.NewsCarousel.find(thing => {
-      console.log(thing)
+      //console.log(thing)
       return thing.id == this.props.news.ActiveNews.id
     })
-    if (story != undefined){
-    return (story)
+    if (story != undefined) {
+      return (story)
     }
-    
+
   }
 
   showPic(id){
@@ -115,12 +128,9 @@ class NewsScreen extends React.Component {
     })
     if (pic != undefined){
       console.log('the thing' + pic)
-    // return require(`../assets${png}`)
     }
 
   }
-
-
   expandArticle() {
     this.setState({
       hidden: !this.state.hidden
@@ -132,7 +142,13 @@ class NewsScreen extends React.Component {
 
 
   render() {
+    if (!this.state.fontLoaded) {
 
+
+      return <AppLoading />;
+
+
+    }
     return (
 
       <ImageBackground source={this.state.pic} style={{height:'100%'}}>
@@ -140,9 +156,8 @@ class NewsScreen extends React.Component {
       <View style={styles.container}>
        
         <TouchableOpacity onPress={() => this.expandArticle()}>
-          <Text style={styles.pageheader}>Welcome to the News</Text>
+          <Text style={styles.pageheader}>News</Text>
         </TouchableOpacity>
-        {/* <Text style={this.state.hidden ? { height: 0 } : styles.hidden}>{{...this.findNewsStory()}.headline}</Text> */}
         <ScrollView >
           <View style={this.state.hidden ? { height: 0 } : styles.hidden}>
           <Text style={this.state.hidden ? { height: 0 } : styles.hiddenHeader}>{{...this.findNewsStory()}.headline}</Text>

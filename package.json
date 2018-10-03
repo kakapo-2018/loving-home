@@ -10,6 +10,11 @@
     "test": "jest --watchAll",
     "babel-test": "babel ./tests/api-test-lolz.js --watch --out-file ./tests/babel-test.js"
   },
+  "rnpm": {
+    "assets": [
+      "./assets/fonts/"
+    ]
+  },
   "jest": {
     "preset": "jest-expo"
   },
